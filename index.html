@@ -165,7 +165,8 @@
 
   .dest-section-title { font-size: 13px; font-weight: 600; color: var(--ink-soft); margin: 22px 0 10px; }
   .dest-section-title:first-child { margin-top: 0; }
-  .rank-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-soft); }
+  .rank-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-soft); cursor: pointer; }
+  .rank-row:hover { background: var(--bg); }
   .rank-row:last-child { border-bottom: none; }
   .rank-pos { width: 22px; font-size: 13px; color: var(--ink-faint); font-weight: 600; flex-shrink: 0; }
   .rank-mid { flex: 1; min-width: 0; }
@@ -190,6 +191,9 @@
 
 <main>
   <div id="app" class="wrap"></div>
+  <div id="flight-detail-modal" class="admin-panel" style="display:none" onclick="if(event.target===this) closeFlightDetail()">
+    <div class="admin-box" id="flight-detail-content"></div>
+  </div>
 </main>
 
 <footer>
@@ -483,7 +487,7 @@ function historyCard(recentFlights) {
     `;
   }).join('');
   return `
-    <div class="card">
+    <div class="card" style="cursor:pointer" onclick="showFlightDetailForCurrent()">
       <p class="why-title">היסטוריית טיסות אחרונה</p>
       ${rows}
       <div style="display:flex;gap:16px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border-soft)">
@@ -494,7 +498,7 @@ function historyCard(recentFlights) {
   `;
 }
 
-function rankRow(g, pos, isBest, isWorst) {
+function rankRow(g, pos, isBest, isWorst, dir, idx) {
   const m = riskMeta(g.riskLevel);
   const pct = Math.round(g.delayProbability60 * 100);
   const primary = g.aliases[0];
@@ -508,7 +512,7 @@ function rankRow(g, pos, isBest, isWorst) {
     ? `<span class="tag-illustrative" style="background:var(--red-bg);color:var(--red);margin-right:4px">הכי הרבה איחורים</span>`
     : '';
   return `
-    <div class="rank-row">
+    <div class="rank-row" onclick="showFlightDetail('${dir}', ${idx})">
       <div class="rank-pos">${pos}</div>
       <div class="rank-mid">
         <div class="rank-airline">${primary.airline}${badge}${g.isCodeshareGroup ? ' <span class="tag-illustrative" style="margin-right:4px">קודשרינג</span>' : ''}</div>
@@ -525,6 +529,65 @@ function weightedSummary(groups) {
   if (totalSamples === 0) return null;
   const weightedRate = groups.reduce((s, g) => s + g.delayRate60 * g.sampleSize, 0) / totalSamples;
   return { rate: weightedRate, samples: totalSamples, flightCount: groups.length };
+}
+
+// Actual clock time isn't stored directly - it's derived from the
+// group's representative scheduled time + that day's delay in minutes.
+// Handles delays that push past midnight in either direction.
+function addMinutesToTime(hhmm, delayMin) {
+  const [h, m] = hhmm.split(':').map(Number);
+  let total = h * 60 + m + Math.round(delayMin);
+  let dayOffset = 0;
+  while (total < 0) { total += 1440; dayOffset -= 1; }
+  while (total >= 1440) { total -= 1440; dayOffset += 1; }
+  const hh = String(Math.floor(total / 60)).padStart(2, '0');
+  const mm = String(total % 60).padStart(2, '0');
+  return { time: `${hh}:${mm}`, dayOffset };
+}
+
+function showFlightDetail(dir, idx) {
+  const group = destResults[dir][idx];
+  renderFlightDetailModal(group);
+  document.getElementById('flight-detail-modal').style.display = 'flex';
+}
+
+function showFlightDetailForCurrent() {
+  renderFlightDetailModal(currentFlight, true);
+  document.getElementById('flight-detail-modal').style.display = 'flex';
+}
+
+function closeFlightDetail() {
+  document.getElementById('flight-detail-modal').style.display = 'none';
+}
+
+function renderFlightDetailModal(f, isSingleFlight) {
+  const primary = isSingleFlight ? { airline: f.airline, flightNumber: f.flightNumber } : f.aliases[0];
+  const rows = (f.recentFlights || []).map(r => {
+    const actual = addMinutesToTime(r.scheduledTime, r.delayMin);
+    const late = r.delayMin >= 60;
+    return `
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-soft);font-size:13px">
+        <span style="width:70px;color:var(--ink-faint)">${r.date}</span>
+        <span style="width:60px">${r.scheduledTime}</span>
+        <span style="color:var(--ink-faint)">→</span>
+        <span style="width:80px;color:${late ? 'var(--red)' : 'var(--ink)'};font-weight:${late?600:400}">${actual.time}${actual.dayOffset ? ` (${actual.dayOffset>0?'+':''}${actual.dayOffset} יום)` : ''}</span>
+        <span style="color:var(--ink-faint);margin-right:auto">${r.delayMin>=0?'+':''}${r.delayMin} min</span>
+      </div>
+    `;
+  }).join('');
+  document.getElementById('flight-detail-content').innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+      <div>
+        <h3 style="margin:0">${primary.airline} ${primary.flightNumber}</h3>
+        <p style="margin:2px 0 0;font-size:13px;color:var(--ink-soft)">${f.origin} ← ${f.destination}</p>
+      </div>
+      <button onclick="closeFlightDetail()" style="border:none;background:none;font-size:20px;color:var(--ink-faint);cursor:pointer;line-height:1">×</button>
+    </div>
+    <div style="display:flex;gap:10px;font-size:11px;color:var(--ink-faint);padding:8px 0;border-bottom:1px solid var(--border);font-weight:600">
+      <span style="width:70px">תאריך</span><span style="width:60px">מתוכנן</span><span></span><span style="width:80px">בפועל</span>
+    </div>
+    ${rows || `<p style="font-size:13px;color:var(--ink-soft)">אין עדיין נתוני היסטוריה זמינים לטיסה זו.</p>`}
+  `;
 }
 
 function summaryBlock(label, icon, summary) {
@@ -563,8 +626,8 @@ function renderDestinationResult() {
       ${empty ? `
         <p style="font-size:14px;color:var(--ink-soft);margin-top:18px">לא נמצאו טיסות ליעד הזה במדגם הנוכחי. נסו לכתוב את שם העיר באנגלית, או יעד אחר.</p>
       ` : `
-        ${outbound.length ? `<div class="dest-section-title">🛫 טיסות ליעד (${outbound.length})</div>${outbound.map((f,i)=>rankRow(f,i+1,i===0,i===outbound.length-1 && outbound.length>1)).join('')}` : ''}
-        ${inbound.length ? `<div class="dest-section-title">🛬 טיסות חזרה (${inbound.length})</div>${inbound.map((f,i)=>rankRow(f,i+1,i===0,i===inbound.length-1 && inbound.length>1)).join('')}` : ''}
+        ${outbound.length ? `<div class="dest-section-title">🛫 טיסות ליעד (${outbound.length})</div>${outbound.map((f,i)=>rankRow(f,i+1,i===0,i===outbound.length-1 && outbound.length>1,'outbound',i)).join('')}` : ''}
+        ${inbound.length ? `<div class="dest-section-title">🛬 טיסות חזרה (${inbound.length})</div>${inbound.map((f,i)=>rankRow(f,i+1,i===0,i===inbound.length-1 && inbound.length>1,'inbound',i)).join('')}` : ''}
       `}
     </div>
     <div class="card trust-box">

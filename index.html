@@ -266,14 +266,18 @@ function riskInterpretation(level, dir) {
   return `כדאי לקחת בחשבון סיכוי גבוה לאיחור ${verb}.`;
 }
 
+let META = null;
+
 async function loadData() {
   try {
-    const [flightsRes, routesRes] = await Promise.all([
+    const [flightsRes, routesRes, metaRes] = await Promise.all([
       fetch('./flight_stats.json'),
       fetch('./route_groups.json'),
+      fetch('./meta.json'),
     ]);
     ALL_FLIGHTS = await flightsRes.json();
     ROUTE_GROUPS = await routesRes.json();
+    try { META = await metaRes.json(); } catch (e) { META = null; }
     SEED_DATA = [...ALL_FLIGHTS]
       .filter(f => f.sampleSize >= 5)
       .sort((a, b) => b.sampleSize - a.sampleSize)
@@ -330,6 +334,7 @@ function renderHome() {
       <p class="eyebrow">FLIGHT DELAY PREDICTION</p>
       <h1 class="headline">האם אפשר לסמוך על הטיסה הזו?</h1>
       <p class="sub">בדקו את הסיכוי שהטיסה שלכם תאחר ב-60 דקות ומעלה — לפני שמזמינים, או לפני שיוצאים לשדה.</p>
+      ${META ? `<p style="font-size:12.5px;color:var(--ink-faint);margin-top:10px">📡 ${META.totalScanned.toLocaleString()} טיסות נסרקו עד כה במנוע שלנו</p>` : ''}
     </section>
     <section id="search-card" class="card">
       <div class="toggle">
@@ -374,6 +379,7 @@ function renderHome() {
         </div>
       `}
     </section>
+    ${homeStatsSection()}
     <section id="how" class="how">
       <h2>איך זה עובד</h2>
       <div class="how-grid">
@@ -498,6 +504,43 @@ function historyCard(recentFlights) {
   `;
 }
 
+function homeStatsSection() {
+  if (!META || !META.mostDelayedFlights || !META.mostDelayedFlights.length) return '';
+  const delayedRows = META.mostDelayedFlights.map((g, i) => {
+    const primary = g.aliases[0];
+    const pct = Math.round(g.delayProbability60 * 100);
+    return `
+      <div class="rank-row" onclick="showFlightDetail('meta_delayed', ${i})">
+        <div class="rank-pos">${i+1}</div>
+        <div class="rank-mid">
+          <div class="rank-airline">${primary.airline}</div>
+          <div class="rank-flight">${primary.flightNumber} · ${g.origin} ← ${g.destination}</div>
+        </div>
+        <div class="rank-pct" style="color:var(--red)">${pct}%</div>
+      </div>
+    `;
+  }).join('');
+  const punctualRows = (META.mostPunctualAirlines || []).map((a, i) => `
+    <div class="rank-row" style="cursor:default">
+      <div class="rank-pos">${i+1}</div>
+      <div class="rank-mid"><div class="rank-airline">${a.airline}</div></div>
+      <div class="rank-pct" style="color:var(--green)">${Math.round(a.delayRate*100)}%</div>
+    </div>
+  `).join('');
+  return `
+    <section class="card" style="margin-top:24px">
+      <p class="why-title">5 הטיסות עם הכי הרבה איחורים</p>
+      <p class="dest-hint" style="margin-top:0">לפי אחוז הסיכוי לאיחור של 60+ דקות, מבין טיסות עם מדגם מספק.</p>
+      ${delayedRows}
+    </section>
+    <section class="card" style="margin-top:18px">
+      <p class="why-title">החברות הדייקניות ביותר</p>
+      <p class="dest-hint" style="margin-top:0">שיעור איחור נמוך ביותר, מבין חברות עם מספיק טיסות שנותחו.</p>
+      ${punctualRows}
+    </section>
+  `;
+}
+
 function rankRow(g, pos, isBest, isWorst, dir, idx) {
   const m = riskMeta(g.riskLevel);
   const pct = Math.round(g.delayProbability60 * 100);
@@ -546,7 +589,7 @@ function addMinutesToTime(hhmm, delayMin) {
 }
 
 function showFlightDetail(dir, idx) {
-  const group = destResults[dir][idx];
+  const group = dir === 'meta_delayed' ? META.mostDelayedFlights[idx] : destResults[dir][idx];
   renderFlightDetailModal(group);
   document.getElementById('flight-detail-modal').style.display = 'flex';
 }

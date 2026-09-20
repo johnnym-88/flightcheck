@@ -5384,11 +5384,11 @@
     "aliases": [
       {
         "airline": "El Al Israel Airlines",
-        "flightNumber": "LY5428"
+        "flightNumber": "LY5338"
       },
       {
         "airline": "El Al Israel Airlines",
-        "flightNumber": "LY5338"
+        "flightNumber": "LY5428"
       }
     ],
     "sampleSize": 1,
@@ -6146,11 +6146,11 @@
     "aliases": [
       {
         "airline": "Emirates",
-        "flightNumber": "EK2369"
+        "flightNumber": "EK2120"
       },
       {
         "airline": "Emirates",
-        "flightNumber": "EK2120"
+        "flightNumber": "EK2369"
       },
       {
         "airline": "Flydubai",
@@ -11960,11 +11960,11 @@
     "aliases": [
       {
         "airline": "El Al Israel Airlines",
-        "flightNumber": "LY014"
+        "flightNumber": "LY020"
       },
       {
         "airline": "El Al Israel Airlines",
-        "flightNumber": "LY020"
+        "flightNumber": "LY014"
       },
       {
         "airline": "Aero Mexico",
@@ -15301,11 +15301,11 @@
     "aliases": [
       {
         "airline": "Israir Airlines",
-        "flightNumber": "6H522"
+        "flightNumber": "6H514"
       },
       {
         "airline": "Israir Airlines",
-        "flightNumber": "6H514"
+        "flightNumber": "6H522"
       }
     ],
     "sampleSize": 2,
@@ -19960,11 +19960,11 @@
       },
       {
         "airline": "LOT Polish Airlines",
-        "flightNumber": "LO5256"
+        "flightNumber": "LO5258"
       },
       {
         "airline": "LOT Polish Airlines",
-        "flightNumber": "LO5258"
+        "flightNumber": "LO5256"
       }
     ],
     "sampleSize": 3,
@@ -21447,11 +21447,11 @@
       },
       {
         "airline": "Israir Airlines",
-        "flightNumber": "6H951"
+        "flightNumber": "6H569"
       },
       {
         "airline": "Israir Airlines",
-        "flightNumber": "6H569"
+        "flightNumber": "6H951"
       }
     ],
     "sampleSize": 9,
@@ -32340,11 +32340,11 @@
     "aliases": [
       {
         "airline": "TUS Airways",
-        "flightNumber": "U8152"
+        "flightNumber": "U8158"
       },
       {
         "airline": "TUS Airways",
-        "flightNumber": "U8158"
+        "flightNumber": "U8152"
       }
     ],
     "sampleSize": 7,

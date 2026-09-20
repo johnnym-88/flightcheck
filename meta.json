@@ -1,0 +1,274 @@
+{
+  "totalScanned": 4600,
+  "totalFlightsAnalyzed": 1404,
+  "lastUpdated": "2026-09-20",
+  "mostPunctualAirlines": [
+    {
+      "airline": "Etihad Airways",
+      "delayRate": 0.0
+    },
+    {
+      "airline": "Ethiopian Airlines",
+      "delayRate": 0.0
+    },
+    {
+      "airline": "Vietnam Airlines",
+      "delayRate": 0.0
+    },
+    {
+      "airline": "Thai Airways",
+      "delayRate": 0.0
+    },
+    {
+      "airline": "Qantas Airways",
+      "delayRate": 0.0
+    }
+  ],
+  "mostDelayedFlights": [
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Bergamo",
+      "scheduledTime": "14:45",
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Blue Bird Airways",
+          "flightNumber": "BZ154"
+        }
+      ],
+      "sampleSize": 6,
+      "averageDelay": 95.8,
+      "delayRate60": 0.833,
+      "delayProbability60": 0.475,
+      "riskLevel": "medium",
+      "recentFlights": [
+        {
+          "date": "2026-09-19",
+          "delayMin": 135.0,
+          "scheduledTime": "14:45"
+        },
+        {
+          "date": "2026-09-18",
+          "delayMin": 104.0,
+          "scheduledTime": "14:00"
+        },
+        {
+          "date": "2026-09-17",
+          "delayMin": 37.0,
+          "scheduledTime": "15:10"
+        },
+        {
+          "date": "2026-09-16",
+          "delayMin": 79.0,
+          "scheduledTime": "15:10"
+        },
+        {
+          "date": "2026-09-15",
+          "delayMin": 113.0,
+          "scheduledTime": "14:45"
+        },
+        {
+          "date": "2026-09-14",
+          "delayMin": 107.0,
+          "scheduledTime": "15:00"
+        }
+      ]
+    },
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Bucharest - Otopeni",
+      "scheduledTime": "16:45",
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Wizz Air Malta",
+          "flightNumber": "W43264"
+        }
+      ],
+      "sampleSize": 6,
+      "averageDelay": 95.2,
+      "delayRate60": 0.833,
+      "delayProbability60": 0.475,
+      "riskLevel": "medium",
+      "recentFlights": [
+        {
+          "date": "2026-09-19",
+          "delayMin": 28.0,
+          "scheduledTime": "16:45"
+        },
+        {
+          "date": "2026-09-18",
+          "delayMin": 140.0,
+          "scheduledTime": "16:45"
+        },
+        {
+          "date": "2026-09-17",
+          "delayMin": 147.0,
+          "scheduledTime": "16:40"
+        },
+        {
+          "date": "2026-09-16",
+          "delayMin": 108.0,
+          "scheduledTime": "16:45"
+        },
+        {
+          "date": "2026-09-15",
+          "delayMin": 81.0,
+          "scheduledTime": "16:45"
+        },
+        {
+          "date": "2026-09-14",
+          "delayMin": 67.0,
+          "scheduledTime": "16:45"
+        }
+      ]
+    },
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Milan-Malpensa",
+      "scheduledTime": "18:55",
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Wizz Air Malta",
+          "flightNumber": "W46404"
+        }
+      ],
+      "sampleSize": 6,
+      "averageDelay": 91.8,
+      "delayRate60": 0.833,
+      "delayProbability60": 0.472,
+      "riskLevel": "medium",
+      "recentFlights": [
+        {
+          "date": "2026-09-19",
+          "delayMin": 42.0,
+          "scheduledTime": "18:55"
+        },
+        {
+          "date": "2026-09-18",
+          "delayMin": 96.0,
+          "scheduledTime": "18:55"
+        },
+        {
+          "date": "2026-09-17",
+          "delayMin": 68.0,
+          "scheduledTime": "18:55"
+        },
+        {
+          "date": "2026-09-16",
+          "delayMin": 152.0,
+          "scheduledTime": "18:55"
+        },
+        {
+          "date": "2026-09-15",
+          "delayMin": 103.0,
+          "scheduledTime": "18:55"
+        },
+        {
+          "date": "2026-09-14",
+          "delayMin": 90.0,
+          "scheduledTime": "18:55"
+        }
+      ]
+    },
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Barcelona",
+      "scheduledTime": "13:35",
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Blue Bird Airways",
+          "flightNumber": "BZ252"
+        }
+      ],
+      "sampleSize": 6,
+      "averageDelay": 115.8,
+      "delayRate60": 0.833,
+      "delayProbability60": 0.465,
+      "riskLevel": "medium",
+      "recentFlights": [
+        {
+          "date": "2026-09-19",
+          "delayMin": 120.0,
+          "scheduledTime": "13:30"
+        },
+        {
+          "date": "2026-09-18",
+          "delayMin": 124.0,
+          "scheduledTime": "14:10"
+        },
+        {
+          "date": "2026-09-17",
+          "delayMin": 201.0,
+          "scheduledTime": "14:20"
+        },
+        {
+          "date": "2026-09-16",
+          "delayMin": 122.0,
+          "scheduledTime": "13:35"
+        },
+        {
+          "date": "2026-09-15",
+          "delayMin": 72.0,
+          "scheduledTime": "14:30"
+        },
+        {
+          "date": "2026-09-14",
+          "delayMin": 56.0,
+          "scheduledTime": "13:35"
+        }
+      ]
+    },
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Heraklion",
+      "scheduledTime": "05:45",
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Israir Airlines",
+          "flightNumber": "6H501"
+        }
+      ],
+      "sampleSize": 5,
+      "averageDelay": 100.6,
+      "delayRate60": 0.8,
+      "delayProbability60": 0.435,
+      "riskLevel": "medium",
+      "recentFlights": [
+        {
+          "date": "2026-09-18",
+          "delayMin": 118.0,
+          "scheduledTime": "14:25"
+        },
+        {
+          "date": "2026-09-17",
+          "delayMin": 190.0,
+          "scheduledTime": "14:45"
+        },
+        {
+          "date": "2026-09-16",
+          "delayMin": 74.0,
+          "scheduledTime": "09:50"
+        },
+        {
+          "date": "2026-09-15",
+          "delayMin": 35.0,
+          "scheduledTime": "05:45"
+        },
+        {
+          "date": "2026-09-14",
+          "delayMin": 86.0,
+          "scheduledTime": "14:50"
+        }
+      ]
+    }
+  ]
+}

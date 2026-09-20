@@ -291,10 +291,10 @@ function searchByDestination(query) {
   if (!needle) return { outbound: [], inbound: [] };
   const outbound = ROUTE_GROUPS
     .filter(g => g.direction === 'departure' && g.destination.toLowerCase().includes(needle))
-    .sort((a, b) => a.delayProbability30 - b.delayProbability30);
+    .sort((a, b) => a.delayProbability60 - b.delayProbability60);
   const inbound = ROUTE_GROUPS
     .filter(g => g.direction === 'arrival' && g.origin.toLowerCase().includes(needle))
-    .sort((a, b) => a.delayProbability30 - b.delayProbability30);
+    .sort((a, b) => a.delayProbability60 - b.delayProbability60);
   return { outbound, inbound };
 }
 
@@ -325,7 +325,7 @@ function renderHome() {
     <section class="hero">
       <p class="eyebrow">FLIGHT DELAY PREDICTION</p>
       <h1 class="headline">האם אפשר לסמוך על הטיסה הזו?</h1>
-      <p class="sub">בדקו את הסיכוי שהטיסה שלכם תאחר ב-30 דקות ומעלה — לפני שמזמינים, או לפני שיוצאים לשדה.</p>
+      <p class="sub">בדקו את הסיכוי שהטיסה שלכם תאחר ב-60 דקות ומעלה — לפני שמזמינים, או לפני שיוצאים לשדה.</p>
     </section>
     <section id="search-card" class="card">
       <div class="toggle">
@@ -374,7 +374,7 @@ function renderHome() {
       <h2>איך זה עובד</h2>
       <div class="how-grid">
         <div><div class="step-n">1</div><h3>הכניסו את הטיסה</h3><p>חפשו לפי מספר טיסה ותאריך, ליציאה או נחיתה בבן גוריון.</p></div>
-        <div><div class="step-n">2</div><h3>ראו את הסיכון</h3><p>קבלו הסתברות ברורה אחת לאיחור של 30 דקות ומעלה.</p></div>
+        <div><div class="step-n">2</div><h3>ראו את הסיכון</h3><p>קבלו הסתברות ברורה אחת לאיחור של 60 דקות ומעלה.</p></div>
         <div><div class="step-n">3</div><h3>בדקו שוב מאוחר יותר</h3><p>הסיכון עשוי להשתנות ככל שמתקרבים למועד הטיסה.</p></div>
       </div>
     </section>
@@ -398,15 +398,15 @@ function renderNotFound() {
 
 function renderResult(f) {
   const m = riskMeta(f.riskLevel);
-  const pct = Math.round(f.delayProbability30 * 100);
-  const label = f.direction === 'departure' ? 'סיכוי לאיחור של 30+ דקות בהמראה' : 'סיכוי לאיחור של 30+ דקות בנחיתה';
+  const pct = Math.round(f.delayProbability60 * 100);
+  const label = f.direction === 'departure' ? 'סיכוי לאיחור של 60+ דקות בהמראה' : 'סיכוי לאיחור של 60+ דקות בנחיתה';
   const isDep = f.direction === 'departure';
   const recentCount7 = Math.min(7, f.sampleSize);
 
   const why = [
-    { icon: '📊', t: 'ביצועים היסטוריים', d: `${Math.round(f.delayRate30*100)}% מ-${isDep ? 'ההמראות' : 'הנחיתות'} האחרונות איחרו ב-30+ דקות` },
+    { icon: '📊', t: 'ביצועים היסטוריים', d: `${Math.round(f.delayRate60*100)}% מ-${isDep ? 'ההמראות' : 'הנחיתות'} האחרונות איחרו ב-60+ דקות` },
     { icon: '🧮', t: 'גודל המדגם', d: `ההערכה מבוססת על ${f.sampleSize} תצפיות אחרונות` },
-    { icon: '🛡️', t: 'ביצועי החברה', d: `ל${f.airline} שיעור איחור של ${Math.round(f.airlineDelayRate*100)}% ב-30+ דקות על פני כלל הטיסות שלה` },
+    { icon: '🛡️', t: 'ביצועי החברה', d: `ל${f.airline} שיעור איחור של ${Math.round(f.airlineDelayRate*100)}% ב-60+ דקות על פני כלל הטיסות שלה` },
     { icon: '⛔', t: 'שיעור ביטולים', d: f.cancellationRate > 0 ? `${Math.round(f.cancellationRate*100)}% מהטיסות בוטלו לאחרונה` : 'לא נרשמו ביטולים לאחרונה' },
   ];
 
@@ -428,7 +428,7 @@ function renderResult(f) {
       <p class="interp">${riskInterpretation(f.riskLevel, f.direction)}</p>
       <div class="stats-row">
         <div><div class="stat-v">${f.averageDelay} min</div><div class="stat-l">איחור ממוצע</div></div>
-        <div><div class="stat-v">${Math.round(f.delayRate30*100)}%</div><div class="stat-l">איחרו 30+ דק'</div></div>
+        <div><div class="stat-v">${Math.round(f.delayRate60*100)}%</div><div class="stat-l">איחרו 60+ דק'</div></div>
         <div><div class="stat-v">${f.sampleSize}</div><div class="stat-l">טיסות שנותחו</div></div>
       </div>
       <div class="hist-label" style="margin-top:16px">מבוסס על היסטוריית הטיסות האחרונה</div>
@@ -441,6 +441,8 @@ function renderResult(f) {
       </div>
     </div>
 
+    ${historyCard(f.recentFlights)}
+
     <div class="card">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
         <p class="why-title" style="margin:0">כבר הזמנתם?</p>
@@ -449,7 +451,7 @@ function renderResult(f) {
       <p style="font-size:13.5px;color:var(--ink-soft);margin:8px 0 0">בדקו שוב קרוב יותר למועד הטיסה. ככל שמתקבל מידע תפעולי עדכני, רמת הסיכון עשויה להשתנות.</p>
       <div class="timeline-row">
         ${[[' -7 ימים',0.6],['24 שעות',0.75],['6 שעות',0.9],['2 שעות',1.0]].map(([label,mult])=>{
-          const v = Math.round(f.delayProbability30*mult*100);
+          const v = Math.round(f.delayProbability60*mult*100);
           const lvl = v<30?'low':v<60?'medium':'high';
           const mm = riskMeta(lvl);
           return `<div class="tl-point"><div class="tl-dot" style="border-color:var(${mm.varFg});color:var(${mm.varFg})">${v}</div><div class="tl-label">${label} לפני</div></div>`;
@@ -463,19 +465,53 @@ function renderResult(f) {
   `;
 }
 
-function rankRow(g, pos) {
+function historyCard(recentFlights) {
+  if (!recentFlights || recentFlights.length === 0) return '';
+  const maxAbs = Math.max(...recentFlights.map(r => Math.abs(r.delayMin)), 60);
+  const rows = recentFlights.map(r => {
+    const late = r.delayMin >= 60;
+    const widthPct = Math.max((Math.abs(r.delayMin) / maxAbs) * 100, 3);
+    const sign = r.delayMin >= 0 ? '+' : '';
+    return `
+      <div style="display:flex;align-items:center;gap:12px;padding:7px 0">
+        <span style="font-size:12px;color:var(--ink-faint);width:70px;flex-shrink:0">${r.date}</span>
+        <div style="flex:1;height:10px;border-radius:6px;background:var(--border-soft)">
+          <div style="height:10px;border-radius:6px;width:${widthPct}%;background:${late ? 'var(--red)' : 'var(--green)'}"></div>
+        </div>
+        <span style="font-size:12px;width:60px;text-align:left;flex-shrink:0;color:${late ? 'var(--red)' : 'var(--ink-soft)'};font-weight:${late ? 600 : 400}">${sign}${r.delayMin} min</span>
+      </div>
+    `;
+  }).join('');
+  return `
+    <div class="card">
+      <p class="why-title">היסטוריית טיסות אחרונה</p>
+      ${rows}
+      <div style="display:flex;gap:16px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border-soft)">
+        <div style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:var(--green)"></span><span style="font-size:12px;color:var(--ink-faint)">עד 60 דק' איחור</span></div>
+        <div style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:var(--red)"></span><span style="font-size:12px;color:var(--ink-faint)">60+ דק' איחור</span></div>
+      </div>
+    </div>
+  `;
+}
+
+function rankRow(g, pos, isBest, isWorst) {
   const m = riskMeta(g.riskLevel);
-  const pct = Math.round(g.delayProbability30 * 100);
+  const pct = Math.round(g.delayProbability60 * 100);
   const primary = g.aliases[0];
   const others = g.aliases.slice(1);
   const aliasLine = g.isCodeshareGroup
     ? `${primary.airline} (${primary.flightNumber}) · אותה טיסה נמכרת גם כ-${others.map(a => `${a.airline} ${a.flightNumber}`).join(', ')}`
     : `${primary.flightNumber} · ${g.sampleSize} תצפיות · איחור ממוצע ${g.averageDelay} min`;
+  const badge = isBest
+    ? `<span class="tag-illustrative" style="background:var(--green-bg);color:var(--green);margin-right:4px">הכי אמינה</span>`
+    : isWorst
+    ? `<span class="tag-illustrative" style="background:var(--red-bg);color:var(--red);margin-right:4px">הכי הרבה איחורים</span>`
+    : '';
   return `
     <div class="rank-row">
       <div class="rank-pos">${pos}</div>
       <div class="rank-mid">
-        <div class="rank-airline">${primary.airline}${g.isCodeshareGroup ? ' <span class="tag-illustrative" style="margin-right:4px">קודשרינג</span>' : ''}</div>
+        <div class="rank-airline">${primary.airline}${badge}${g.isCodeshareGroup ? ' <span class="tag-illustrative" style="margin-right:4px">קודשרינג</span>' : ''}</div>
         <div class="rank-flight">${aliasLine}${g.isCodeshareGroup ? ` · ${g.sampleSize} תצפיות · איחור ממוצע ${g.averageDelay} min` : ''}</div>
       </div>
       <span class="rank-badge-mini" style="color:var(${m.varFg});background:var(${m.varBg})">${m.label}</span>
@@ -484,21 +520,51 @@ function rankRow(g, pos) {
   `;
 }
 
+function weightedSummary(groups) {
+  const totalSamples = groups.reduce((s, g) => s + g.sampleSize, 0);
+  if (totalSamples === 0) return null;
+  const weightedRate = groups.reduce((s, g) => s + g.delayRate60 * g.sampleSize, 0) / totalSamples;
+  return { rate: weightedRate, samples: totalSamples, flightCount: groups.length };
+}
+
+function summaryBlock(label, icon, summary) {
+  if (!summary) return '';
+  const pct = Math.round(summary.rate * 100);
+  const m = riskMeta(pct < 30 ? 'low' : pct < 60 ? 'medium' : 'high');
+  return `
+    <div style="flex:1;text-align:center;padding:16px 10px;border-radius:14px;background:var(--bg)">
+      <div style="font-size:12px;color:var(--ink-faint);margin-bottom:6px">${icon} ${label}</div>
+      <div style="font-size:32px;font-weight:700;color:var(${m.varFg})">${pct}%</div>
+      <div style="font-size:11px;color:var(--ink-faint);margin-top:4px">מ-${summary.flightCount} טיסות · ${summary.samples} תצפיות</div>
+    </div>
+  `;
+}
+
 function renderDestinationResult() {
   const { outbound, inbound } = destResults;
   const empty = outbound.length === 0 && inbound.length === 0;
+  const outSummary = weightedSummary(outbound);
+  const inSummary = weightedSummary(inbound);
   return `
     <button class="back-btn" onclick="goHome()">→ חיפוש אחר</button>
     <div class="card" style="margin-top:14px">
       <div class="dest-title-row">
         <p class="why-title" style="margin:0">תוצאות עבור "${destQueryLabel}"</p>
       </div>
-      <p class="dest-hint">מדורגות מהכי אמינה להכי פחות אמינה, לפי אחוז הסיכוי לאיחור של 30+ דקות. דאטה אמיתי מהשבוע האחרון. טיסות המסומנות "קודשרינג" הן אותה טיסה פיזית הנמכרת תחת כמה מספרי/שמות חברות — לכן הן מוצגות כשורה אחת ולא כמה אפשרויות נפרדות.</p>
+      ${!empty ? `
+        <div style="display:flex;gap:10px;margin-top:14px">
+          ${summaryBlock('לכיוון היעד', '🛫', outSummary)}
+          ${summaryBlock('בחזרה לישראל', '🛬', inSummary)}
+        </div>
+      ` : ''}
+    </div>
+    <div class="card" style="margin-top:14px">
+      <p class="dest-hint" style="margin-top:0">מדורגות מהכי אמינה להכי פחות אמינה, לפי אחוז הסיכוי לאיחור של 60+ דקות. דאטה אמיתי מהשבוע האחרון. טיסות המסומנות "קודשרינג" הן אותה טיסה פיזית הנמכרת תחת כמה מספרי/שמות חברות — לכן הן מוצגות כשורה אחת ולא כמה אפשרויות נפרדות.</p>
       ${empty ? `
         <p style="font-size:14px;color:var(--ink-soft);margin-top:18px">לא נמצאו טיסות ליעד הזה במדגם הנוכחי. נסו לכתוב את שם העיר באנגלית, או יעד אחר.</p>
       ` : `
-        ${outbound.length ? `<div class="dest-section-title">🛫 טיסות ליעד (${outbound.length})</div>${outbound.map((f,i)=>rankRow(f,i+1)).join('')}` : ''}
-        ${inbound.length ? `<div class="dest-section-title">🛬 טיסות חזרה (${inbound.length})</div>${inbound.map((f,i)=>rankRow(f,i+1)).join('')}` : ''}
+        ${outbound.length ? `<div class="dest-section-title">🛫 טיסות ליעד (${outbound.length})</div>${outbound.map((f,i)=>rankRow(f,i+1,i===0,i===outbound.length-1 && outbound.length>1)).join('')}` : ''}
+        ${inbound.length ? `<div class="dest-section-title">🛬 טיסות חזרה (${inbound.length})</div>${inbound.map((f,i)=>rankRow(f,i+1,i===0,i===inbound.length-1 && inbound.length>1)).join('')}` : ''}
       `}
     </div>
     <div class="card trust-box">

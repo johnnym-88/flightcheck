@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>FlightCheck — Know before you fly</title>
+<style>
+  :root {
+    --bg: #FAFAF8;
+    --surface: #FFFFFF;
+    --ink: #14171B;
+    --ink-soft: #585F68;
+    --ink-faint: #8A9099;
+    --border: #E6E3DE;
+    --border-soft: #EFEDE8;
+    --brand: #1B4B66;
+    --brand-dark: #123449;
+    --brand-soft: #EAF1F4;
+    --green: #157F3C;
+    --green-bg: #E7F5EA;
+    --green-border: #C4E6CE;
+    --amber: #AD6F0A;
+    --amber-bg: #FCF0DA;
+    --amber-border: #EFD9A4;
+    --red: #C13B2E;
+    --red-bg: #FBEAE8;
+    --red-border: #F0C7C1;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14171B; --surface: #1C2024; --ink: #F2F1EE; --ink-soft: #A9AEB5; --ink-faint: #787E86;
+      --border: #2C3136; --border-soft: #24282C; --brand: #6FA8C4; --brand-dark: #9CC5DA; --brand-soft: #1E333D;
+      --green-bg: #163524; --amber-bg: #3A2E12; --red-bg: #3A1F1C;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14171B; --surface: #1C2024; --ink: #F2F1EE; --ink-soft: #A9AEB5; --ink-faint: #787E86;
+    --border: #2C3136; --border-soft: #24282C; --brand: #6FA8C4; --brand-dark: #9CC5DA; --brand-soft: #1E333D;
+    --green-bg: #163524; --amber-bg: #3A2E12; --red-bg: #3A1F1C;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); height: 100%; }
+  body {
+    margin: 0; height: 100%;
+    background: var(--bg); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  * { box-sizing: border-box; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+  header.top {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 90%, transparent);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border-soft);
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .topbar { max-width: 900px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+  .brand-btn { background: none; border: none; font-size: 15px; font-weight: 600; color: var(--ink); cursor: pointer; font-family: inherit; }
+  nav.links { display: flex; gap: 20px; }
+  nav.links button { background: none; border: none; font-size: 14px; color: var(--ink-soft); cursor: pointer; font-family: inherit; }
+
+  .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--brand); text-transform: uppercase; margin: 0 0 14px; }
+  h1.headline { font-size: 40px; font-weight: 700; line-height: 1.15; margin: 0; }
+  .sub { font-size: 17px; line-height: 1.55; color: var(--ink-soft); max-width: 520px; margin: 16px auto 0; }
+  .hero { text-align: center; padding: 56px 0 36px; }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 24px; }
+  .toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: var(--brand-soft); border-radius: 12px; padding: 4px; }
+  .toggle button { border: none; border-radius: 9px; padding: 11px 8px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 7px; color: var(--ink-soft); background: transparent; }
+  .toggle button.active { background: var(--surface); color: var(--brand); box-shadow: 0 1px 2px rgba(20,23,27,0.08); }
+
+  .field { margin-top: 16px; }
+  .field label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+  .field input { width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; font-size: 15px; background: var(--bg); color: var(--ink); font-family: inherit; }
+  .field input:focus { outline: none; box-shadow: 0 0 0 3px var(--brand-soft); }
+  .grid2 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 14px; }
+  @media (max-width: 480px) { .grid2 { grid-template-columns: 1fr; } }
+
+  .cta { width: 100%; margin-top: 18px; background: var(--brand); color: #fff; border: none; border-radius: 10px; padding: 14px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; }
+  .cta:active { opacity: 0.9; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .chip { border: 1px solid var(--border); background: var(--bg); color: var(--ink-soft); border-radius: 999px; padding: 7px 14px; font-size: 13px; cursor: pointer; font-family: inherit; }
+  .chip-label { font-size: 12px; color: var(--ink-faint); margin-bottom: 8px; }
+  .divider-top { border-top: 1px solid var(--border-soft); margin-top: 20px; padding-top: 20px; }
+
+  .how { border-top: 1px solid var(--border-soft); padding: 48px 0; }
+  .how h2 { text-align: center; font-size: 21px; margin: 0 0 30px; }
+  .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 620px) { .how-grid { grid-template-columns: 1fr; text-align: center; } }
+  .step-n { width: 30px; height: 30px; border-radius: 50%; background: var(--brand-soft); color: var(--brand); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; margin: 0 auto 12px; }
+  @media (min-width: 621px) { .step-n { margin: 0 0 12px; } }
+  .how-grid h3 { font-size: 14px; margin: 0 0 6px; }
+  .how-grid p { font-size: 14px; color: var(--ink-soft); line-height: 1.5; margin: 0; }
+
+  main { padding-bottom: 40px; }
+  .back-btn { display: flex; align-items: center; gap: 6px; background: none; border: none; color: var(--brand); font-size: 14px; font-weight: 500; cursor: pointer; padding: 20px 0 0; font-family: inherit; }
+
+  .flight-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  .flight-title { display: flex; align-items: center; gap: 8px; font-size: 17px; font-weight: 600; }
+  .flight-airline { font-size: 13px; color: var(--ink-faint); font-weight: 400; }
+  .direction-tag { font-size: 13px; font-weight: 500; color: var(--ink-soft); }
+  .route { font-size: 21px; font-weight: 600; margin-top: 14px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .route .arrow { color: var(--ink-faint); font-weight: 400; }
+  .sched { margin-top: 10px; font-size: 13px; color: var(--ink-faint); }
+
+  .score-card { text-align: center; padding: 34px 22px; }
+  .score-num { font-size: 76px; font-weight: 700; line-height: 1; }
+  .score-label { font-size: 16px; color: var(--ink-soft); margin-top: 10px; }
+  .badge { display: inline-block; margin-top: 14px; padding: 5px 13px; border-radius: 999px; font-size: 12px; font-weight: 600; letter-spacing: 0.03em; }
+  .interp { margin-top: 12px; font-size: 15px; color: var(--ink-soft); max-width: 340px; margin-left: auto; margin-right: auto; }
+  .hist-label { font-size: 12px; color: var(--ink-faint); margin-bottom: 14px; }
+  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; border-top: 1px solid var(--border-soft); margin-top: 30px; padding-top: 22px; }
+  .stat-v { font-size: 19px; font-weight: 600; }
+  .stat-l { font-size: 11px; color: var(--ink-faint); margin-top: 3px; }
+
+  .why-title { font-size: 15px; font-weight: 600; margin: 0 0 16px; }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 480px) { .why-grid { grid-template-columns: 1fr; } }
+  .why-item { display: flex; gap: 11px; }
+  .why-icon { width: 32px; height: 32px; border-radius: 9px; background: var(--brand-soft); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+  .why-t { font-size: 13.5px; font-weight: 500; }
+  .why-d { font-size: 13.5px; color: var(--ink-soft); margin-top: 2px; }
+
+  .tag-illustrative { font-size: 11px; background: var(--border-soft); color: var(--ink-faint); padding: 4px 10px; border-radius: 999px; }
+  .timeline-row { display: flex; justify-content: space-between; margin-top: 26px; position: relative; }
+  .timeline-row::before { content: ""; position: absolute; top: 15px; left: 0; right: 0; height: 1px; background: var(--border); }
+  .tl-point { text-align: center; flex: 1; position: relative; }
+  .tl-dot { width: 30px; height: 30px; border-radius: 50%; background: var(--surface); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; margin: 0 auto; position: relative; z-index: 1; border: 2px solid; }
+  .tl-label { font-size: 10.5px; color: var(--ink-faint); margin-top: 8px; }
+
+  .trust-box { background: var(--brand-soft); border-radius: 16px; padding: 18px; text-align: center; }
+  .trust-box p { margin: 0; font-size: 13.5px; color: var(--brand-dark); }
+
+  .not-found { text-align: center; padding: 70px 0; }
+  .nf-icon { width: 46px; height: 46px; border-radius: 50%; background: var(--border-soft); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; font-size: 20px; }
+
+  .loading { text-align: center; padding: 90px 0; color: var(--ink-soft); font-size: 14px; }
+  .spinner { width: 24px; height: 24px; border: 3px solid var(--border); border-top-color: var(--brand); border-radius: 50%; margin: 0 auto 14px; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  footer { border-top: 1px solid var(--border-soft); padding: 26px 0; text-align: center; }
+  footer .fname { font-size: 14px; font-weight: 500; }
+  footer .ftag { font-size: 12px; color: var(--ink-faint); margin-top: 4px; }
+
+  .card + .card { margin-top: 18px; }
+
+  .admin-toggle { position: fixed; bottom: 14px; left: 14px; font-size: 11px; color: var(--ink-faint); background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 5px 9px; cursor: pointer; opacity: 0.55; font-family: inherit; }
+  .admin-panel { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 50; padding: 20px; }
+  .admin-box { background: var(--surface); border-radius: 16px; padding: 22px; max-width: 480px; width: 100%; max-height: 80vh; overflow: auto; }
+  .admin-box h3 { margin: 0 0 8px; font-size: 15px; }
+  .admin-box p { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; }
+  .admin-box textarea { width: 100%; height: 140px; font-family: monospace; font-size: 11px; border: 1px solid var(--border); border-radius: 8px; padding: 8px; background: var(--bg); color: var(--ink); }
+  .admin-box .row { display: flex; gap: 8px; margin-top: 10px; }
+  .admin-box button { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--ink); font-family: inherit; cursor: pointer; font-size: 13px; }
+  .admin-box button.primary { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .admin-status { font-size: 12px; margin-top: 8px; }
+
+  .mode-toggle { display: flex; gap: 8px; margin-bottom: 16px; }
+  .mode-toggle button { flex: 1; border: 1px solid var(--border); background: var(--bg); color: var(--ink-soft); border-radius: 10px; padding: 9px; font-size: 13.5px; font-weight: 500; cursor: pointer; font-family: inherit; }
+  .mode-toggle button.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+
+  .dest-section-title { font-size: 13px; font-weight: 600; color: var(--ink-soft); margin: 22px 0 10px; }
+  .dest-section-title:first-child { margin-top: 0; }
+  .rank-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-soft); }
+  .rank-row:last-child { border-bottom: none; }
+  .rank-pos { width: 22px; font-size: 13px; color: var(--ink-faint); font-weight: 600; flex-shrink: 0; }
+  .rank-mid { flex: 1; min-width: 0; }
+  .rank-airline { font-size: 14px; font-weight: 500; }
+  .rank-flight { font-size: 12px; color: var(--ink-faint); }
+  .rank-pct { font-size: 17px; font-weight: 700; flex-shrink: 0; }
+  .rank-badge-mini { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 999px; flex-shrink: 0; }
+  .dest-title-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  .dest-hint { font-size: 12.5px; color: var(--ink-faint); margin-top: 4px; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="topbar">
+    <button class="brand-btn" onclick="goHome()">FlightCheck</button>
+    <nav class="links">
+      <button onclick="goHome(); setTimeout(()=>document.getElementById('search-card')?.scrollIntoView({behavior:'smooth'}),50)">בדיקת טיסה</button>
+      <button onclick="goHome(); setTimeout(()=>document.getElementById('how')?.scrollIntoView({behavior:'smooth'}),50)">איך זה עובד</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div id="app" class="wrap"></div>
+</main>
+
+<footer>
+  <div class="fname">FlightCheck</div>
+  <div class="ftag">Know before you fly.</div>
+</footer>
+
+
+
+<script>
+let SEED_DATA = [];
+let ALL_FLIGHTS = [];
+let ROUTE_GROUPS = [];
+let dataLoaded = false;
+let dataLoadError = false;
+
+// Common Hebrew destination-name -> English matching fragment, so users can
+// type a city in Hebrew even though the underlying data uses English names.
+// Not exhaustive: any city not listed here still works if typed in English
+// (or in a form that appears literally in the data), via substring match.
+const HEBREW_CITY_MAP = {
+  "רומא": "rome", "אתונה": "athens", "לרנקה": "larnaca", "לארנקה": "larnaca",
+  "פאפוס": "paphos", "בודפשט": "budapest", "פראג": "prague", "וינה": "vienna",
+  "ורשה": "warsaw", "ברלין": "berlin", "מינכן": "munich", "פרנקפורט": "frankfurt",
+  "פריז": "paris", "לונדון": "london", "מדריד": "madrid", "ברצלונה": "barcelona",
+  "מילאנו": "milan", "רודוס": "rhodes", "היראקליון": "heraklion", "חניה": "khania",
+  "סופיה": "sofia", "בוקרשט": "bucharest", "זאגרב": "zagreb", "בלגרד": "belgrade",
+  "סרייבו": "sarajevo", "קרקוב": "krakow", "בטומי": "batumi", "טביליסי": "tbilisi",
+  "באקו": "baku", "דובאי": "dubai", "אבו דאבי": "abu dhabi", "בנגקוק": "bangkok",
+  "פוקט": "phuket", "טוקיו": "tokyo", "ניו יורק": "new york", "לוס אנגלס": "los angeles",
+  "לוס אנג'לס": "los angeles", "מיאמי": "miami", "בוסטון": "boston", "ליסבון": "lisbon",
+  "פורטו": "porto", "ציריך": "zurich", "ג'נבה": "geneva", "גינבה": "geneva",
+  "בזל": "basel", "המבורג": "hamburg", "קלן": "cologne", "דיסלדורף": "dusseldorf",
+  "מלגה": "malaga", "מרסיי": "marseille", "ניס": "nice", "ליון": "lyon",
+  "ונציה": "venice", "נאפולי": "naples", "בולוניה": "bologna", "פלרמו": "palermo",
+  "קטניה": "catania", "בארי": "bari", "ברגמו": "bergamo", "קופנהגן": "copenhagen",
+  "אמסטרדם": "amsterdam", "בריסל": "brussels", "ריגה": "riga", "וילנה": "vilnius",
+  "וילנוס": "vilnius", "מינסק": "minsk", "סלוניקי": "thessaloniki", "כורפו": "corfu",
+  "סנטוריני": "santorini", "מיקונוס": "mikonos", "קוס": "kos", "בורגס": "burgas",
+  "וארנה": "varna", "טירנה": "tirana", "ליובליאנה": "ljubljana", "טיוואט": "tivat",
+  "דוברובניק": "dubrovnik", "מרקש": "marrakesh", "זנזיבר": "zanzibar",
+  "אדיס אבבה": "addis ababa", "סיישל": "mahe seychelles", "טשקנט": "tashkent",
+  "סמרקנד": "samarkand", "ירוואן": "yerevan", "קישינב": "chisinau",
+  "מוסקבה": "moscow", "סוצ'י": "sochi", "קרסנודר": "krasnodar", "אילת": "ramon",
+  "רמון": "ramon",
+};
+
+function normalizeDestinationQuery(input) {
+  const trimmed = input.trim();
+  const mapped = HEBREW_CITY_MAP[trimmed] || HEBREW_CITY_MAP[trimmed.toLowerCase()];
+  return (mapped || trimmed).toLowerCase();
+}
+
+let view = 'home';
+let currentFlight = null;
+let direction = 'departure';
+let searchMode = 'number'; // 'number' | 'destination'
+let destResults = null;
+let destQueryLabel = '';
+
+function riskMeta(level) {
+  if (level === 'low') return { label: 'LOW RISK', varFg: '--green', varBg: '--green-bg', varBorder: '--green-border' };
+  if (level === 'medium') return { label: 'MEDIUM RISK', varFg: '--amber', varBg: '--amber-bg', varBorder: '--amber-border' };
+  return { label: 'HIGH RISK', varFg: '--red', varBg: '--red-bg', varBorder: '--red-border' };
+}
+function riskInterpretation(level, dir) {
+  const verb = dir === 'arrival' ? 'בנחיתה' : 'בהמראה';
+  if (level === 'low') return 'לטיסה הזו יש היסטוריה של אמינות גבוהה יחסית.';
+  if (level === 'medium') return 'לטיסה הזו יש סיכוי משמעותי לאיחור.';
+  return `כדאי לקחת בחשבון סיכוי גבוה לאיחור ${verb}.`;
+}
+
+async function loadData() {
+  try {
+    const [flightsRes, routesRes] = await Promise.all([
+      fetch('./flight_stats.json'),
+      fetch('./route_groups.json'),
+    ]);
+    ALL_FLIGHTS = await flightsRes.json();
+    ROUTE_GROUPS = await routesRes.json();
+    SEED_DATA = [...ALL_FLIGHTS]
+      .filter(f => f.sampleSize >= 5)
+      .sort((a, b) => b.sampleSize - a.sampleSize)
+      .slice(0, 8);
+    dataLoaded = true;
+  } catch (e) {
+    console.error('Failed to load flight data', e);
+    dataLoadError = true;
+  }
+}
+
+async function lookupFlight(flightNumberRaw) {
+  const key = flightNumberRaw.replace(/\s+/g, '').toUpperCase();
+  return ALL_FLIGHTS.find(f => f.flightNumber === key) || null;
+}
+
+function searchByDestination(query) {
+  const needle = normalizeDestinationQuery(query);
+  if (!needle) return { outbound: [], inbound: [] };
+  const outbound = ROUTE_GROUPS
+    .filter(g => g.direction === 'departure' && g.destination.toLowerCase().includes(needle))
+    .sort((a, b) => a.delayProbability60 - b.delayProbability60);
+  const inbound = ROUTE_GROUPS
+    .filter(g => g.direction === 'arrival' && g.origin.toLowerCase().includes(needle))
+    .sort((a, b) => a.delayProbability60 - b.delayProbability60);
+  return { outbound, inbound };
+}
+
+function goHome() {
+  view = 'home';
+  currentFlight = null;
+  render();
+}
+
+async function handleSearch(flightNumber, dir) {
+  view = 'loading';
+  render();
+  await new Promise(r => setTimeout(r, 600));
+  const result = await lookupFlight(flightNumber);
+  if (result) {
+    currentFlight = result;
+    view = 'result';
+  } else {
+    view = 'notfound';
+  }
+  render();
+}
+
+function icon(dir) { return dir === 'departure' ? '🛫' : '🛬'; }
+
+function renderHome() {
+  return `
+    <section class="hero">
+      <p class="eyebrow">FLIGHT DELAY PREDICTION</p>
+      <h1 class="headline">האם אפשר לסמוך על הטיסה הזו?</h1>
+      <p class="sub">בדקו את הסיכוי שהטיסה שלכם תאחר ב-60 דקות ומעלה — לפני שמזמינים, או לפני שיוצאים לשדה.</p>
+    </section>
+    <section id="search-card" class="card">
+      <div class="toggle">
+        <button id="btn-dep" class="${direction === 'departure' ? 'active' : ''}" onclick="setDirection('departure')">🛫 יציאה מישראל</button>
+        <button id="btn-arr" class="${direction === 'arrival' ? 'active' : ''}" onclick="setDirection('arrival')">🛬 כניסה לישראל</button>
+      </div>
+
+      <div class="mode-toggle">
+        <button class="${searchMode === 'number' ? 'active' : ''}" onclick="setSearchMode('number')">לפי מספר טיסה</button>
+        <button class="${searchMode === 'destination' ? 'active' : ''}" onclick="setSearchMode('destination')">לפי יעד</button>
+      </div>
+
+      ${searchMode === 'number' ? `
+        <div class="grid2">
+          <div class="field">
+            <label>מספר טיסה</label>
+            <input id="input-flight" placeholder="לדוגמה: LY9255" />
+          </div>
+          <div class="field">
+            <label>תאריך טיסה</label>
+            <input id="input-date" type="date" />
+          </div>
+        </div>
+        <button class="cta" onclick="submitSearch()">בדוק טיסה</button>
+        <div class="divider-top">
+          <div class="chip-label">נסו טיסה לדוגמה (דאטה אמיתי מבן גוריון)</div>
+          <div class="chips">
+            ${SEED_DATA.slice(0, 8).map(f => `<button class="chip" onclick="quickSearch('${f.flightNumber}','${f.direction}')">${f.flightNumber}</button>`).join('')}
+          </div>
+        </div>
+      ` : `
+        <div class="field">
+          <label>יעד</label>
+          <input id="input-dest" placeholder="לדוגמה: רומא, אתונה, לרנקה" onkeydown="if(event.key==='Enter') submitDestSearch()" />
+        </div>
+        <button class="cta" onclick="submitDestSearch()">מצא חברות לפי יעד</button>
+        <div class="divider-top">
+          <div class="chip-label">יעדים לדוגמה</div>
+          <div class="chips">
+            ${['רומא','אתונה','לרנקה','פאפוס','לונדון','בודפשט'].map(c => `<button class="chip" onclick="quickDestSearch('${c}')">${c}</button>`).join('')}
+          </div>
+        </div>
+      `}
+    </section>
+    <section id="how" class="how">
+      <h2>איך זה עובד</h2>
+      <div class="how-grid">
+        <div><div class="step-n">1</div><h3>הכניסו את הטיסה</h3><p>חפשו לפי מספר טיסה ותאריך, ליציאה או נחיתה בבן גוריון.</p></div>
+        <div><div class="step-n">2</div><h3>ראו את הסיכון</h3><p>קבלו הסתברות ברורה אחת לאיחור של 60 דקות ומעלה.</p></div>
+        <div><div class="step-n">3</div><h3>בדקו שוב מאוחר יותר</h3><p>הסיכון עשוי להשתנות ככל שמתקרבים למועד הטיסה.</p></div>
+      </div>
+    </section>
+  `;
+}
+
+function renderLoading() {
+  return `<div class="loading"><div class="spinner"></div>בודק טיסה...</div>`;
+}
+
+function renderNotFound() {
+  return `
+    <div class="not-found">
+      <div class="nf-icon">🔍</div>
+      <p style="font-size:17px;font-weight:600;margin:0 0 6px">לא מצאנו את הטיסה הזו.</p>
+      <p style="font-size:14px;color:var(--ink-soft);margin:0 0 18px">בדקו את מספר הטיסה והתאריך ונסו שוב.<br/>(המאגר כולל כרגע כ-1,335 זיהויי טיסה מהשבוע האחרון בבן גוריון — טיסות חדשות/עונתיות עשויות עדיין לא להופיע.)</p>
+      <button class="cta" style="max-width:220px;margin:0 auto" onclick="goHome()">נסו טיסה אחרת</button>
+    </div>
+  `;
+}
+
+function renderResult(f) {
+  const m = riskMeta(f.riskLevel);
+  const pct = Math.round(f.delayProbability60 * 100);
+  const label = f.direction === 'departure' ? 'סיכוי לאיחור של 60+ דקות בהמראה' : 'סיכוי לאיחור של 60+ דקות בנחיתה';
+  const isDep = f.direction === 'departure';
+  const recentCount7 = Math.min(7, f.sampleSize);
+
+  const why = [
+    { icon: '📊', t: 'ביצועים היסטוריים', d: `${Math.round(f.delayRate60*100)}% מ-${isDep ? 'ההמראות' : 'הנחיתות'} האחרונות איחרו ב-60+ דקות` },
+    { icon: '🧮', t: 'גודל המדגם', d: `ההערכה מבוססת על ${f.sampleSize} תצפיות אחרונות` },
+    { icon: '🛡️', t: 'ביצועי החברה', d: `ל${f.airline} שיעור איחור של ${Math.round(f.airlineDelayRate*100)}% ב-60+ דקות על פני כלל הטיסות שלה` },
+    { icon: '⛔', t: 'שיעור ביטולים', d: f.cancellationRate > 0 ? `${Math.round(f.cancellationRate*100)}% מהטיסות בוטלו לאחרונה` : 'לא נרשמו ביטולים לאחרונה' },
+  ];
+
+  return `
+    <button class="back-btn" onclick="goHome()">→ בדיקת טיסה אחרת</button>
+    <div class="card" style="margin-top:14px">
+      <div class="flight-head">
+        <div class="flight-title">${icon(f.direction)} ${f.flightNumber} <span class="flight-airline">${f.airline}</span></div>
+        <span class="direction-tag">${isDep ? 'המראה' : 'נחיתה'}</span>
+      </div>
+      <div class="route">${f.origin} <span class="arrow">←</span> ${f.destination}</div>
+      <div class="sched">דאטה אמיתי מתוך ${f.sampleSize} תצפיות בשבוע האחרון</div>
+    </div>
+
+    <div class="card score-card">
+      <div class="score-num" style="color:var(${m.varFg})">${pct}%</div>
+      <div class="score-label">${label}</div>
+      <div class="badge" style="color:var(${m.varFg});background:var(${m.varBg});border:1px solid var(${m.varBorder})">${m.label}</div>
+      <p class="interp">${riskInterpretation(f.riskLevel, f.direction)}</p>
+      <div class="stats-row">
+        <div><div class="stat-v">${f.averageDelay} min</div><div class="stat-l">איחור ממוצע</div></div>
+        <div><div class="stat-v">${Math.round(f.delayRate60*100)}%</div><div class="stat-l">איחרו 60+ דק'</div></div>
+        <div><div class="stat-v">${f.sampleSize}</div><div class="stat-l">טיסות שנותחו</div></div>
+      </div>
+      <div class="hist-label" style="margin-top:16px">מבוסס על היסטוריית הטיסות האחרונה</div>
+    </div>
+
+    <div class="card">
+      <p class="why-title">למה הציון הזה?</p>
+      <div class="why-grid">
+        ${why.map(w => `<div class="why-item"><div class="why-icon">${w.icon}</div><div><div class="why-t">${w.t}</div><div class="why-d">${w.d}</div></div></div>`).join('')}
+      </div>
+    </div>
+
+    ${historyCard(f.recentFlights)}
+
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <p class="why-title" style="margin:0">כבר הזמנתם?</p>
+        <span class="tag-illustrative">דוגמה להמחשה</span>
+      </div>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin:8px 0 0">בדקו שוב קרוב יותר למועד הטיסה. ככל שמתקבל מידע תפעולי עדכני, רמת הסיכון עשויה להשתנות.</p>
+      <div class="timeline-row">
+        ${[[' -7 ימים',0.6],['24 שעות',0.75],['6 שעות',0.9],['2 שעות',1.0]].map(([label,mult])=>{
+          const v = Math.round(f.delayProbability60*mult*100);
+          const lvl = v<30?'low':v<60?'medium':'high';
+          const mm = riskMeta(lvl);
+          return `<div class="tl-point"><div class="tl-dot" style="border-color:var(${mm.varFg});color:var(${mm.varFg})">${v}</div><div class="tl-label">${label} לפני</div></div>`;
+        }).join('')}
+      </div>
+    </div>
+
+    <div class="card trust-box">
+      <p>התחזיות מבוססות על נתונים היסטוריים ותפעוליים אמיתיים מרשות שדות התעופה. אין ודאות מוחלטת בשום תחזית.</p>
+    </div>
+  `;
+}
+
+function historyCard(recentFlights) {
+  if (!recentFlights || recentFlights.length === 0) return '';
+  const maxAbs = Math.max(...recentFlights.map(r => Math.abs(r.delayMin)), 60);
+  const rows = recentFlights.map(r => {
+    const late = r.delayMin >= 60;
+    const widthPct = Math.max((Math.abs(r.delayMin) / maxAbs) * 100, 3);
+    const sign = r.delayMin >= 0 ? '+' : '';
+    return `
+      <div style="display:flex;align-items:center;gap:12px;padding:7px 0">
+        <span style="font-size:12px;color:var(--ink-faint);width:70px;flex-shrink:0">${r.date}</span>
+        <div style="flex:1;height:10px;border-radius:6px;background:var(--border-soft)">
+          <div style="height:10px;border-radius:6px;width:${widthPct}%;background:${late ? 'var(--red)' : 'var(--green)'}"></div>
+        </div>
+        <span style="font-size:12px;width:60px;text-align:left;flex-shrink:0;color:${late ? 'var(--red)' : 'var(--ink-soft)'};font-weight:${late ? 600 : 400}">${sign}${r.delayMin} min</span>
+      </div>
+    `;
+  }).join('');
+  return `
+    <div class="card">
+      <p class="why-title">היסטוריית טיסות אחרונה</p>
+      ${rows}
+      <div style="display:flex;gap:16px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border-soft)">
+        <div style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:var(--green)"></span><span style="font-size:12px;color:var(--ink-faint)">עד 60 דק' איחור</span></div>
+        <div style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:var(--red)"></span><span style="font-size:12px;color:var(--ink-faint)">60+ דק' איחור</span></div>
+      </div>
+    </div>
+  `;
+}
+
+function rankRow(g, pos, isBest, isWorst) {
+  const m = riskMeta(g.riskLevel);
+  const pct = Math.round(g.delayProbability60 * 100);
+  const primary = g.aliases[0];
+  const others = g.aliases.slice(1);
+  const aliasLine = g.isCodeshareGroup
+    ? `${primary.airline} (${primary.flightNumber}) · אותה טיסה נמכרת גם כ-${others.map(a => `${a.airline} ${a.flightNumber}`).join(', ')}`
+    : `${primary.flightNumber} · ${g.sampleSize} תצפיות · איחור ממוצע ${g.averageDelay} min`;
+  const badge = isBest
+    ? `<span class="tag-illustrative" style="background:var(--green-bg);color:var(--green);margin-right:4px">הכי אמינה</span>`
+    : isWorst
+    ? `<span class="tag-illustrative" style="background:var(--red-bg);color:var(--red);margin-right:4px">הכי הרבה איחורים</span>`
+    : '';
+  return `
+    <div class="rank-row">
+      <div class="rank-pos">${pos}</div>
+      <div class="rank-mid">
+        <div class="rank-airline">${primary.airline}${badge}${g.isCodeshareGroup ? ' <span class="tag-illustrative" style="margin-right:4px">קודשרינג</span>' : ''}</div>
+        <div class="rank-flight">${aliasLine}${g.isCodeshareGroup ? ` · ${g.sampleSize} תצפיות · איחור ממוצע ${g.averageDelay} min` : ''}</div>
+      </div>
+      <span class="rank-badge-mini" style="color:var(${m.varFg});background:var(${m.varBg})">${m.label}</span>
+      <div class="rank-pct" style="color:var(${m.varFg})">${pct}%</div>
+    </div>
+  `;
+}
+
+function weightedSummary(groups) {
+  const totalSamples = groups.reduce((s, g) => s + g.sampleSize, 0);
+  if (totalSamples === 0) return null;
+  const weightedRate = groups.reduce((s, g) => s + g.delayRate60 * g.sampleSize, 0) / totalSamples;
+  return { rate: weightedRate, samples: totalSamples, flightCount: groups.length };
+}
+
+function summaryBlock(label, icon, summary) {
+  if (!summary) return '';
+  const pct = Math.round(summary.rate * 100);
+  const m = riskMeta(pct < 30 ? 'low' : pct < 60 ? 'medium' : 'high');
+  return `
+    <div style="flex:1;text-align:center;padding:16px 10px;border-radius:14px;background:var(--bg)">
+      <div style="font-size:12px;color:var(--ink-faint);margin-bottom:6px">${icon} ${label}</div>
+      <div style="font-size:32px;font-weight:700;color:var(${m.varFg})">${pct}%</div>
+      <div style="font-size:11px;color:var(--ink-faint);margin-top:4px">מ-${summary.flightCount} טיסות · ${summary.samples} תצפיות</div>
+    </div>
+  `;
+}
+
+function renderDestinationResult() {
+  const { outbound, inbound } = destResults;
+  const empty = outbound.length === 0 && inbound.length === 0;
+  const outSummary = weightedSummary(outbound);
+  const inSummary = weightedSummary(inbound);
+  return `
+    <button class="back-btn" onclick="goHome()">→ חיפוש אחר</button>
+    <div class="card" style="margin-top:14px">
+      <div class="dest-title-row">
+        <p class="why-title" style="margin:0">תוצאות עבור "${destQueryLabel}"</p>
+      </div>
+      ${!empty ? `
+        <div style="display:flex;gap:10px;margin-top:14px">
+          ${summaryBlock('לכיוון היעד', '🛫', outSummary)}
+          ${summaryBlock('בחזרה לישראל', '🛬', inSummary)}
+        </div>
+      ` : ''}
+    </div>
+    <div class="card" style="margin-top:14px">
+      <p class="dest-hint" style="margin-top:0">מדורגות מהכי אמינה להכי פחות אמינה, לפי אחוז הסיכוי לאיחור של 60+ דקות. דאטה אמיתי מהשבוע האחרון. טיסות המסומנות "קודשרינג" הן אותה טיסה פיזית הנמכרת תחת כמה מספרי/שמות חברות — לכן הן מוצגות כשורה אחת ולא כמה אפשרויות נפרדות.</p>
+      ${empty ? `
+        <p style="font-size:14px;color:var(--ink-soft);margin-top:18px">לא נמצאו טיסות ליעד הזה במדגם הנוכחי. נסו לכתוב את שם העיר באנגלית, או יעד אחר.</p>
+      ` : `
+        ${outbound.length ? `<div class="dest-section-title">🛫 טיסות ליעד (${outbound.length})</div>${outbound.map((f,i)=>rankRow(f,i+1,i===0,i===outbound.length-1 && outbound.length>1)).join('')}` : ''}
+        ${inbound.length ? `<div class="dest-section-title">🛬 טיסות חזרה (${inbound.length})</div>${inbound.map((f,i)=>rankRow(f,i+1,i===0,i===inbound.length-1 && inbound.length>1)).join('')}` : ''}
+      `}
+    </div>
+    <div class="card trust-box">
+      <p>הדירוג מבוסס על נתונים היסטוריים אמיתיים מהשבוע האחרון בלבד. עם עוד דאטה, הדירוג יהיה מדויק יותר.</p>
+    </div>
+  `;
+}
+
+function render() {
+  const app = document.getElementById('app');
+  if (view === 'home') app.innerHTML = renderHome();
+  else if (view === 'loading') app.innerHTML = renderLoading();
+  else if (view === 'notfound') app.innerHTML = renderNotFound();
+  else if (view === 'result') app.innerHTML = renderResult(currentFlight);
+  else if (view === 'destresult') app.innerHTML = renderDestinationResult();
+}
+
+function setDirection(d) { direction = d; render(); }
+function setSearchMode(m) { searchMode = m; render(); }
+function submitSearch() {
+  const v = document.getElementById('input-flight').value;
+  if (!v.trim()) return;
+  handleSearch(v, direction);
+}
+function submitDestSearch() {
+  const v = document.getElementById('input-dest').value;
+  if (!v.trim()) return;
+  destQueryLabel = v.trim();
+  destResults = searchByDestination(v);
+  view = 'destresult';
+  render();
+}
+function quickDestSearch(city) {
+  destQueryLabel = city;
+  destResults = searchByDestination(city);
+  view = 'destresult';
+  render();
+}
+function quickSearch(flightNumber, dir) {
+  direction = dir;
+  handleSearch(flightNumber, dir);
+}
+
+(async function boot() {
+  document.getElementById('app').innerHTML = `
+    <div class="loading"><div class="spinner"></div>Loading flight data...</div>
+  `;
+  await loadData();
+  if (dataLoadError) {
+    document.getElementById('app').innerHTML = `
+      <div class="not-found">
+        <p style="font-size:15px;color:var(--ink-soft)">Couldn't load flight data. Make sure flight_stats.json and route_groups.json are in the same folder as this page.</p>
+      </div>
+    `;
+    return;
+  }
+  render();
+})();
+</script>
+</body>
+</html>

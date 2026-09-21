@@ -259,6 +259,7 @@ let currentFlight = null;
 let direction = 'departure';
 let searchMode = 'number'; // 'number' | 'destination'
 let destResults = null;
+let destDirectionFilter = 'both';
 let destQueryLabel = '';
 
 function riskMeta(level) {
@@ -523,8 +524,8 @@ function homeStatsSection() {
       <div class="rank-row" onclick="showFlightDetail('meta_delayed', ${i})">
         <div class="rank-pos">${i+1}</div>
         <div class="rank-mid">
-          <div class="rank-airline">${primary.airline}</div>
-          <div class="rank-flight"><span class="flight-num-highlight">${primary.flightNumber}</span> · ${g.origin} ← ${g.destination}</div>
+          <div class="rank-airline">${primary.flightNumber}</div>
+          <div class="rank-flight">${primary.airline} · ${g.origin} ← ${g.destination}</div>
         </div>
         <div class="rank-pct" style="color:var(--red)">${pct}%</div>
       </div>
@@ -676,7 +677,6 @@ function renderFlightDetailModal(f, isSingleFlight) {
       <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-soft);font-size:13px">
         <span style="width:70px;color:var(--ink-faint)">${r.date}</span>
         <span style="width:60px">${r.scheduledTime}</span>
-        <span style="color:var(--ink-faint)">→</span>
         <span style="width:80px;color:${late ? 'var(--red)' : 'var(--ink)'};font-weight:${late?600:400}">${actual.time}${actual.dayOffset ? ` (${actual.dayOffset>0?'+':''}${actual.dayOffset} יום)` : ''}</span>
         <span style="color:var(--ink-faint);margin-right:auto">${r.delayMin>=0?'+':''}${r.delayMin} min</span>
       </div>
@@ -691,7 +691,7 @@ function renderFlightDetailModal(f, isSingleFlight) {
       <button onclick="closeFlightDetail()" style="border:none;background:none;font-size:20px;color:var(--ink-faint);cursor:pointer;line-height:1">×</button>
     </div>
     <div style="display:flex;gap:10px;font-size:11px;color:var(--ink-faint);padding:8px 0;border-bottom:1px solid var(--border);font-weight:600">
-      <span style="width:70px">תאריך</span><span style="width:60px">מתוכנן</span><span></span><span style="width:80px">בפועל</span>
+      <span style="width:70px">תאריך</span><span style="width:60px">מתוכנן</span><span style="width:80px">בפועל</span>
     </div>
     ${rows || `<p style="font-size:13px;color:var(--ink-soft)">אין עדיין נתוני היסטוריה זמינים לטיסה זו.</p>`}
   `;
@@ -773,12 +773,13 @@ async function submitReview(flightNumber, prefix) {
   btn.textContent = 'שליחת ביקורת';
 }
 
-function summaryBlock(label, icon, summary) {
+function summaryBlock(label, icon, summary, filterValue) {
   if (!summary) return '';
   const pct = Math.round(summary.rate * 100);
   const m = riskMeta(pct < 30 ? 'low' : pct < 60 ? 'medium' : 'high');
+  const isActive = destDirectionFilter === filterValue;
   return `
-    <div style="flex:1;text-align:center;padding:16px 10px;border-radius:14px;background:var(--bg)">
+    <div onclick="setDestFilter('${filterValue}')" style="flex:1;text-align:center;padding:16px 10px;border-radius:14px;background:var(--bg);cursor:pointer;border:2px solid ${isActive ? 'var(--brand)' : 'transparent'}">
       <div style="font-size:12px;color:var(--ink-faint);margin-bottom:6px">${icon} ${label}</div>
       <div style="font-size:32px;font-weight:700;color:var(${m.varFg})">${pct}%</div>
       <div style="font-size:11px;color:var(--ink-faint);margin-top:4px">מ-${summary.flightCount} טיסות · ${summary.samples} תצפיות</div>
@@ -786,10 +787,17 @@ function summaryBlock(label, icon, summary) {
   `;
 }
 
+function setDestFilter(value) {
+  destDirectionFilter = destDirectionFilter === value ? 'both' : value;
+  render();
+}
+
 function renderDestinationResult() {
   const { outbound, inbound, outboundTechStops, inboundTechStops } = destResults;
   const empty = outbound.length === 0 && inbound.length === 0;
-  const hasTechStops = outboundTechStops.length > 0 || inboundTechStops.length > 0;
+  const showOut = destDirectionFilter === 'both' || destDirectionFilter === 'outbound';
+  const showIn = destDirectionFilter === 'both' || destDirectionFilter === 'inbound';
+  const hasTechStops = (showOut && outboundTechStops.length > 0) || (showIn && inboundTechStops.length > 0);
   const outSummary = weightedSummary(outbound);
   const inSummary = weightedSummary(inbound);
   return `
@@ -800,9 +808,10 @@ function renderDestinationResult() {
       </div>
       ${!empty ? `
         <div style="display:flex;gap:10px;margin-top:14px">
-          ${summaryBlock('לכיוון היעד', '🛫', outSummary)}
-          ${summaryBlock('בחזרה לישראל', '🛬', inSummary)}
+          ${summaryBlock('לכיוון היעד', '🛫', outSummary, 'outbound')}
+          ${summaryBlock('בחזרה לישראל', '🛬', inSummary, 'inbound')}
         </div>
+        <p style="font-size:11.5px;color:var(--ink-faint);margin:10px 0 0;text-align:center">לחצו על אחת מהתיבות כדי לסנן רק לכיוון הזה</p>
       ` : ''}
     </div>
     <div class="card" style="margin-top:14px">
@@ -810,17 +819,17 @@ function renderDestinationResult() {
       ${empty && !hasTechStops ? `
         <p style="font-size:14px;color:var(--ink-soft);margin-top:18px">לא נמצאו טיסות ליעד הזה במדגם הנוכחי. נסו לכתוב את שם העיר באנגלית, או יעד אחר.</p>
       ` : `
-        ${outbound.length ? `<div class="dest-section-title">🛫 טיסות ליעד (${outbound.length})</div>${outbound.map((f,i)=>rankRow(f,i+1,i===0,i===outbound.length-1 && outbound.length>1,'outbound',i)).join('')}` : ''}
-        ${inbound.length ? `<div class="dest-section-title">🛬 טיסות חזרה (${inbound.length})</div>${inbound.map((f,i)=>rankRow(f,i+1,i===0,i===inbound.length-1 && inbound.length>1,'inbound',i)).join('')}` : ''}
+        ${showOut && outbound.length ? `<div class="dest-section-title">🛫 טיסות ליעד (${outbound.length})</div>${outbound.map((f,i)=>rankRow(f,i+1,i===0,i===outbound.length-1 && outbound.length>1,'outbound',i)).join('')}` : ''}
+        ${showIn && inbound.length ? `<div class="dest-section-title">🛬 טיסות חזרה (${inbound.length})</div>${inbound.map((f,i)=>rankRow(f,i+1,i===0,i===inbound.length-1 && inbound.length>1,'inbound',i)).join('')}` : ''}
       `}
     </div>
     ${hasTechStops ? `
     <div class="card" style="margin-top:14px">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-        <p class="why-title" style="margin:0">✈️🔄 עצירות ביניים ב${destQueryLabel} (${outboundTechStops.length + inboundTechStops.length})</p>
+        <p class="why-title" style="margin:0">✈️🔄 עצירות ביניים ב${destQueryLabel} (${(showOut?outboundTechStops.length:0) + (showIn?inboundTechStops.length:0)})</p>
       </div>
       <p class="dest-hint" style="margin-top:0">הטיסות האלה <strong>עוצרות</strong> ב${destQueryLabel} לצורך החלפת צוות אווירי (בשל המצב הביטחוני), אך לא זהו יעדן הסופי — הנוסעים ממשיכים איתן ליעד אחר. אין לנו נתוני עיכוב עבור המשך הדרך, ולכן הן לא כלולות בדירוג למעלה.</p>
-      ${[...outboundTechStops, ...inboundTechStops].map(g => `
+      ${[...(showOut?outboundTechStops:[]), ...(showIn?inboundTechStops:[])].map(g => `
         <div style="padding:10px 0;border-bottom:1px solid var(--border-soft);font-size:13px">
           <div style="font-weight:500">${g.aliases[0].airline} ${g.aliases[0].flightNumber}${g.aliases.length>1 ? ` (גם ${g.aliases.slice(1).map(a=>a.flightNumber).join(', ')})` : ''}</div>
           <div style="color:var(--ink-soft);margin-top:2px">${g.origin} ← ${g.destination} · ${g.technicalStopNote}</div>
@@ -858,12 +867,14 @@ function submitDestSearch() {
   if (!v.trim()) return;
   destQueryLabel = v.trim();
   destResults = searchByDestination(v);
+  destDirectionFilter = 'both';
   view = 'destresult';
   render();
 }
 function quickDestSearch(city) {
   destQueryLabel = city;
   destResults = searchByDestination(city);
+  destDirectionFilter = 'both';
   view = 'destresult';
   render();
 }

@@ -172,6 +172,8 @@
   .rank-mid { flex: 1; min-width: 0; }
   .rank-airline { font-size: 14px; font-weight: 500; }
   .rank-flight { font-size: 12px; color: var(--ink-faint); }
+  .flight-num-highlight { color: var(--ink); font-weight: 600; }
+  .info-dot { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; border-radius: 50%; background: var(--border-soft); color: var(--ink-faint); font-size: 10px; font-weight: 700; cursor: pointer; vertical-align: middle; }
   .rank-pct { font-size: 17px; font-weight: 700; flex-shrink: 0; }
   .rank-badge-mini { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 999px; flex-shrink: 0; }
   .dest-title-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
@@ -515,14 +517,14 @@ function homeStatsSection() {
         <div class="rank-pos">${i+1}</div>
         <div class="rank-mid">
           <div class="rank-airline">${primary.airline}</div>
-          <div class="rank-flight">${primary.flightNumber} · ${g.origin} ← ${g.destination}</div>
+          <div class="rank-flight"><span class="flight-num-highlight">${primary.flightNumber}</span> · ${g.origin} ← ${g.destination}</div>
         </div>
         <div class="rank-pct" style="color:var(--red)">${pct}%</div>
       </div>
     `;
   }).join('');
   const punctualRows = (META.mostPunctualAirlines || []).map((a, i) => `
-    <div class="rank-row" style="cursor:default">
+    <div class="rank-row" onclick="showAirlineDetail(${i})">
       <div class="rank-pos">${i+1}</div>
       <div class="rank-mid"><div class="rank-airline">${a.airline}</div></div>
       <div class="rank-pct" style="color:var(--green)">${Math.round(a.delayRate*100)}%</div>
@@ -536,7 +538,7 @@ function homeStatsSection() {
     </section>
     <section class="card" style="margin-top:18px">
       <p class="why-title">החברות הדייקניות ביותר</p>
-      <p class="dest-hint" style="margin-top:0">שיעור איחור נמוך ביותר, מבין חברות עם מספיק טיסות שנותחו.</p>
+      <p class="dest-hint" style="margin-top:0">שיעור איחור נמוך ביותר, מבין חברות עם מספיק טיסות שנותחו. לחצו על חברה כדי לראות אילו טיסות שלה נותחו.</p>
       ${punctualRows}
     </section>
   `;
@@ -548,19 +550,22 @@ function rankRow(g, pos, isBest, isWorst, dir, idx) {
   const primary = g.aliases[0];
   const others = g.aliases.slice(1);
   const aliasLine = g.isCodeshareGroup
-    ? `${primary.airline} (${primary.flightNumber}) · אותה טיסה נמכרת גם כ-${others.map(a => `${a.airline} ${a.flightNumber}`).join(', ')}`
-    : `${primary.flightNumber} · ${g.sampleSize} תצפיות · איחור ממוצע ${g.averageDelay} min`;
+    ? `<span class="flight-num-highlight">${primary.flightNumber}</span> · אותה טיסה נמכרת גם כ-${others.map(a => `<span class="flight-num-highlight">${a.flightNumber}</span> (${a.airline})`).join(', ')} · ${g.sampleSize} תצפיות · איחור ממוצע ${g.averageDelay} min`
+    : `<span class="flight-num-highlight">${primary.flightNumber}</span> · ${g.sampleSize} תצפיות · איחור ממוצע ${g.averageDelay} min`;
   const badge = isBest
     ? `<span class="tag-illustrative" style="background:var(--green-bg);color:var(--green);margin-right:4px">הכי אמינה</span>`
     : isWorst
     ? `<span class="tag-illustrative" style="background:var(--red-bg);color:var(--red);margin-right:4px">הכי הרבה איחורים</span>`
     : '';
+  const codeshareTag = g.isCodeshareGroup
+    ? ` <span class="tag-illustrative" style="margin-right:4px">קודשרינג</span><span class="info-dot" onclick="event.stopPropagation(); showCodeshareInfo();">?</span>`
+    : '';
   return `
     <div class="rank-row" onclick="showFlightDetail('${dir}', ${idx})">
       <div class="rank-pos">${pos}</div>
       <div class="rank-mid">
-        <div class="rank-airline">${primary.airline}${badge}${g.isCodeshareGroup ? ' <span class="tag-illustrative" style="margin-right:4px">קודשרינג</span>' : ''}</div>
-        <div class="rank-flight">${aliasLine}${g.isCodeshareGroup ? ` · ${g.sampleSize} תצפיות · איחור ממוצע ${g.averageDelay} min` : ''}</div>
+        <div class="rank-airline">${primary.airline}${badge}${codeshareTag}</div>
+        <div class="rank-flight">${aliasLine}</div>
       </div>
       <span class="rank-badge-mini" style="color:var(${m.varFg});background:var(${m.varBg})">${m.label}</span>
       <div class="rank-pct" style="color:var(${m.varFg})">${pct}%</div>
@@ -589,8 +594,59 @@ function addMinutesToTime(hhmm, delayMin) {
   return { time: `${hh}:${mm}`, dayOffset };
 }
 
+function showCodeshareInfo() {
+  document.getElementById('flight-detail-content').innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+      <h3 style="margin:0">מה זה קודשרינג?</h3>
+      <button onclick="closeFlightDetail()" style="border:none;background:none;font-size:20px;color:var(--ink-faint);cursor:pointer;line-height:1">×</button>
+    </div>
+    <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0">
+      לפעמים כמה חברות תעופה מוכרות כרטיסים על <strong>אותה טיסה פיזית בדיוק</strong> — אותו מטוס, אותו טייס, אותה שעת המראה — כל אחת תחת מספר טיסה משלה. זה נפוץ כדי לאפשר צבירת נקודות/סטטוס וחיבורי טיסות נוחים יותר.
+    </p>
+    <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:10px 0 0">
+      במעשה, זה אומר שכל מספרי הטיסה המקושרים <strong>תמיד יאחרו באותה מידה בדיוק</strong> — הרי מדובר באותה טיסה עצמה. לכן אנחנו מציגים אותן כשורה אחת במקום להראות אותן כאילו הן אפשרויות שונות עם רמות אמינות שונות.
+    </p>
+  `;
+  document.getElementById('flight-detail-modal').style.display = 'flex';
+}
+
+let currentAirlineFlights = [];
+
+function showAirlineDetail(idx) {
+  const airline = META.mostPunctualAirlines[idx].airline;
+  currentAirlineFlights = ROUTE_GROUPS.filter(g => g.aliases.some(a => a.airline === airline))
+    .sort((a, b) => a.delayProbability60 - b.delayProbability60);
+  const rows = currentAirlineFlights.map((g, i) => {
+    const alias = g.aliases.find(a => a.airline === airline) || g.aliases[0];
+    const m = riskMeta(g.riskLevel);
+    const pct = Math.round(g.delayProbability60 * 100);
+    return `
+      <div class="rank-row" onclick="showFlightDetail('airline_list', ${i})">
+        <div class="rank-pos">${i+1}</div>
+        <div class="rank-mid">
+          <div class="rank-airline"><span class="flight-num-highlight">${alias.flightNumber}</span></div>
+          <div class="rank-flight">${g.origin} ← ${g.destination} · ${g.sampleSize} תצפיות</div>
+        </div>
+        <span class="rank-badge-mini" style="color:var(${m.varFg});background:var(${m.varBg})">${m.label}</span>
+        <div class="rank-pct" style="color:var(${m.varFg})">${pct}%</div>
+      </div>
+    `;
+  }).join('');
+  document.getElementById('flight-detail-content').innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+      <h3 style="margin:0">${airline}</h3>
+      <button onclick="closeFlightDetail()" style="border:none;background:none;font-size:20px;color:var(--ink-faint);cursor:pointer;line-height:1">×</button>
+    </div>
+    <p style="font-size:12.5px;color:var(--ink-faint);margin:0 0 10px">${currentAirlineFlights.length} טיסות נותחו · לחצו על טיסה לפרטים נוספים</p>
+    ${rows || `<p style="font-size:13px;color:var(--ink-soft)">לא נמצאו טיסות.</p>`}
+  `;
+  document.getElementById('flight-detail-modal').style.display = 'flex';
+}
+
 function showFlightDetail(dir, idx) {
-  const group = dir === 'meta_delayed' ? META.mostDelayedFlights[idx] : destResults[dir][idx];
+  const group = dir === 'meta_delayed' ? META.mostDelayedFlights[idx]
+    : dir === 'airline_list' ? currentAirlineFlights[idx]
+    : destResults[dir][idx];
   renderFlightDetailModal(group);
   document.getElementById('flight-detail-modal').style.display = 'flex';
 }

@@ -296,14 +296,15 @@ async function lookupFlight(flightNumberRaw) {
 
 function searchByDestination(query) {
   const needle = normalizeDestinationQuery(query);
-  if (!needle) return { outbound: [], inbound: [] };
-  const outbound = ROUTE_GROUPS
-    .filter(g => g.direction === 'departure' && g.destination.toLowerCase().includes(needle))
-    .sort((a, b) => a.delayProbability60 - b.delayProbability60);
-  const inbound = ROUTE_GROUPS
-    .filter(g => g.direction === 'arrival' && g.origin.toLowerCase().includes(needle))
-    .sort((a, b) => a.delayProbability60 - b.delayProbability60);
-  return { outbound, inbound };
+  if (!needle) return { outbound: [], inbound: [], outboundTechStops: [], inboundTechStops: [] };
+  const matchesOut = g => g.direction === 'departure' && g.destination.toLowerCase().includes(needle);
+  const matchesIn = g => g.direction === 'arrival' && g.origin.toLowerCase().includes(needle);
+  const byProb = (a, b) => a.delayProbability60 - b.delayProbability60;
+  const outbound = ROUTE_GROUPS.filter(g => matchesOut(g) && !g.isTechnicalStop).sort(byProb);
+  const inbound = ROUTE_GROUPS.filter(g => matchesIn(g) && !g.isTechnicalStop).sort(byProb);
+  const outboundTechStops = ROUTE_GROUPS.filter(g => matchesOut(g) && g.isTechnicalStop);
+  const inboundTechStops = ROUTE_GROUPS.filter(g => matchesIn(g) && g.isTechnicalStop);
+  return { outbound, inbound, outboundTechStops, inboundTechStops };
 }
 
 function goHome() {
@@ -647,8 +648,9 @@ function summaryBlock(label, icon, summary) {
 }
 
 function renderDestinationResult() {
-  const { outbound, inbound } = destResults;
+  const { outbound, inbound, outboundTechStops, inboundTechStops } = destResults;
   const empty = outbound.length === 0 && inbound.length === 0;
+  const hasTechStops = outboundTechStops.length > 0 || inboundTechStops.length > 0;
   const outSummary = weightedSummary(outbound);
   const inSummary = weightedSummary(inbound);
   return `
@@ -666,13 +668,27 @@ function renderDestinationResult() {
     </div>
     <div class="card" style="margin-top:14px">
       <p class="dest-hint" style="margin-top:0">מדורגות מהכי אמינה להכי פחות אמינה, לפי אחוז הסיכוי לאיחור של 60+ דקות. דאטה אמיתי מהשבוע האחרון. טיסות המסומנות "קודשרינג" הן אותה טיסה פיזית הנמכרת תחת כמה מספרי/שמות חברות — לכן הן מוצגות כשורה אחת ולא כמה אפשרויות נפרדות.</p>
-      ${empty ? `
+      ${empty && !hasTechStops ? `
         <p style="font-size:14px;color:var(--ink-soft);margin-top:18px">לא נמצאו טיסות ליעד הזה במדגם הנוכחי. נסו לכתוב את שם העיר באנגלית, או יעד אחר.</p>
       ` : `
         ${outbound.length ? `<div class="dest-section-title">🛫 טיסות ליעד (${outbound.length})</div>${outbound.map((f,i)=>rankRow(f,i+1,i===0,i===outbound.length-1 && outbound.length>1,'outbound',i)).join('')}` : ''}
         ${inbound.length ? `<div class="dest-section-title">🛬 טיסות חזרה (${inbound.length})</div>${inbound.map((f,i)=>rankRow(f,i+1,i===0,i===inbound.length-1 && inbound.length>1,'inbound',i)).join('')}` : ''}
       `}
     </div>
+    ${hasTechStops ? `
+    <div class="card" style="margin-top:14px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+        <p class="why-title" style="margin:0">✈️🔄 עצירות ביניים ב${destQueryLabel} (${outboundTechStops.length + inboundTechStops.length})</p>
+      </div>
+      <p class="dest-hint" style="margin-top:0">הטיסות האלה <strong>עוצרות</strong> ב${destQueryLabel} לצורך החלפת צוות אווירי (בשל המצב הביטחוני), אך לא זהו יעדן הסופי — הנוסעים ממשיכים איתן ליעד אחר. אין לנו נתוני עיכוב עבור המשך הדרך, ולכן הן לא כלולות בדירוג למעלה.</p>
+      ${[...outboundTechStops, ...inboundTechStops].map(g => `
+        <div style="padding:10px 0;border-bottom:1px solid var(--border-soft);font-size:13px">
+          <div style="font-weight:500">${g.aliases[0].airline} ${g.aliases[0].flightNumber}${g.aliases.length>1 ? ` (גם ${g.aliases.slice(1).map(a=>a.flightNumber).join(', ')})` : ''}</div>
+          <div style="color:var(--ink-soft);margin-top:2px">${g.origin} ← ${g.destination} · ${g.technicalStopNote}</div>
+        </div>
+      `).join('')}
+    </div>
+    ` : ''}
     <div class="card trust-box">
       <p>הדירוג מבוסס על נתונים היסטוריים אמיתיים מהשבוע האחרון בלבד. עם עוד דאטה, הדירוג יהיה מדויק יותר.</p>
     </div>

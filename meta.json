@@ -1,1 +1,327 @@
-{"totalScanned":5991,"totalFlightsAnalyzed":1455,"lastUpdated":"2026-09-23","mostPunctualAirlines":[{"airline":"Etihad Airways","delayRate":0},{"airline":"Ethiopian Airlines","delayRate":0},{"airline":"Emirates","delayRate":0.025},{"airline":"Swiss Int`L Airlines","delayRate":0.031},{"airline":"Air Baltic","delayRate":0.033}],"mostDelayedFlights":[{"direction":"departure","origin":"Tel Aviv (TLV)","destination":"Milan-Malpensa","scheduledTime":"18:55","isCodeshareGroup":false,"aliases":[{"airline":"Wizz Air Malta","flightNumber":"W46404"}],"sampleSize":7,"averageDelay":92.7,"delayRate60":0.857,"delayProbability60":0.505,"riskLevel":"medium","recentFlights":[{"date":"2026-09-22","delayMin":98,"scheduledTime":"18:55"},{"date":"2026-09-19","delayMin":42,"scheduledTime":"18:55"},{"date":"2026-09-18","delayMin":96,"scheduledTime":"18:55"},{"date":"2026-09-17","delayMin":68,"scheduledTime":"18:55"},{"date":"2026-09-16","delayMin":152,"scheduledTime":"18:55"},{"date":"2026-09-15","delayMin":103,"scheduledTime":"18:55"},{"date":"2026-09-14","delayMin":90,"scheduledTime":"18:55"}],"isTechnicalStop":false,"technicalStopNote":null,"trueDestination":null},{"direction":"departure","origin":"Tel Aviv (TLV)","destination":"Bergamo","scheduledTime":"14:45","isCodeshareGroup":false,"aliases":[{"airline":"Blue Bird Airways","flightNumber":"BZ154"}],"sampleSize":8,"averageDelay":86.1,"delayRate60":0.75,"delayProbability60":0.474,"riskLevel":"medium","recentFlights":[{"date":"2026-09-22","delayMin":95,"scheduledTime":"14:45"},{"date":"2026-09-20","delayMin":19,"scheduledTime":"12:55"},{"date":"2026-09-19","delayMin":135,"scheduledTime":"14:45"},{"date":"2026-09-18","delayMin":104,"scheduledTime":"14:00"},{"date":"2026-09-17","delayMin":37,"scheduledTime":"15:10"},{"date":"2026-09-16","delayMin":79,"scheduledTime":"15:10"},{"date":"2026-09-15","delayMin":113,"scheduledTime":"14:45"},{"date":"2026-09-14","delayMin":107,"scheduledTime":"15:00"}],"isTechnicalStop":false,"technicalStopNote":null,"trueDestination":null},{"direction":"departure","origin":"Tel Aviv (TLV)","destination":"Athens","scheduledTime":"19:55","isCodeshareGroup":true,"aliases":[{"airline":"Aegean Airlines","flightNumber":"A3927"},{"airline":"Air Serbia","flightNumber":"JU7614"},{"airline":"Emirates","flightNumber":"EK4978"}],"sampleSize":6,"averageDelay":79.8,"delayRate60":0.833,"delayProbability60":0.469,"riskLevel":"medium","recentFlights":[{"date":"2026-09-22","delayMin":76,"scheduledTime":"19:55"},{"date":"2026-09-19","delayMin":45,"scheduledTime":"19:55"},{"date":"2026-09-17","delayMin":114,"scheduledTime":"19:55"},{"date":"2026-09-16","delayMin":75,"scheduledTime":"19:55"},{"date":"2026-09-15","delayMin":100,"scheduledTime":"19:55"},{"date":"2026-09-14","delayMin":69,"scheduledTime":"19:55"}],"isTechnicalStop":false,"technicalStopNote":null,"trueDestination":null},{"direction":"departure","origin":"Tel Aviv (TLV)","destination":"Chisinau","scheduledTime":"20:00","isCodeshareGroup":false,"aliases":[{"airline":"Sky Up Nistru","flightNumber":"4V518"}],"sampleSize":6,"averageDelay":105.7,"delayRate60":0.833,"delayProbability60":0.469,"riskLevel":"medium","recentFlights":[{"date":"2026-09-22","delayMin":119,"scheduledTime":"20:00"},{"date":"2026-09-18","delayMin":97,"scheduledTime":"19:10"},{"date":"2026-09-17","delayMin":64,"scheduledTime":"20:20"},{"date":"2026-09-16","delayMin":174,"scheduledTime":"11:10"},{"date":"2026-09-15","delayMin":121,"scheduledTime":"20:00"},{"date":"2026-09-14","delayMin":59,"scheduledTime":"20:25"}],"isTechnicalStop":false,"technicalStopNote":null,"trueDestination":null},{"direction":"departure","origin":"Tel Aviv (TLV)","destination":"Barcelona","scheduledTime":"13:35","isCodeshareGroup":false,"aliases":[{"airline":"Blue Bird Airways","flightNumber":"BZ252"}],"sampleSize":8,"averageDelay":105.1,"delayRate60":0.75,"delayProbability60":0.465,"riskLevel":"medium","recentFlights":[{"date":"2026-09-22","delayMin":105,"scheduledTime":"14:25"},{"date":"2026-09-20","delayMin":41,"scheduledTime":"12:55"},{"date":"2026-09-19","delayMin":120,"scheduledTime":"13:30"},{"date":"2026-09-18","delayMin":124,"scheduledTime":"14:10"},{"date":"2026-09-17","delayMin":201,"scheduledTime":"14:20"},{"date":"2026-09-16","delayMin":122,"scheduledTime":"13:35"},{"date":"2026-09-15","delayMin":72,"scheduledTime":"14:30"},{"date":"2026-09-14","delayMin":56,"scheduledTime":"13:35"}],"isTechnicalStop":false,"technicalStopNote":null,"trueDestination":null}]}
+{
+  "totalScanned": 5991,
+  "totalFlightsAnalyzed": 1455,
+  "lastUpdated": "2026-09-23",
+  "mostPunctualAirlines": [
+    {
+      "airline": "Etihad Airways",
+      "delayRate": 0.0
+    },
+    {
+      "airline": "Ethiopian Airlines",
+      "delayRate": 0.0
+    },
+    {
+      "airline": "Emirates",
+      "delayRate": 0.025
+    },
+    {
+      "airline": "Swiss Int`L Airlines",
+      "delayRate": 0.031
+    },
+    {
+      "airline": "Air Baltic",
+      "delayRate": 0.033
+    }
+  ],
+  "mostDelayedFlights": [
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Milan-Malpensa",
+      "scheduledTime": "18:55",
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Wizz Air Malta",
+          "flightNumber": "W46404"
+        }
+      ],
+      "sampleSize": 7,
+      "averageDelay": 92.7,
+      "delayRate60": 0.857,
+      "delayProbability60": 0.505,
+      "riskLevel": "medium",
+      "recentFlights": [
+        {
+          "date": "2026-09-22",
+          "delayMin": 98.0,
+          "scheduledTime": "18:55"
+        },
+        {
+          "date": "2026-09-19",
+          "delayMin": 42.0,
+          "scheduledTime": "18:55"
+        },
+        {
+          "date": "2026-09-18",
+          "delayMin": 96.0,
+          "scheduledTime": "18:55"
+        },
+        {
+          "date": "2026-09-17",
+          "delayMin": 68.0,
+          "scheduledTime": "18:55"
+        },
+        {
+          "date": "2026-09-16",
+          "delayMin": 152.0,
+          "scheduledTime": "18:55"
+        },
+        {
+          "date": "2026-09-15",
+          "delayMin": 103.0,
+          "scheduledTime": "18:55"
+        },
+        {
+          "date": "2026-09-14",
+          "delayMin": 90.0,
+          "scheduledTime": "18:55"
+        }
+      ],
+      "isTechnicalStop": false,
+      "technicalStopNote": null,
+      "trueDestination": null
+    },
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Bergamo",
+      "scheduledTime": "14:45",
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Blue Bird Airways",
+          "flightNumber": "BZ154"
+        }
+      ],
+      "sampleSize": 8,
+      "averageDelay": 86.1,
+      "delayRate60": 0.75,
+      "delayProbability60": 0.474,
+      "riskLevel": "medium",
+      "recentFlights": [
+        {
+          "date": "2026-09-22",
+          "delayMin": 95.0,
+          "scheduledTime": "14:45"
+        },
+        {
+          "date": "2026-09-20",
+          "delayMin": 19.0,
+          "scheduledTime": "12:55"
+        },
+        {
+          "date": "2026-09-19",
+          "delayMin": 135.0,
+          "scheduledTime": "14:45"
+        },
+        {
+          "date": "2026-09-18",
+          "delayMin": 104.0,
+          "scheduledTime": "14:00"
+        },
+        {
+          "date": "2026-09-17",
+          "delayMin": 37.0,
+          "scheduledTime": "15:10"
+        },
+        {
+          "date": "2026-09-16",
+          "delayMin": 79.0,
+          "scheduledTime": "15:10"
+        },
+        {
+          "date": "2026-09-15",
+          "delayMin": 113.0,
+          "scheduledTime": "14:45"
+        },
+        {
+          "date": "2026-09-14",
+          "delayMin": 107.0,
+          "scheduledTime": "15:00"
+        }
+      ],
+      "isTechnicalStop": false,
+      "technicalStopNote": null,
+      "trueDestination": null
+    },
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Athens",
+      "scheduledTime": "19:55",
+      "isCodeshareGroup": true,
+      "aliases": [
+        {
+          "airline": "Aegean Airlines",
+          "flightNumber": "A3927"
+        },
+        {
+          "airline": "Air Serbia",
+          "flightNumber": "JU7614"
+        },
+        {
+          "airline": "Emirates",
+          "flightNumber": "EK4978"
+        }
+      ],
+      "sampleSize": 6,
+      "averageDelay": 79.8,
+      "delayRate60": 0.833,
+      "delayProbability60": 0.469,
+      "riskLevel": "medium",
+      "recentFlights": [
+        {
+          "date": "2026-09-22",
+          "delayMin": 76.0,
+          "scheduledTime": "19:55"
+        },
+        {
+          "date": "2026-09-19",
+          "delayMin": 45.0,
+          "scheduledTime": "19:55"
+        },
+        {
+          "date": "2026-09-17",
+          "delayMin": 114.0,
+          "scheduledTime": "19:55"
+        },
+        {
+          "date": "2026-09-16",
+          "delayMin": 75.0,
+          "scheduledTime": "19:55"
+        },
+        {
+          "date": "2026-09-15",
+          "delayMin": 100.0,
+          "scheduledTime": "19:55"
+        },
+        {
+          "date": "2026-09-14",
+          "delayMin": 69.0,
+          "scheduledTime": "19:55"
+        }
+      ],
+      "isTechnicalStop": false,
+      "technicalStopNote": null,
+      "trueDestination": null
+    },
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Chisinau",
+      "scheduledTime": "20:00",
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Sky Up Nistru",
+          "flightNumber": "4V518"
+        }
+      ],
+      "sampleSize": 6,
+      "averageDelay": 105.7,
+      "delayRate60": 0.833,
+      "delayProbability60": 0.469,
+      "riskLevel": "medium",
+      "recentFlights": [
+        {
+          "date": "2026-09-22",
+          "delayMin": 119.0,
+          "scheduledTime": "20:00"
+        },
+        {
+          "date": "2026-09-18",
+          "delayMin": 97.0,
+          "scheduledTime": "19:10"
+        },
+        {
+          "date": "2026-09-17",
+          "delayMin": 64.0,
+          "scheduledTime": "20:20"
+        },
+        {
+          "date": "2026-09-16",
+          "delayMin": 174.0,
+          "scheduledTime": "11:10"
+        },
+        {
+          "date": "2026-09-15",
+          "delayMin": 121.0,
+          "scheduledTime": "20:00"
+        },
+        {
+          "date": "2026-09-14",
+          "delayMin": 59.0,
+          "scheduledTime": "20:25"
+        }
+      ],
+      "isTechnicalStop": false,
+      "technicalStopNote": null,
+      "trueDestination": null
+    },
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Barcelona",
+      "scheduledTime": "13:35",
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Blue Bird Airways",
+          "flightNumber": "BZ252"
+        }
+      ],
+      "sampleSize": 8,
+      "averageDelay": 105.1,
+      "delayRate60": 0.75,
+      "delayProbability60": 0.465,
+      "riskLevel": "medium",
+      "recentFlights": [
+        {
+          "date": "2026-09-22",
+          "delayMin": 105.0,
+          "scheduledTime": "14:25"
+        },
+        {
+          "date": "2026-09-20",
+          "delayMin": 41.0,
+          "scheduledTime": "12:55"
+        },
+        {
+          "date": "2026-09-19",
+          "delayMin": 120.0,
+          "scheduledTime": "13:30"
+        },
+        {
+          "date": "2026-09-18",
+          "delayMin": 124.0,
+          "scheduledTime": "14:10"
+        },
+        {
+          "date": "2026-09-17",
+          "delayMin": 201.0,
+          "scheduledTime": "14:20"
+        },
+        {
+          "date": "2026-09-16",
+          "delayMin": 122.0,
+          "scheduledTime": "13:35"
+        },
+        {
+          "date": "2026-09-15",
+          "delayMin": 72.0,
+          "scheduledTime": "14:30"
+        },
+        {
+          "date": "2026-09-14",
+          "delayMin": 56.0,
+          "scheduledTime": "13:35"
+        }
+      ],
+      "isTechnicalStop": false,
+      "technicalStopNote": null,
+      "trueDestination": null
+    }
+  ]
+}

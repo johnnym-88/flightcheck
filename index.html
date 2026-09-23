@@ -645,10 +645,10 @@ let currentAirlineFlights = [];
 
 function showAirlineDetail(idx) {
   const airline = META.mostPunctualAirlines[idx].airline;
-  currentAirlineFlights = ROUTE_GROUPS.filter(g => g.aliases.some(a => a.airline === airline))
+  currentAirlineFlights = ROUTE_GROUPS.filter(g => g.aliases[0].airline === airline)
     .sort((a, b) => a.delayProbability60 - b.delayProbability60);
   const rows = currentAirlineFlights.map((g, i) => {
-    const alias = g.aliases.find(a => a.airline === airline) || g.aliases[0];
+    const alias = g.aliases[0];
     const m = riskMeta(g.riskLevel);
     const pct = Math.round(g.delayProbability60 * 100);
     return `

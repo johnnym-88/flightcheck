@@ -7512,19 +7512,19 @@
     "aliases": [
       {
         "airline": "Emirates",
-        "flightNumber": "EK2369"
-      },
-      {
-        "airline": "Emirates",
         "flightNumber": "EK2120"
       },
       {
-        "airline": "Flydubai",
-        "flightNumber": "FZ1549"
+        "airline": "Emirates",
+        "flightNumber": "EK2369"
       },
       {
         "airline": "Flydubai",
         "flightNumber": "FZ1073"
+      },
+      {
+        "airline": "Flydubai",
+        "flightNumber": "FZ1549"
       }
     ],
     "sampleSize": 17,
@@ -9022,11 +9022,11 @@
     "aliases": [
       {
         "airline": "Aegean Airlines",
-        "flightNumber": "A3458"
+        "flightNumber": "A3456"
       },
       {
         "airline": "Aegean Airlines",
-        "flightNumber": "A3456"
+        "flightNumber": "A3458"
       }
     ],
     "sampleSize": 5,
@@ -24448,11 +24448,11 @@
       },
       {
         "airline": "LOT Polish Airlines",
-        "flightNumber": "LO5258"
+        "flightNumber": "LO5252"
       },
       {
         "airline": "LOT Polish Airlines",
-        "flightNumber": "LO5252"
+        "flightNumber": "LO5258"
       },
       {
         "airline": "LOT Polish Airlines",
@@ -25121,11 +25121,11 @@
       },
       {
         "airline": "El Al Israel Airlines",
-        "flightNumber": "LY9615"
+        "flightNumber": "LY9601"
       },
       {
         "airline": "El Al Israel Airlines",
-        "flightNumber": "LY9601"
+        "flightNumber": "LY9615"
       },
       {
         "airline": "Srilanka Airlines",
@@ -26269,11 +26269,11 @@
       },
       {
         "airline": "Israir Airlines",
-        "flightNumber": "6H951"
+        "flightNumber": "6H569"
       },
       {
         "airline": "Israir Airlines",
-        "flightNumber": "6H569"
+        "flightNumber": "6H951"
       }
     ],
     "sampleSize": 10,
@@ -33022,11 +33022,11 @@
     "aliases": [
       {
         "airline": "Blue Bird Airways",
-        "flightNumber": "BZ752"
+        "flightNumber": "BZ744"
       },
       {
         "airline": "Blue Bird Airways",
-        "flightNumber": "BZ744"
+        "flightNumber": "BZ752"
       }
     ],
     "sampleSize": 9,
@@ -37868,11 +37868,11 @@
     "aliases": [
       {
         "airline": "El Al Israel Airlines",
-        "flightNumber": "LY387"
+        "flightNumber": "LY281"
       },
       {
         "airline": "El Al Israel Airlines",
-        "flightNumber": "LY281"
+        "flightNumber": "LY387"
       },
       {
         "airline": "Air Portugal",

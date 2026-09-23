@@ -343,7 +343,7 @@ function renderHome() {
       <p class="eyebrow">FLIGHT DELAY PREDICTION</p>
       <h1 class="headline">האם אפשר לסמוך על הטיסה הזו?</h1>
       <p class="sub">בדקו את הסיכוי שהטיסה שלכם תאחר ב-60 דקות ומעלה — לפני שמזמינים, או לפני שיוצאים לשדה.</p>
-      ${META ? `<p style="font-size:12.5px;color:var(--ink-faint);margin-top:10px">📡 ${META.totalScanned.toLocaleString()} טיסות נסרקו עד כה במנוע שלנו</p>` : ''}
+      ${META ? `<p style="font-size:12.5px;color:var(--ink-faint);margin-top:10px">📡 ${META.totalScanned.toLocaleString()} טיסות נסרקו עד כה במנוע שלנו · עודכן לאחרונה: ${META.lastUpdated}</p>` : ''}
     </section>
     <section id="search-card" class="card">
       <div class="toggle">
@@ -531,6 +531,22 @@ function homeStatsSection() {
       </div>
     `;
   }).join('');
+  const recent24hRows = (META.mostDelayedLast24h || []).map((e, i) => {
+    const primary = e.aliases[0];
+    const codeshareTag = e.isCodeshareGroup
+      ? ` <span class="tag-illustrative" style="margin-right:4px">קודשרינג</span>`
+      : '';
+    return `
+      <div class="rank-row" style="cursor:default">
+        <div class="rank-pos">${i+1}</div>
+        <div class="rank-mid">
+          <div class="rank-airline">${primary.flightNumber}${codeshareTag}</div>
+          <div class="rank-flight">${primary.airline} · ${e.origin} ← ${e.destination} · ${e.date} ${e.scheduledTime}</div>
+        </div>
+        <div class="rank-pct" style="color:var(--red)">${Math.round(e.delayMin)} min</div>
+      </div>
+    `;
+  }).join('');
   const punctualRows = (META.mostPunctualAirlines || []).map((a, i) => `
     <div class="rank-row" onclick="showAirlineDetail(${i})">
       <div class="rank-pos">${i+1}</div>
@@ -539,7 +555,14 @@ function homeStatsSection() {
     </div>
   `).join('');
   return `
+    ${recent24hRows ? `
     <section class="card" style="margin-top:24px">
+      <p class="why-title">5 הטיסות עם הכי הרבה איחורים ב-24 השעות האחרונות</p>
+      <p class="dest-hint" style="margin-top:0">איחור בפועל, לפי אירועים אחרונים ממש (לא ממוצע היסטורי).</p>
+      ${recent24hRows}
+    </section>
+    ` : ''}
+    <section class="card" style="margin-top:18px">
       <p class="why-title">5 הטיסות עם הכי הרבה איחורים</p>
       <p class="dest-hint" style="margin-top:0">לפי אחוז הסיכוי לאיחור של 60+ דקות, מבין טיסות עם מדגם מספק.</p>
       ${delayedRows}

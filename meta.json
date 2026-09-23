@@ -1,7 +1,7 @@
 {
   "totalScanned": 5991,
   "totalFlightsAnalyzed": 1455,
-  "lastUpdated": "2026-09-23",
+  "lastUpdated": "2026-09-23 13:01",
   "mostPunctualAirlines": [
     {
       "airline": "Etihad Airways",
@@ -322,6 +322,83 @@
       "isTechnicalStop": false,
       "technicalStopNote": null,
       "trueDestination": null
+    }
+  ],
+  "mostDelayedLast24h": [
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Zanzibar",
+      "scheduledTime": "14:00",
+      "date": "2026-09-22",
+      "delayMin": 348.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Arkia Israeli Airlines",
+          "flightNumber": "IZ621"
+        }
+      ]
+    },
+    {
+      "direction": "arrival",
+      "origin": "Kos",
+      "destination": "Tel Aviv (TLV)",
+      "scheduledTime": "11:55",
+      "date": "2026-09-22",
+      "delayMin": 327.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Blue Bird Airways",
+          "flightNumber": "BZ801"
+        }
+      ]
+    },
+    {
+      "direction": "arrival",
+      "origin": "Vilnius Intl",
+      "destination": "Tel Aviv (TLV)",
+      "scheduledTime": "04:25",
+      "date": "2026-09-23",
+      "delayMin": 316.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Israir Airlines",
+          "flightNumber": "6H824"
+        }
+      ]
+    },
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Rhodes-Paradisi",
+      "scheduledTime": "14:25",
+      "date": "2026-09-22",
+      "delayMin": 300.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Arkia Israeli Airlines",
+          "flightNumber": "IZ073"
+        }
+      ]
+    },
+    {
+      "direction": "arrival",
+      "origin": "Paphos",
+      "destination": "Tel Aviv (TLV)",
+      "scheduledTime": "21:55",
+      "date": "2026-09-22",
+      "delayMin": 299.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Israir Airlines",
+          "flightNumber": "6H946"
+        }
+      ]
     }
   ]
 }

@@ -537,7 +537,7 @@ function homeStatsSection() {
       ? ` <span class="tag-illustrative" style="margin-right:4px">קודשרינג</span>`
       : '';
     return `
-      <div class="rank-row" style="cursor:default">
+      <div class="rank-row" onclick="showFlightDetail('recent24h', ${i})">
         <div class="rank-pos">${i+1}</div>
         <div class="rank-mid">
           <div class="rank-airline">${primary.flightNumber}${codeshareTag}</div>
@@ -675,11 +675,41 @@ function showAirlineDetail(idx) {
 }
 
 function showFlightDetail(dir, idx) {
+  if (dir === 'recent24h') {
+    renderSingleEventModal(META.mostDelayedLast24h[idx]);
+    document.getElementById('flight-detail-modal').style.display = 'flex';
+    return;
+  }
   const group = dir === 'meta_delayed' ? META.mostDelayedFlights[idx]
     : dir === 'airline_list' ? currentAirlineFlights[idx]
     : destResults[dir][idx];
   renderFlightDetailModal(group);
   document.getElementById('flight-detail-modal').style.display = 'flex';
+}
+
+function renderSingleEventModal(e) {
+  const primary = e.aliases[0];
+  const actual = addMinutesToTime(e.scheduledTime, e.delayMin);
+  const late = e.delayMin >= 60;
+  document.getElementById('flight-detail-content').innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+      <div>
+        <h3 style="margin:0">${primary.airline} ${primary.flightNumber}</h3>
+        <p style="margin:2px 0 0;font-size:13px;color:var(--ink-soft)">${e.origin} ← ${e.destination}</p>
+      </div>
+      <button onclick="closeFlightDetail()" style="border:none;background:none;font-size:20px;color:var(--ink-faint);cursor:pointer;line-height:1">×</button>
+    </div>
+    <div style="display:flex;gap:10px;font-size:11px;color:var(--ink-faint);padding:8px 0;border-bottom:1px solid var(--border);font-weight:600">
+      <span style="width:70px">תאריך</span><span style="width:60px">מתוכנן</span><span style="width:80px">בפועל</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 0;font-size:13px">
+      <span style="width:70px;color:var(--ink-faint)">${e.date}</span>
+      <span style="width:60px">${e.scheduledTime}</span>
+      <span style="width:80px;color:${late ? 'var(--red)' : 'var(--ink)'};font-weight:600">${actual.time}${actual.dayOffset ? ` (${actual.dayOffset>0?'+':''}${actual.dayOffset} יום)` : ''}</span>
+      <span style="color:var(--ink-faint);margin-right:auto">${e.delayMin>=0?'+':''}${Math.round(e.delayMin)} min</span>
+    </div>
+    ${e.isCodeshareGroup ? `<p style="font-size:12px;color:var(--ink-faint);margin-top:10px">קודשרינג: גם ${e.aliases.slice(1).map(a=>`${a.airline} ${a.flightNumber}`).join(', ')}</p>` : ''}
+  `;
 }
 
 function showFlightDetailForCurrent() {

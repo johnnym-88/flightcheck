@@ -456,7 +456,7 @@ function renderResult(f) {
         <div class="flight-title">${icon(f.direction)} ${f.flightNumber} <span class="flight-airline">${f.airline}</span></div>
         <span class="direction-tag">${isDep ? 'המראה' : 'נחיתה'}</span>
       </div>
-      <div class="route">${f.origin} <span class="arrow">←</span> ${f.destination}</div>
+      <div class="route">${f.origin} <span class="arrow">→</span> ${f.destination}</div>
       <div class="sched">דאטה אמיתי מתוך ${f.sampleSize} תצפיות בשבוע האחרון</div>
     </div>
 
@@ -545,7 +545,7 @@ function homeStatsSection() {
         <div class="rank-pos">${i+1}</div>
         <div class="rank-mid">
           <div class="rank-airline">${primary.flightNumber}</div>
-          <div class="rank-flight">${primary.airline} · ${g.origin} ← ${g.destination}</div>
+          <div class="rank-flight">${primary.airline} · ${g.origin} → ${g.destination}</div>
         </div>
         <div class="rank-pct" style="color:var(--red)">${pct}%</div>
       </div>
@@ -564,7 +564,7 @@ function homeStatsSection() {
         <div class="rank-pos">${i+1}</div>
         <div class="rank-mid">
           <div class="rank-airline">${primary.flightNumber}${codeshareTag}</div>
-          <div class="rank-flight">${primary.airline} · ${e.origin} ← ${e.destination} · ${e.date} ${e.scheduledTime}</div>
+          <div class="rank-flight">${primary.airline} · ${e.origin} → ${e.destination} · ${e.date} ${e.scheduledTime}</div>
         </div>
         <div class="rank-pct" style="color:var(--red)">${Math.round(e.delayMin)} min</div>
       </div>
@@ -690,7 +690,7 @@ function showAirlineDetail(idx) {
         <div class="rank-pos">${i+1}</div>
         <div class="rank-mid">
           <div class="rank-airline"><span class="flight-num-highlight">${alias.flightNumber}</span></div>
-          <div class="rank-flight">${g.origin} ← ${g.destination} · ${g.sampleSize} תצפיות</div>
+          <div class="rank-flight">${g.origin} → ${g.destination} · ${g.sampleSize} תצפיות</div>
         </div>
         <span class="rank-badge-mini" style="color:var(${m.varFg});background:var(${m.varBg})">${m.label}</span>
         <div class="rank-pct" style="color:var(${m.varFg})">${pct}%</div>
@@ -729,7 +729,7 @@ function renderSingleEventModal(e) {
     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
       <div>
         <h3 style="margin:0">${primary.airline} ${primary.flightNumber}</h3>
-        <p style="margin:2px 0 0;font-size:13px;color:var(--ink-soft)">${e.origin} ← ${e.destination}</p>
+        <p style="margin:2px 0 0;font-size:13px;color:var(--ink-soft)">${e.origin} → ${e.destination}</p>
       </div>
       <button onclick="closeFlightDetail()" style="border:none;background:none;font-size:20px;color:var(--ink-faint);cursor:pointer;line-height:1">×</button>
     </div>
@@ -773,7 +773,7 @@ function renderFlightDetailModal(f, isSingleFlight) {
     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
       <div>
         <h3 style="margin:0">${primary.airline} ${primary.flightNumber}</h3>
-        <p style="margin:2px 0 0;font-size:13px;color:var(--ink-soft)">${f.origin} ← ${f.destination}</p>
+        <p style="margin:2px 0 0;font-size:13px;color:var(--ink-soft)">${f.origin} → ${f.destination}</p>
       </div>
       <button onclick="closeFlightDetail()" style="border:none;background:none;font-size:20px;color:var(--ink-faint);cursor:pointer;line-height:1">×</button>
     </div>
@@ -924,7 +924,7 @@ function renderDestinationResult() {
       ${[...(showOut?outboundTechStops:[]), ...(showIn?inboundTechStops:[])].map(g => `
         <div style="padding:10px 0;border-bottom:1px solid var(--border-soft);font-size:13px">
           <div style="font-weight:500">${g.aliases[0].airline} ${g.aliases[0].flightNumber}${g.aliases.length>1 ? ` (גם ${g.aliases.slice(1).map(a=>a.flightNumber).join(', ')})` : ''}</div>
-          <div style="color:var(--ink-soft);margin-top:2px">${g.origin} ← ${g.destination} · ${g.technicalStopNote}</div>
+          <div style="color:var(--ink-soft);margin-top:2px">${g.origin} → ${g.destination} · ${g.technicalStopNote}</div>
         </div>
       `).join('')}
     </div>

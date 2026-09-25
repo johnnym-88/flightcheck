@@ -4,6 +4,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>FlightCheck — Know before you fly</title>
+<link rel="manifest" href="./manifest.json" />
+<meta name="theme-color" content="#1B4B66" />
+<link rel="icon" href="icon-192.png" type="image/png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="FlightCheck" />
 <style>
   :root {
     --bg: #FAFAF8;
@@ -246,6 +253,20 @@ const HEBREW_CITY_MAP = {
   "סמרקנד": "samarkand", "ירוואן": "yerevan", "קישינב": "chisinau",
   "מוסקבה": "moscow", "סוצ'י": "sochi", "קרסנודר": "krasnodar", "אילת": "ramon",
   "רמון": "ramon",
+  // Previously unmapped cities (found via systematic audit - see conversation notes)
+  "בקאו": "bacau", "ברטיסלבה": "bratislava", "סלובקיה": "bratislava",
+  "קליארי": "cagliari", "קלוז'": "cluj napoca", "קלוז' נאפוקה": "cluj napoca",
+  "יאסי": "iasi", "קלמטה": "kalamata", "קרפתוס": "karpathos",
+  "קפלוניה": "kefallinia", "קילימנג'רו": "kilimanjaro", "לינץ": "linz",
+  "לוטון": "luton", "מדיירה": "madeira", "לסבוס": "mitilini", "מיטיליני": "mitilini",
+  "הנוי": "hanoi", "וייטנאם": "hanoi", "פרווזה": "preveza", "לפקדה": "preveza",
+  "ז'שוב": "rzeszow", "זלצבורג": "salzburg", "סוצ'אבה": "suceava",
+  "טטרה": "tatry", "ורונה": "verona",
+  // Country-name shortcuts for countries we only serve one city in
+  "אלבניה": "tirana", "ארמניה": "yerevan", "מולדובה": "chisinau",
+  "בלארוס": "minsk", "אתיופיה": "addis ababa", "מונטנגרו": "tivat",
+  "סלובניה": "ljubljana", "בוסניה": "sarajevo", "אזרבייג'ן": "baku",
+  "לטביה": "riga", "ליטא": "vilnius",
 };
 
 function normalizeDestinationQuery(input) {
@@ -531,13 +552,13 @@ function homeStatsSection() {
       </div>
     `;
   }).join('');
-  const recent24hRows = (META.mostDelayedLast24h || []).map((e, i) => {
+  const yesterdayRows = (META.mostDelayedYesterday || []).map((e, i) => {
     const primary = e.aliases[0];
     const codeshareTag = e.isCodeshareGroup
       ? ` <span class="tag-illustrative" style="margin-right:4px">קודשרינג</span>`
       : '';
     return `
-      <div class="rank-row" onclick="showFlightDetail('recent24h', ${i})">
+      <div class="rank-row" onclick="showFlightDetail('yesterday', ${i})">
         <div class="rank-pos">${i+1}</div>
         <div class="rank-mid">
           <div class="rank-airline">${primary.flightNumber}${codeshareTag}</div>
@@ -555,11 +576,11 @@ function homeStatsSection() {
     </div>
   `).join('');
   return `
-    ${recent24hRows ? `
+    ${yesterdayRows ? `
     <section class="card" style="margin-top:24px">
-      <p class="why-title">5 הטיסות עם הכי הרבה איחורים ב-24 השעות האחרונות</p>
-      <p class="dest-hint" style="margin-top:0">איחור בפועל, לפי אירועים אחרונים ממש (לא ממוצע היסטורי).</p>
-      ${recent24hRows}
+      <p class="why-title">5 הטיסות המאחרות אתמול</p>
+      <p class="dest-hint" style="margin-top:0">איחור בפועל, לפי אירועי אתמול (לא ממוצע היסטורי).</p>
+      ${yesterdayRows}
     </section>
     ` : ''}
     <section class="card" style="margin-top:18px">
@@ -675,8 +696,8 @@ function showAirlineDetail(idx) {
 }
 
 function showFlightDetail(dir, idx) {
-  if (dir === 'recent24h') {
-    renderSingleEventModal(META.mostDelayedLast24h[idx]);
+  if (dir === 'yesterday') {
+    renderSingleEventModal(META.mostDelayedYesterday[idx]);
     document.getElementById('flight-detail-modal').style.display = 'flex';
     return;
   }
@@ -951,6 +972,11 @@ function quickSearch(flightNumber, dir) {
   }
   render();
 })();
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
 </script>
 </body>
 </html>

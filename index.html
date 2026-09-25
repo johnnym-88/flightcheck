@@ -175,7 +175,8 @@
   .rank-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-soft); cursor: pointer; }
   .stats-grid { display: flex; flex-direction: column; gap: 16px; }
   @media (min-width: 860px) {
-    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-items: start; }
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-items: stretch; }
+    .stats-grid > section { display: flex; flex-direction: column; height: 100%; }
     .stats-grid .rank-row { padding: 8px 0; gap: 8px; }
     .stats-grid .rank-flight { font-size: 11px; }
     .stats-grid .rank-pct { font-size: 14px; }
@@ -286,7 +287,6 @@ function normalizeDestinationQuery(input) {
 
 let view = 'home';
 let currentFlight = null;
-let direction = 'departure';
 let searchMode = 'number'; // 'number' | 'destination'
 let destResults = null;
 let destDirectionFilter = 'both';
@@ -352,7 +352,7 @@ function goHome() {
   render();
 }
 
-async function handleSearch(flightNumber, dir) {
+async function handleSearch(flightNumber) {
   view = 'loading';
   render();
   await new Promise(r => setTimeout(r, 600));
@@ -377,11 +377,6 @@ function renderHome() {
       ${META ? `<p style="font-size:12.5px;color:var(--ink-faint);margin-top:10px">📡 ${META.totalScanned.toLocaleString()} טיסות נסרקו עד כה במנוע שלנו · עודכן לאחרונה: ${META.lastUpdated}</p>` : ''}
     </section>
     <section id="search-card" class="card">
-      <div class="toggle">
-        <button id="btn-dep" class="${direction === 'departure' ? 'active' : ''}" onclick="setDirection('departure')">🛫 יציאה מישראל</button>
-        <button id="btn-arr" class="${direction === 'arrival' ? 'active' : ''}" onclick="setDirection('arrival')">🛬 כניסה לישראל</button>
-      </div>
-
       <div class="mode-toggle">
         <button class="${searchMode === 'number' ? 'active' : ''}" onclick="setSearchMode('number')">לפי מספר טיסה</button>
         <button class="${searchMode === 'destination' ? 'active' : ''}" onclick="setSearchMode('destination')">לפי יעד</button>
@@ -952,12 +947,11 @@ function render() {
   else if (view === 'destresult') app.innerHTML = renderDestinationResult();
 }
 
-function setDirection(d) { direction = d; render(); }
 function setSearchMode(m) { searchMode = m; render(); }
 function submitSearch() {
   const v = document.getElementById('input-flight').value;
   if (!v.trim()) return;
-  handleSearch(v, direction);
+  handleSearch(v);
 }
 function submitDestSearch() {
   const v = document.getElementById('input-dest').value;
@@ -974,10 +968,6 @@ function quickDestSearch(city) {
   destDirectionFilter = 'both';
   view = 'destresult';
   render();
-}
-function quickSearch(flightNumber, dir) {
-  direction = dir;
-  handleSearch(flightNumber, dir);
 }
 
 (async function boot() {

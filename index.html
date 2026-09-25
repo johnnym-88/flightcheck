@@ -177,6 +177,7 @@
   @media (min-width: 860px) {
     .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-items: stretch; }
     .stats-grid > section { display: flex; flex-direction: column; height: 100%; }
+    .stats-grid .card + .card { margin-top: 0; }
     .stats-grid .rank-row { padding: 8px 0; gap: 8px; }
     .stats-grid .rank-flight { font-size: 11px; }
     .stats-grid .rank-pct { font-size: 14px; }
@@ -552,7 +553,9 @@ function homeStatsSection() {
     `;
   }).join('');
   const yesterdayAll = META.mostDelayedYesterday || [];
-  const yesterdayFiltered = yesterdayAll.filter(e => yesterdayDirectionFilter === 'both' || e.direction === yesterdayDirectionFilter);
+  const yesterdayFiltered = yesterdayAll
+    .filter(e => yesterdayDirectionFilter === 'both' || e.direction === yesterdayDirectionFilter)
+    .slice(0, 5);
   const yesterdayRows = yesterdayFiltered.map((e) => {
     const i = yesterdayAll.indexOf(e);
     const primary = e.aliases[0];

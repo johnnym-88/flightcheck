@@ -1,17 +1,17 @@
 {
-  "totalScanned": 7828,
-  "totalFlightsAnalyzed": 1513,
-  "lastUpdated": "2026-09-26 07:56",
+  "totalScanned": 8302,
+  "totalFlightsAnalyzed": 1517,
+  "lastUpdated": "2026-09-26 20:16",
   "dataStartDate": "2026-09-13",
-  "daysOfDataCollected": 13,
+  "daysOfDataCollected": 14,
   "mostPunctualAirlines": [
     {
       "airline": "Etihad Airways",
-      "delayRate": 0.008
+      "delayRate": 0.007
     },
     {
       "airline": "Ethiopian Airlines",
-      "delayRate": 0.014
+      "delayRate": 0.013
     },
     {
       "airline": "Air Baltic",
@@ -19,11 +19,11 @@
     },
     {
       "airline": "Emirates",
-      "delayRate": 0.03
+      "delayRate": 0.026
     },
     {
-      "airline": "Air Europa",
-      "delayRate": 0.05
+      "airline": "Air France",
+      "delayRate": 0.045
     }
   ],
   "mostDelayedFlights": [
@@ -39,12 +39,22 @@
           "flightNumber": "W46404"
         }
       ],
-      "sampleSize": 9,
-      "averageDelay": 88.9,
-      "delayRate60": 0.889,
-      "delayProbability60": 0.574,
-      "riskLevel": "medium",
+      "sampleSize": 11,
+      "averageDelay": 93.6,
+      "delayRate60": 0.909,
+      "delayProbability60": 0.622,
+      "riskLevel": "high",
       "recentFlights": [
+        {
+          "date": "2026-09-26",
+          "delayMin": 127.0,
+          "scheduledTime": "18:55"
+        },
+        {
+          "date": "2026-09-25",
+          "delayMin": 103.0,
+          "scheduledTime": "18:55"
+        },
         {
           "date": "2026-09-24",
           "delayMin": 89.0,
@@ -96,84 +106,6 @@
       "trueDestination": null
     },
     {
-      "direction": "arrival",
-      "origin": "Kos",
-      "destination": "Tel Aviv (TLV)",
-      "scheduledTime": "13:00",
-      "isCodeshareGroup": false,
-      "aliases": [
-        {
-          "airline": "Blue Bird Airways",
-          "flightNumber": "BZ801"
-        }
-      ],
-      "sampleSize": 11,
-      "averageDelay": 167.8,
-      "delayRate60": 0.818,
-      "delayProbability60": 0.566,
-      "riskLevel": "medium",
-      "recentFlights": [
-        {
-          "date": "2026-09-25",
-          "delayMin": 195.0,
-          "scheduledTime": "13:45"
-        },
-        {
-          "date": "2026-09-24",
-          "delayMin": 157.0,
-          "scheduledTime": "13:00"
-        },
-        {
-          "date": "2026-09-23",
-          "delayMin": 361.0,
-          "scheduledTime": "09:55"
-        },
-        {
-          "date": "2026-09-22",
-          "delayMin": 327.0,
-          "scheduledTime": "11:55"
-        },
-        {
-          "date": "2026-09-20",
-          "delayMin": 61.0,
-          "scheduledTime": "12:25"
-        },
-        {
-          "date": "2026-09-19",
-          "delayMin": 12.0,
-          "scheduledTime": "13:45"
-        },
-        {
-          "date": "2026-09-18",
-          "delayMin": 409.0,
-          "scheduledTime": "07:55"
-        },
-        {
-          "date": "2026-09-17",
-          "delayMin": 81.0,
-          "scheduledTime": "13:00"
-        },
-        {
-          "date": "2026-09-16",
-          "delayMin": 177.0,
-          "scheduledTime": "12:10"
-        },
-        {
-          "date": "2026-09-15",
-          "delayMin": 60.0,
-          "scheduledTime": "13:40"
-        },
-        {
-          "date": "2026-09-14",
-          "delayMin": 6.0,
-          "scheduledTime": "13:00"
-        }
-      ],
-      "isTechnicalStop": false,
-      "technicalStopNote": null,
-      "trueDestination": null
-    },
-    {
       "direction": "departure",
       "origin": "Tel Aviv (TLV)",
       "destination": "Athens",
@@ -185,12 +117,17 @@
           "flightNumber": "BZ704"
         }
       ],
-      "sampleSize": 9,
-      "averageDelay": 141.6,
-      "delayRate60": 0.889,
-      "delayProbability60": 0.566,
+      "sampleSize": 10,
+      "averageDelay": 143.4,
+      "delayRate60": 0.9,
+      "delayProbability60": 0.591,
       "riskLevel": "medium",
       "recentFlights": [
+        {
+          "date": "2026-09-25",
+          "delayMin": 160.0,
+          "scheduledTime": "16:20"
+        },
         {
           "date": "2026-09-24",
           "delayMin": 426.0,
@@ -242,79 +179,6 @@
       "trueDestination": null
     },
     {
-      "direction": "arrival",
-      "origin": "Athens",
-      "destination": "Tel Aviv (TLV)",
-      "scheduledTime": "18:40",
-      "isCodeshareGroup": false,
-      "aliases": [
-        {
-          "airline": "Blue Bird Airways",
-          "flightNumber": "BZ703"
-        }
-      ],
-      "sampleSize": 10,
-      "averageDelay": 153.1,
-      "delayRate60": 0.8,
-      "delayProbability60": 0.542,
-      "riskLevel": "medium",
-      "recentFlights": [
-        {
-          "date": "2026-09-25",
-          "delayMin": 346.0,
-          "scheduledTime": "08:55"
-        },
-        {
-          "date": "2026-09-24",
-          "delayMin": 416.0,
-          "scheduledTime": "18:40"
-        },
-        {
-          "date": "2026-09-23",
-          "delayMin": 97.0,
-          "scheduledTime": "22:30"
-        },
-        {
-          "date": "2026-09-20",
-          "delayMin": 296.0,
-          "scheduledTime": "07:45"
-        },
-        {
-          "date": "2026-09-19",
-          "delayMin": 17.0,
-          "scheduledTime": "14:25"
-        },
-        {
-          "date": "2026-09-18",
-          "delayMin": 91.0,
-          "scheduledTime": "12:45"
-        },
-        {
-          "date": "2026-09-17",
-          "delayMin": 74.0,
-          "scheduledTime": "18:40"
-        },
-        {
-          "date": "2026-09-16",
-          "delayMin": 92.0,
-          "scheduledTime": "22:30"
-        },
-        {
-          "date": "2026-09-15",
-          "delayMin": 73.0,
-          "scheduledTime": "18:40"
-        },
-        {
-          "date": "2026-09-14",
-          "delayMin": 29.0,
-          "scheduledTime": "22:30"
-        }
-      ],
-      "isTechnicalStop": false,
-      "technicalStopNote": null,
-      "trueDestination": null
-    },
-    {
       "direction": "departure",
       "origin": "Tel Aviv (TLV)",
       "destination": "Bergamo",
@@ -326,12 +190,22 @@
           "flightNumber": "BZ154"
         }
       ],
-      "sampleSize": 10,
-      "averageDelay": 113.5,
-      "delayRate60": 0.8,
-      "delayProbability60": 0.539,
+      "sampleSize": 12,
+      "averageDelay": 122.9,
+      "delayRate60": 0.833,
+      "delayProbability60": 0.586,
       "riskLevel": "medium",
       "recentFlights": [
+        {
+          "date": "2026-09-26",
+          "delayMin": 94.0,
+          "scheduledTime": "14:45"
+        },
+        {
+          "date": "2026-09-25",
+          "delayMin": 246.0,
+          "scheduledTime": "14:00"
+        },
         {
           "date": "2026-09-24",
           "delayMin": 310.0,
@@ -386,9 +260,205 @@
       "isTechnicalStop": false,
       "technicalStopNote": null,
       "trueDestination": null
+    },
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Vienna",
+      "scheduledTime": "14:00",
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Blue Bird Airways",
+          "flightNumber": "BZ316"
+        }
+      ],
+      "sampleSize": 12,
+      "averageDelay": 193.4,
+      "delayRate60": 0.833,
+      "delayProbability60": 0.582,
+      "riskLevel": "medium",
+      "recentFlights": [
+        {
+          "date": "2026-09-26",
+          "delayMin": 66.0,
+          "scheduledTime": "14:00"
+        },
+        {
+          "date": "2026-09-25",
+          "delayMin": 294.0,
+          "scheduledTime": "14:45"
+        },
+        {
+          "date": "2026-09-24",
+          "delayMin": 467.0,
+          "scheduledTime": "11:55"
+        },
+        {
+          "date": "2026-09-23",
+          "delayMin": 170.0,
+          "scheduledTime": "15:00"
+        },
+        {
+          "date": "2026-09-22",
+          "delayMin": 259.0,
+          "scheduledTime": "14:00"
+        },
+        {
+          "date": "2026-09-20",
+          "delayMin": 33.0,
+          "scheduledTime": "12:30"
+        },
+        {
+          "date": "2026-09-19",
+          "delayMin": 99.0,
+          "scheduledTime": "14:00"
+        },
+        {
+          "date": "2026-09-18",
+          "delayMin": 131.0,
+          "scheduledTime": "15:00"
+        },
+        {
+          "date": "2026-09-17",
+          "delayMin": 171.0,
+          "scheduledTime": "13:55"
+        },
+        {
+          "date": "2026-09-16",
+          "delayMin": 115.0,
+          "scheduledTime": "15:00"
+        },
+        {
+          "date": "2026-09-15",
+          "delayMin": 476.0,
+          "scheduledTime": "14:10"
+        },
+        {
+          "date": "2026-09-14",
+          "delayMin": 40.0,
+          "scheduledTime": "14:00"
+        }
+      ],
+      "isTechnicalStop": false,
+      "technicalStopNote": null,
+      "trueDestination": null
+    },
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Larnaca",
+      "scheduledTime": "17:10",
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "TUS Airways",
+          "flightNumber": "U8107"
+        }
+      ],
+      "sampleSize": 9,
+      "averageDelay": 167.9,
+      "delayRate60": 0.889,
+      "delayProbability60": 0.577,
+      "riskLevel": "medium",
+      "recentFlights": [
+        {
+          "date": "2026-09-26",
+          "delayMin": 114.0,
+          "scheduledTime": "18:25"
+        },
+        {
+          "date": "2026-09-25",
+          "delayMin": 205.0,
+          "scheduledTime": "17:10"
+        },
+        {
+          "date": "2026-09-24",
+          "delayMin": 433.0,
+          "scheduledTime": "19:40"
+        },
+        {
+          "date": "2026-09-23",
+          "delayMin": 92.0,
+          "scheduledTime": "19:00"
+        },
+        {
+          "date": "2026-09-22",
+          "delayMin": 367.0,
+          "scheduledTime": "20:00"
+        },
+        {
+          "date": "2026-09-21",
+          "delayMin": 74.0,
+          "scheduledTime": "23:30"
+        },
+        {
+          "date": "2026-09-20",
+          "delayMin": 17.0,
+          "scheduledTime": "02:55"
+        },
+        {
+          "date": "2026-09-18",
+          "delayMin": 103.0,
+          "scheduledTime": "17:10"
+        },
+        {
+          "date": "2026-09-17",
+          "delayMin": 106.0,
+          "scheduledTime": "19:40"
+        }
+      ],
+      "isTechnicalStop": false,
+      "technicalStopNote": null,
+      "trueDestination": null
     }
   ],
   "mostDelayedYesterday": [
+    {
+      "direction": "arrival",
+      "origin": "Corfu",
+      "destination": "Tel Aviv (TLV)",
+      "scheduledTime": "06:50",
+      "date": "2026-09-25",
+      "delayMin": 752.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "TUS Airways",
+          "flightNumber": "U8235"
+        }
+      ]
+    },
+    {
+      "direction": "arrival",
+      "origin": "Heraklion",
+      "destination": "Tel Aviv (TLV)",
+      "scheduledTime": "07:50",
+      "date": "2026-09-25",
+      "delayMin": 652.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Blue Bird Airways",
+          "flightNumber": "BZ745"
+        }
+      ]
+    },
+    {
+      "direction": "arrival",
+      "origin": "Budapest",
+      "destination": "Tel Aviv (TLV)",
+      "scheduledTime": "15:05",
+      "date": "2026-09-25",
+      "delayMin": 507.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Israir Airlines",
+          "flightNumber": "6H728"
+        }
+      ]
+    },
     {
       "direction": "arrival",
       "origin": "Mikonos",
@@ -421,6 +491,51 @@
     },
     {
       "direction": "arrival",
+      "origin": "Budapest",
+      "destination": "Tel Aviv (TLV)",
+      "scheduledTime": "17:20",
+      "date": "2026-09-25",
+      "delayMin": 499.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Arkia Israeli Airlines",
+          "flightNumber": "IZ292"
+        }
+      ]
+    },
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Athens",
+      "scheduledTime": "22:00",
+      "date": "2026-09-25",
+      "delayMin": 439.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Arkia Israeli Airlines",
+          "flightNumber": "IZ215"
+        }
+      ]
+    },
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Tivat",
+      "scheduledTime": "14:00",
+      "date": "2026-09-25",
+      "delayMin": 378.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Arkia Israeli Airlines",
+          "flightNumber": "IZ367"
+        }
+      ]
+    },
+    {
+      "direction": "arrival",
       "origin": "Khania-Soudabay",
       "destination": "Tel Aviv (TLV)",
       "scheduledTime": "08:55",
@@ -431,6 +546,21 @@
         {
           "airline": "Blue Bird Airways",
           "flightNumber": "BZ761"
+        }
+      ]
+    },
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Kos",
+      "scheduledTime": "15:30",
+      "date": "2026-09-25",
+      "delayMin": 361.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Blue Bird Airways",
+          "flightNumber": "BZ804"
         }
       ]
     },
@@ -466,6 +596,96 @@
     },
     {
       "direction": "arrival",
+      "origin": "Kos",
+      "destination": "Tel Aviv (TLV)",
+      "scheduledTime": "19:30",
+      "date": "2026-09-25",
+      "delayMin": 344.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Blue Bird Airways",
+          "flightNumber": "BZ803"
+        }
+      ]
+    },
+    {
+      "direction": "arrival",
+      "origin": "Rhodes-Paradisi",
+      "destination": "Tel Aviv (TLV)",
+      "scheduledTime": "13:00",
+      "date": "2026-09-25",
+      "delayMin": 335.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Arkia Israeli Airlines",
+          "flightNumber": "IZ074"
+        }
+      ]
+    },
+    {
+      "direction": "arrival",
+      "origin": "Tivat",
+      "destination": "Tel Aviv (TLV)",
+      "scheduledTime": "21:00",
+      "date": "2026-09-25",
+      "delayMin": 318.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Arkia Israeli Airlines",
+          "flightNumber": "IZ368"
+        }
+      ]
+    },
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Rhodes-Paradisi",
+      "scheduledTime": "19:50",
+      "date": "2026-09-25",
+      "delayMin": 315.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Blue Bird Airways",
+          "flightNumber": "BZ696"
+        }
+      ]
+    },
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Rhodes-Paradisi",
+      "scheduledTime": "14:40",
+      "date": "2026-09-25",
+      "delayMin": 311.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Blue Bird Airways",
+          "flightNumber": "BZ694"
+        }
+      ]
+    },
+    {
+      "direction": "arrival",
+      "origin": "Rhodes-Paradisi",
+      "destination": "Tel Aviv (TLV)",
+      "scheduledTime": "18:50",
+      "date": "2026-09-25",
+      "delayMin": 301.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Blue Bird Airways",
+          "flightNumber": "BZ693"
+        }
+      ]
+    },
+    {
+      "direction": "arrival",
       "origin": "Tbilisi",
       "destination": "Tel Aviv (TLV)",
       "scheduledTime": "10:45",
@@ -476,6 +696,21 @@
         {
           "airline": "Arkia Israeli Airlines",
           "flightNumber": "IZ1418"
+        }
+      ]
+    },
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Vienna",
+      "scheduledTime": "14:45",
+      "date": "2026-09-25",
+      "delayMin": 294.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Blue Bird Airways",
+          "flightNumber": "BZ316"
         }
       ]
     },
@@ -525,6 +760,21 @@
       ]
     },
     {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Rome - Fiumicino",
+      "scheduledTime": "16:40",
+      "date": "2026-09-25",
+      "delayMin": 277.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Israir Airlines",
+          "flightNumber": "6H347"
+        }
+      ]
+    },
+    {
       "direction": "arrival",
       "origin": "Athens",
       "destination": "Tel Aviv (TLV)",
@@ -555,6 +805,21 @@
       ]
     },
     {
+      "direction": "arrival",
+      "origin": "Vienna",
+      "destination": "Tel Aviv (TLV)",
+      "scheduledTime": "22:55",
+      "date": "2026-09-25",
+      "delayMin": 265.0,
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Blue Bird Airways",
+          "flightNumber": "BZ317"
+        }
+      ]
+    },
+    {
       "direction": "departure",
       "origin": "Tel Aviv (TLV)",
       "destination": "Tbilisi",
@@ -570,280 +835,32 @@
       ]
     },
     {
-      "direction": "arrival",
-      "origin": "Paphos",
-      "destination": "Tel Aviv (TLV)",
-      "scheduledTime": "01:00",
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
+      "destination": "Corfu",
+      "scheduledTime": "15:40",
       "date": "2026-09-25",
-      "delayMin": 219.0,
+      "delayMin": 255.0,
       "isCodeshareGroup": false,
       "aliases": [
         {
-          "airline": "Israir Airlines",
-          "flightNumber": "6H594"
+          "airline": "TUS Airways",
+          "flightNumber": "U8236"
         }
       ]
     },
     {
       "direction": "departure",
       "origin": "Tel Aviv (TLV)",
-      "destination": "Heraklion",
-      "scheduledTime": "11:00",
+      "destination": "Geneva",
+      "scheduledTime": "14:30",
       "date": "2026-09-25",
-      "delayMin": 205.0,
-      "isCodeshareGroup": false,
-      "aliases": [
-        {
-          "airline": "Blue Bird Airways",
-          "flightNumber": "BZ746"
-        }
-      ]
-    },
-    {
-      "direction": "departure",
-      "origin": "Tel Aviv (TLV)",
-      "destination": "Los Angeles",
-      "scheduledTime": "04:25",
-      "date": "2026-09-25",
-      "delayMin": 202.0,
-      "isCodeshareGroup": true,
-      "aliases": [
-        {
-          "airline": "El Al Israel Airlines",
-          "flightNumber": "LY005"
-        },
-        {
-          "airline": "Aero Mexico",
-          "flightNumber": "AM7875"
-        },
-        {
-          "airline": "Delta Airlines",
-          "flightNumber": "DL7428"
-        }
-      ]
-    },
-    {
-      "direction": "arrival",
-      "origin": "Kos",
-      "destination": "Tel Aviv (TLV)",
-      "scheduledTime": "13:45",
-      "date": "2026-09-25",
-      "delayMin": 195.0,
-      "isCodeshareGroup": false,
-      "aliases": [
-        {
-          "airline": "Blue Bird Airways",
-          "flightNumber": "BZ801"
-        }
-      ]
-    },
-    {
-      "direction": "departure",
-      "origin": "Tel Aviv (TLV)",
-      "destination": "Heraklion",
-      "scheduledTime": "12:25",
-      "date": "2026-09-25",
-      "delayMin": 192.0,
-      "isCodeshareGroup": false,
-      "aliases": [
-        {
-          "airline": "Blue Bird Airways",
-          "flightNumber": "BZ754"
-        }
-      ]
-    },
-    {
-      "direction": "departure",
-      "origin": "Tel Aviv (TLV)",
-      "destination": "Kos",
-      "scheduledTime": "09:30",
-      "date": "2026-09-25",
-      "delayMin": 189.0,
-      "isCodeshareGroup": false,
-      "aliases": [
-        {
-          "airline": "Blue Bird Airways",
-          "flightNumber": "BZ802"
-        }
-      ]
-    },
-    {
-      "direction": "arrival",
-      "origin": "Berlin Brandenburg Intl",
-      "destination": "Tel Aviv (TLV)",
-      "scheduledTime": "00:05",
-      "date": "2026-09-25",
-      "delayMin": 187.0,
-      "isCodeshareGroup": false,
-      "aliases": [
-        {
-          "airline": "Israir Airlines",
-          "flightNumber": "6H252"
-        }
-      ]
-    },
-    {
-      "direction": "arrival",
-      "origin": "Rhodes-Paradisi",
-      "destination": "Tel Aviv (TLV)",
-      "scheduledTime": "13:40",
-      "date": "2026-09-25",
-      "delayMin": 183.0,
-      "isCodeshareGroup": false,
-      "aliases": [
-        {
-          "airline": "Blue Bird Airways",
-          "flightNumber": "BZ691"
-        }
-      ]
-    },
-    {
-      "direction": "departure",
-      "origin": "Tel Aviv (TLV)",
-      "destination": "Heraklion",
-      "scheduledTime": "06:55",
-      "date": "2026-09-25",
-      "delayMin": 175.0,
-      "isCodeshareGroup": false,
-      "aliases": [
-        {
-          "airline": "Blue Bird Airways",
-          "flightNumber": "BZ752"
-        }
-      ]
-    },
-    {
-      "direction": "departure",
-      "origin": "Tel Aviv (TLV)",
-      "destination": "Prague-Ruzyne",
-      "scheduledTime": "10:00",
-      "date": "2026-09-25",
-      "delayMin": 175.0,
+      "delayMin": 249.0,
       "isCodeshareGroup": false,
       "aliases": [
         {
           "airline": "Arkia Israeli Airlines",
-          "flightNumber": "IZ281"
-        }
-      ]
-    },
-    {
-      "direction": "departure",
-      "origin": "Tel Aviv (TLV)",
-      "destination": "Athens",
-      "scheduledTime": "07:20",
-      "date": "2026-09-25",
-      "delayMin": 165.0,
-      "isCodeshareGroup": false,
-      "aliases": [
-        {
-          "airline": "Arkia Israeli Airlines",
-          "flightNumber": "IZ211"
-        }
-      ]
-    },
-    {
-      "direction": "departure",
-      "origin": "Tel Aviv (TLV)",
-      "destination": "Heraklion",
-      "scheduledTime": "14:00",
-      "date": "2026-09-25",
-      "delayMin": 162.0,
-      "isCodeshareGroup": false,
-      "aliases": [
-        {
-          "airline": "Blue Bird Airways",
-          "flightNumber": "BZ734"
-        }
-      ]
-    },
-    {
-      "direction": "arrival",
-      "origin": "Athens",
-      "destination": "Tel Aviv (TLV)",
-      "scheduledTime": "12:40",
-      "date": "2026-09-25",
-      "delayMin": 153.0,
-      "isCodeshareGroup": false,
-      "aliases": [
-        {
-          "airline": "Arkia Israeli Airlines",
-          "flightNumber": "IZ212"
-        }
-      ]
-    },
-    {
-      "direction": "arrival",
-      "origin": "Tbilisi",
-      "destination": "Tel Aviv (TLV)",
-      "scheduledTime": "03:10",
-      "date": "2026-09-25",
-      "delayMin": 149.0,
-      "isCodeshareGroup": false,
-      "aliases": [
-        {
-          "airline": "El Al Israel Airlines",
-          "flightNumber": "LY5110"
-        }
-      ]
-    },
-    {
-      "direction": "departure",
-      "origin": "Tel Aviv (TLV)",
-      "destination": "Khania-Soudabay",
-      "scheduledTime": "08:20",
-      "date": "2026-09-25",
-      "delayMin": 148.0,
-      "isCodeshareGroup": false,
-      "aliases": [
-        {
-          "airline": "Blue Bird Airways",
-          "flightNumber": "BZ762"
-        }
-      ]
-    },
-    {
-      "direction": "departure",
-      "origin": "Tel Aviv (TLV)",
-      "destination": "Mikonos",
-      "scheduledTime": "08:30",
-      "date": "2026-09-25",
-      "delayMin": 146.0,
-      "isCodeshareGroup": false,
-      "aliases": [
-        {
-          "airline": "Blue Bird Airways",
-          "flightNumber": "BZ888"
-        }
-      ]
-    },
-    {
-      "direction": "arrival",
-      "origin": "Heraklion",
-      "destination": "Tel Aviv (TLV)",
-      "scheduledTime": "11:25",
-      "date": "2026-09-25",
-      "delayMin": 144.0,
-      "isCodeshareGroup": false,
-      "aliases": [
-        {
-          "airline": "Blue Bird Airways",
-          "flightNumber": "BZ753"
-        }
-      ]
-    },
-    {
-      "direction": "departure",
-      "origin": "Tel Aviv (TLV)",
-      "destination": "Milan-Malpensa",
-      "scheduledTime": "07:55",
-      "date": "2026-09-25",
-      "delayMin": 142.0,
-      "isCodeshareGroup": false,
-      "aliases": [
-        {
-          "airline": "Arkia Israeli Airlines",
-          "flightNumber": "IZ337"
+          "flightNumber": "IZ521"
         }
       ]
     }

@@ -331,7 +331,6 @@ let searchMode = 'number'; // 'number' | 'destination'
 let destResults = null;
 let destDirectionFilter = 'both';
 let yesterdayDirectionFilter = 'both';
-let pieDirectionFilter = 'both';
 let destQueryLabel = '';
 
 function riskMeta(level) {
@@ -484,7 +483,7 @@ function renderNotFound() {
     <div class="not-found">
       <div class="nf-icon">🔍</div>
       <p style="font-size:17px;font-weight:600;margin:0 0 6px">לא מצאנו את הטיסה הזו.</p>
-      <p style="font-size:14px;color:var(--ink-soft);margin:0 0 18px">בדקו את מספר הטיסה והתאריך ונסו שוב.<br/>(המאגר כולל כרגע כ-1,335 זיהויי טיסה מהשבוע האחרון בבן גוריון — טיסות חדשות/עונתיות עשויות עדיין לא להופיע.)</p>
+      <p style="font-size:14px;color:var(--ink-soft);margin:0 0 18px">בדקו את מספר הטיסה והתאריך ונסו שוב.<br/>(המאגר כולל כרגע כ-${META && META.totalFlightsAnalyzed ? META.totalFlightsAnalyzed.toLocaleString() : ''} זיהויי טיסה, מ-${META && META.daysOfDataCollected ? META.daysOfDataCollected : ''} הימים האחרונים בבן גוריון — טיסות חדשות/עונתיות עשויות עדיין לא להופיע.)</p>
       <button class="cta" style="max-width:220px;margin:0 auto" onclick="goHome()">נסו טיסה אחרת</button>
     </div>
   `;
@@ -587,48 +586,6 @@ function historyCard(recentFlights) {
         <div style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:var(--red)"></span><span style="font-size:12px;color:var(--ink-faint)">60+ דק' איחור</span></div>
       </div>
     </div>
-  `;
-}
-
-function pieChartCard() {
-  const summary = META.onTimeSummary;
-  if (!summary) return '';
-  let onTime, delayed;
-  if (pieDirectionFilter === 'both') {
-    onTime = summary.departure.onTime + summary.arrival.onTime;
-    delayed = summary.departure.delayed + summary.arrival.delayed;
-  } else {
-    onTime = summary[pieDirectionFilter].onTime;
-    delayed = summary[pieDirectionFilter].delayed;
-  }
-  const total = onTime + delayed;
-  const onTimePct = total > 0 ? (onTime / total * 100) : 0;
-  const pieFilterBtn = (value, label) => `
-    <button onclick="setPieFilter('${value}')" style="font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid ${pieDirectionFilter===value?'var(--brand)':'var(--border)'};background:${pieDirectionFilter===value?'var(--brand)':'transparent'};color:${pieDirectionFilter===value?'#fff':'var(--ink-soft)'};cursor:pointer">${label}</button>
-  `;
-  return `
-    <section class="card">
-      <p class="why-title" style="margin-top:0">בזמן מול מתעכב</p>
-      <p class="dest-hint" style="margin-top:0">מבין כל הטיסות שנותחו (סף של 60+ דקות לאיחור).</p>
-      <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap">
-        ${pieFilterBtn('both', 'המראות ונחיתות')}
-        ${pieFilterBtn('departure', 'המראות')}
-        ${pieFilterBtn('arrival', 'נחיתות')}
-      </div>
-      <div style="display:flex;align-items:center;gap:20px">
-        <div style="width:100px;height:100px;border-radius:50%;flex-shrink:0;background:conic-gradient(var(--green) 0% ${onTimePct}%, var(--red) ${onTimePct}% 100%)"></div>
-        <div style="font-size:13px">
-          <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
-            <span style="width:10px;height:10px;border-radius:50%;background:var(--green);display:inline-block"></span>
-            <span>בזמן: <strong>${Math.round(onTimePct)}%</strong> (${onTime.toLocaleString()})</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:6px">
-            <span style="width:10px;height:10px;border-radius:50%;background:var(--red);display:inline-block"></span>
-            <span>מתעכב: <strong>${Math.round(100-onTimePct)}%</strong> (${delayed.toLocaleString()})</span>
-          </div>
-        </div>
-      </div>
-    </section>
   `;
 }
 
@@ -856,9 +813,20 @@ function closeFlightDetail() {
   document.getElementById('flight-detail-modal').style.display = 'none';
 }
 
-function renderFlightDetailModal(f, isSingleFlight) {
+let currentModalFlight = null;
+let currentModalIsSingle = false;
+let historyVisibleCount = 7;
+
+function renderFlightDetailModal(f, isSingleFlight, keepPage) {
+  if (!keepPage) {
+    currentModalFlight = f;
+    currentModalIsSingle = isSingleFlight;
+    historyVisibleCount = 7;
+  }
   const primary = isSingleFlight ? { airline: f.airline, flightNumber: f.flightNumber } : f.aliases[0];
-  const rows = (f.recentFlights || []).map(r => {
+  const allHistory = f.recentFlights || [];
+  const visible = allHistory.slice(0, historyVisibleCount);
+  const rows = visible.map(r => {
     const actual = addMinutesToTime(r.scheduledTime, r.delayMin);
     const late = r.delayMin >= 60;
     return `
@@ -870,6 +838,7 @@ function renderFlightDetailModal(f, isSingleFlight) {
       </div>
     `;
   }).join('');
+  const hasMore = allHistory.length > historyVisibleCount;
   document.getElementById('flight-detail-content').innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
       <div>
@@ -882,7 +851,13 @@ function renderFlightDetailModal(f, isSingleFlight) {
       <span style="width:70px">תאריך</span><span style="width:60px">מתוכנן</span><span style="width:80px">בפועל</span>
     </div>
     ${rows || `<p style="font-size:13px;color:var(--ink-soft)">אין עדיין נתוני היסטוריה זמינים לטיסה זו.</p>`}
+    ${hasMore ? `<button onclick="loadMoreHistory()" style="width:100%;margin-top:10px;background:none;border:1px solid var(--border);border-radius:8px;padding:9px;font-size:13px;color:var(--brand);cursor:pointer">טען עוד שבוע אחורה</button>` : ''}
   `;
+}
+
+function loadMoreHistory() {
+  historyVisibleCount += 7;
+  renderFlightDetailModal(currentModalFlight, currentModalIsSingle, true);
 }
 
 function reviewsWidgetHTML(prefix, flightNumber) {
@@ -985,11 +960,6 @@ function setYesterdayFilter(value) {
   render();
 }
 
-function setPieFilter(value) {
-  pieDirectionFilter = value;
-  render();
-}
-
 function renderDestinationResult() {
   const { outbound, inbound, outboundTechStops, inboundTechStops } = destResults;
   const empty = outbound.length === 0 && inbound.length === 0;
@@ -1013,7 +983,7 @@ function renderDestinationResult() {
       ` : ''}
     </div>
     <div class="card" style="margin-top:14px">
-      <p class="dest-hint" style="margin-top:0">מדורגות מהכי אמינה להכי פחות אמינה, לפי אחוז הסיכוי לאיחור של 60+ דקות. דאטה אמיתי מהשבוע האחרון. טיסות המסומנות "קודשרינג" הן אותה טיסה פיזית הנמכרת תחת כמה מספרי/שמות חברות — לכן הן מוצגות כשורה אחת ולא כמה אפשרויות נפרדות.</p>
+      <p class="dest-hint" style="margin-top:0">מדורגות מהכי אמינה להכי פחות אמינה, לפי אחוז הסיכוי לאיחור של 60+ דקות. דאטה אמיתי מ-${META && META.daysOfDataCollected ? META.daysOfDataCollected : ''} הימים האחרונים. טיסות המסומנות "קודשרינג" הן אותה טיסה פיזית הנמכרת תחת כמה מספרי/שמות חברות — לכן הן מוצגות כשורה אחת ולא כמה אפשרויות נפרדות.</p>
       ${empty && !hasTechStops ? `
         <p style="font-size:14px;color:var(--ink-soft);margin-top:18px">לא נמצאו טיסות ליעד הזה במדגם הנוכחי. נסו לכתוב את שם העיר באנגלית, או יעד אחר.</p>
       ` : `
@@ -1036,7 +1006,7 @@ function renderDestinationResult() {
     </div>
     ` : ''}
     <div class="card trust-box">
-      <p>הדירוג מבוסס על נתונים היסטוריים אמיתיים מהשבוע האחרון בלבד. עם עוד דאטה, הדירוג יהיה מדויק יותר.</p>
+      <p>הדירוג מבוסס על נתונים היסטוריים אמיתיים מ-${META && META.daysOfDataCollected ? META.daysOfDataCollected : ''} הימים האחרונים. עם עוד דאטה, הדירוג יהיה מדויק יותר.</p>
     </div>
   `;
 }

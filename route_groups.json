@@ -1341,30 +1341,18 @@
     "isCodeshareGroup": true,
     "aliases": [
       {
-        "airline": "Arkia Israeli Airlines",
-        "flightNumber": "IZ216"
-      },
-      {
-        "airline": "El Al Israel Airlines",
-        "flightNumber": "LY548"
-      },
-      {
         "airline": "Aegean Airlines",
         "flightNumber": "A3928"
       },
       {
         "airline": "Emirates",
         "flightNumber": "EK4977"
-      },
-      {
-        "airline": "Israir Airlines",
-        "flightNumber": "6H956"
       }
     ],
-    "sampleSize": 18,
-    "averageDelay": 16.5,
-    "delayRate60": 0.056,
-    "delayProbability60": 0.098,
+    "sampleSize": 11,
+    "averageDelay": 6.1,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.081,
     "riskLevel": "low",
     "recentFlights": [
       {
@@ -1374,28 +1362,13 @@
       },
       {
         "date": "2026-09-24",
-        "delayMin": 13.0,
-        "scheduledTime": "04:10"
-      },
-      {
-        "date": "2026-09-24",
         "delayMin": 8.0,
         "scheduledTime": "02:55"
       },
       {
         "date": "2026-09-23",
-        "delayMin": 42.0,
-        "scheduledTime": "10:25"
-      },
-      {
-        "date": "2026-09-23",
         "delayMin": 33.0,
         "scheduledTime": "02:55"
-      },
-      {
-        "date": "2026-09-23",
-        "delayMin": 157.5,
-        "scheduledTime": "01:55"
       },
       {
         "date": "2026-09-22",
@@ -1408,24 +1381,9 @@
         "scheduledTime": "02:55"
       },
       {
-        "date": "2026-09-20",
-        "delayMin": 8.0,
-        "scheduledTime": "02:20"
-      },
-      {
-        "date": "2026-09-20",
-        "delayMin": -2.0,
-        "scheduledTime": "01:55"
-      },
-      {
         "date": "2026-09-19",
         "delayMin": 1.0,
         "scheduledTime": "02:55"
-      },
-      {
-        "date": "2026-09-18",
-        "delayMin": 8.0,
-        "scheduledTime": "21:15"
       },
       {
         "date": "2026-09-18",
@@ -1435,6 +1393,21 @@
       {
         "date": "2026-09-17",
         "delayMin": 7.0,
+        "scheduledTime": "02:55"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": -2.0,
+        "scheduledTime": "02:55"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 22.0,
+        "scheduledTime": "02:55"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": -4.0,
         "scheduledTime": "02:55"
       }
     ],
@@ -1485,21 +1458,17 @@
     "origin": "Athens",
     "destination": "Tel Aviv (TLV)",
     "scheduledTime": "11:55",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
-      {
-        "airline": "Blue Bird Airways",
-        "flightNumber": "BZ705"
-      },
       {
         "airline": "Wizz Air Malta",
         "flightNumber": "W47512"
       }
     ],
-    "sampleSize": 11,
-    "averageDelay": 46.0,
-    "delayRate60": 0.182,
-    "delayProbability60": 0.198,
+    "sampleSize": 9,
+    "averageDelay": 2.4,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.104,
     "riskLevel": "low",
     "recentFlights": [
       {
@@ -1523,19 +1492,9 @@
         "scheduledTime": "12:00"
       },
       {
-        "date": "2026-09-19",
-        "delayMin": 83.0,
-        "scheduledTime": "12:30"
-      },
-      {
         "date": "2026-09-18",
         "delayMin": 49.5,
         "scheduledTime": "11:55"
-      },
-      {
-        "date": "2026-09-17",
-        "delayMin": 401.0,
-        "scheduledTime": "08:55"
       },
       {
         "date": "2026-09-17",
@@ -1566,29 +1525,20 @@
     "direction": "arrival",
     "origin": "Athens",
     "destination": "Tel Aviv (TLV)",
-    "scheduledTime": "12:35",
-    "isCodeshareGroup": true,
+    "scheduledTime": "12:40",
+    "isCodeshareGroup": false,
     "aliases": [
       {
         "airline": "Arkia Israeli Airlines",
         "flightNumber": "IZ212"
-      },
-      {
-        "airline": "El Al Israel Airlines",
-        "flightNumber": "LY542"
       }
     ],
-    "sampleSize": 19,
-    "averageDelay": 45.6,
-    "delayRate60": 0.211,
-    "delayProbability60": 0.214,
-    "riskLevel": "low",
+    "sampleSize": 11,
+    "averageDelay": 64.9,
+    "delayRate60": 0.364,
+    "delayProbability60": 0.303,
+    "riskLevel": "medium",
     "recentFlights": [
-      {
-        "date": "2026-09-25",
-        "delayMin": 21.0,
-        "scheduledTime": "12:55"
-      },
       {
         "date": "2026-09-25",
         "delayMin": 153.0,
@@ -1600,19 +1550,9 @@
         "scheduledTime": "13:05"
       },
       {
-        "date": "2026-09-24",
-        "delayMin": 10.0,
-        "scheduledTime": "12:35"
-      },
-      {
         "date": "2026-09-23",
         "delayMin": 30.0,
         "scheduledTime": "13:00"
-      },
-      {
-        "date": "2026-09-23",
-        "delayMin": 16.0,
-        "scheduledTime": "12:35"
       },
       {
         "date": "2026-09-22",
@@ -1625,11 +1565,6 @@
         "scheduledTime": "11:35"
       },
       {
-        "date": "2026-09-20",
-        "delayMin": 33.0,
-        "scheduledTime": "12:35"
-      },
-      {
         "date": "2026-09-19",
         "delayMin": 38.0,
         "scheduledTime": "12:55"
@@ -1640,19 +1575,24 @@
         "scheduledTime": "12:40"
       },
       {
-        "date": "2026-09-18",
-        "delayMin": 41.0,
-        "scheduledTime": "11:30"
-      },
-      {
         "date": "2026-09-17",
         "delayMin": 137.0,
         "scheduledTime": "13:00"
       },
       {
-        "date": "2026-09-17",
-        "delayMin": 10.0,
-        "scheduledTime": "12:35"
+        "date": "2026-09-16",
+        "delayMin": 14.0,
+        "scheduledTime": "13:00"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 119.0,
+        "scheduledTime": "12:45"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 44.0,
+        "scheduledTime": "12:40"
       }
     ],
     "isTechnicalStop": false,
@@ -1928,16 +1868,12 @@
       {
         "airline": "Emirates",
         "flightNumber": "EK4976"
-      },
-      {
-        "airline": "Israir Airlines",
-        "flightNumber": "6H954"
       }
     ],
-    "sampleSize": 9,
-    "averageDelay": 47.0,
-    "delayRate60": 0.111,
-    "delayProbability60": 0.162,
+    "sampleSize": 8,
+    "averageDelay": 35.1,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.11,
     "riskLevel": "low",
     "recentFlights": [
       {
@@ -1959,11 +1895,6 @@
         "date": "2026-09-19",
         "delayMin": 12.0,
         "scheduledTime": "19:00"
-      },
-      {
-        "date": "2026-09-18",
-        "delayMin": 142.0,
-        "scheduledTime": "23:45"
       },
       {
         "date": "2026-09-17",
@@ -2052,38 +1983,24 @@
     "direction": "arrival",
     "origin": "Athens",
     "destination": "Tel Aviv (TLV)",
-    "scheduledTime": "22:30",
-    "isCodeshareGroup": true,
+    "scheduledTime": "18:40",
+    "isCodeshareGroup": false,
     "aliases": [
       {
         "airline": "Blue Bird Airways",
         "flightNumber": "BZ703"
-      },
-      {
-        "airline": "Sky Express S.A.",
-        "flightNumber": "GQ720"
       }
     ],
-    "sampleSize": 21,
-    "averageDelay": 81.8,
-    "delayRate60": 0.429,
-    "delayProbability60": 0.371,
+    "sampleSize": 10,
+    "averageDelay": 153.1,
+    "delayRate60": 0.8,
+    "delayProbability60": 0.542,
     "riskLevel": "medium",
     "recentFlights": [
       {
         "date": "2026-09-25",
         "delayMin": 346.0,
         "scheduledTime": "08:55"
-      },
-      {
-        "date": "2026-09-25",
-        "delayMin": 38.0,
-        "scheduledTime": "05:30"
-      },
-      {
-        "date": "2026-09-24",
-        "delayMin": 17.0,
-        "scheduledTime": "22:30"
       },
       {
         "date": "2026-09-24",
@@ -2096,34 +2013,9 @@
         "scheduledTime": "22:30"
       },
       {
-        "date": "2026-09-23",
-        "delayMin": 34.0,
-        "scheduledTime": "22:20"
-      },
-      {
-        "date": "2026-09-22",
-        "delayMin": 7.0,
-        "scheduledTime": "22:30"
-      },
-      {
-        "date": "2026-09-21",
-        "delayMin": 71.0,
-        "scheduledTime": "22:30"
-      },
-      {
-        "date": "2026-09-20",
-        "delayMin": -10.0,
-        "scheduledTime": "06:00"
-      },
-      {
         "date": "2026-09-20",
         "delayMin": 296.0,
         "scheduledTime": "07:45"
-      },
-      {
-        "date": "2026-09-19",
-        "delayMin": -28.0,
-        "scheduledTime": "22:30"
       },
       {
         "date": "2026-09-19",
@@ -2136,9 +2028,24 @@
         "scheduledTime": "12:45"
       },
       {
-        "date": "2026-09-18",
-        "delayMin": -11.0,
-        "scheduledTime": "05:30"
+        "date": "2026-09-17",
+        "delayMin": 74.0,
+        "scheduledTime": "18:40"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 92.0,
+        "scheduledTime": "22:30"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 73.0,
+        "scheduledTime": "18:40"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 29.0,
+        "scheduledTime": "22:30"
       }
     ],
     "isTechnicalStop": false,
@@ -2202,6 +2109,190 @@
     "direction": "arrival",
     "origin": "Athens",
     "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "12:35",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "El Al Israel Airlines",
+        "flightNumber": "LY542"
+      }
+    ],
+    "sampleSize": 8,
+    "averageDelay": 19.0,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.11,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-25",
+        "delayMin": 21.0,
+        "scheduledTime": "12:55"
+      },
+      {
+        "date": "2026-09-24",
+        "delayMin": 10.0,
+        "scheduledTime": "12:35"
+      },
+      {
+        "date": "2026-09-23",
+        "delayMin": 16.0,
+        "scheduledTime": "12:35"
+      },
+      {
+        "date": "2026-09-20",
+        "delayMin": 33.0,
+        "scheduledTime": "12:35"
+      },
+      {
+        "date": "2026-09-18",
+        "delayMin": 41.0,
+        "scheduledTime": "11:30"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": 10.0,
+        "scheduledTime": "12:35"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 18.0,
+        "scheduledTime": "12:35"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 3.0,
+        "scheduledTime": "12:40"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Athens",
+    "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "22:30",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Sky Express S.A.",
+        "flightNumber": "GQ720"
+      }
+    ],
+    "sampleSize": 11,
+    "averageDelay": 17.0,
+    "delayRate60": 0.091,
+    "delayProbability60": 0.145,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-25",
+        "delayMin": 38.0,
+        "scheduledTime": "05:30"
+      },
+      {
+        "date": "2026-09-24",
+        "delayMin": 17.0,
+        "scheduledTime": "22:30"
+      },
+      {
+        "date": "2026-09-23",
+        "delayMin": 34.0,
+        "scheduledTime": "22:20"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": 7.0,
+        "scheduledTime": "22:30"
+      },
+      {
+        "date": "2026-09-21",
+        "delayMin": 71.0,
+        "scheduledTime": "22:30"
+      },
+      {
+        "date": "2026-09-20",
+        "delayMin": -10.0,
+        "scheduledTime": "06:00"
+      },
+      {
+        "date": "2026-09-19",
+        "delayMin": -28.0,
+        "scheduledTime": "22:30"
+      },
+      {
+        "date": "2026-09-18",
+        "delayMin": -11.0,
+        "scheduledTime": "05:30"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": 8.0,
+        "scheduledTime": "22:30"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 20.0,
+        "scheduledTime": "22:20"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 41.0,
+        "scheduledTime": "22:30"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Athens",
+    "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "02:20",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Arkia Israeli Airlines",
+        "flightNumber": "IZ216"
+      }
+    ],
+    "sampleSize": 4,
+    "averageDelay": 45.4,
+    "delayRate60": 0.25,
+    "delayProbability60": 0.211,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-24",
+        "delayMin": 13.0,
+        "scheduledTime": "04:10"
+      },
+      {
+        "date": "2026-09-23",
+        "delayMin": 157.5,
+        "scheduledTime": "01:55"
+      },
+      {
+        "date": "2026-09-20",
+        "delayMin": 8.0,
+        "scheduledTime": "02:20"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": 3.0,
+        "scheduledTime": "02:20"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Athens",
+    "destination": "Tel Aviv (TLV)",
     "scheduledTime": "03:05",
     "isCodeshareGroup": false,
     "aliases": [
@@ -2235,6 +2326,39 @@
         "date": "2026-09-17",
         "delayMin": -16.0,
         "scheduledTime": "03:05"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Athens",
+    "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "08:55",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Blue Bird Airways",
+        "flightNumber": "BZ705"
+      }
+    ],
+    "sampleSize": 2,
+    "averageDelay": 242.0,
+    "delayRate60": 1.0,
+    "delayProbability60": 0.353,
+    "riskLevel": "medium",
+    "recentFlights": [
+      {
+        "date": "2026-09-19",
+        "delayMin": 83.0,
+        "scheduledTime": "12:30"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": 401.0,
+        "scheduledTime": "08:55"
       }
     ],
     "isTechnicalStop": false,
@@ -2311,6 +2435,95 @@
         "date": "2026-09-18",
         "delayMin": 30.0,
         "scheduledTime": "09:05"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Athens",
+    "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "21:15",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Israir Airlines",
+        "flightNumber": "6H956"
+      }
+    ],
+    "sampleSize": 1,
+    "averageDelay": 8.0,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.171,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-18",
+        "delayMin": 8.0,
+        "scheduledTime": "21:15"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Athens",
+    "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "23:45",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Israir Airlines",
+        "flightNumber": "6H954"
+      }
+    ],
+    "sampleSize": 1,
+    "averageDelay": 142.0,
+    "delayRate60": 1.0,
+    "delayProbability60": 0.282,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-18",
+        "delayMin": 142.0,
+        "scheduledTime": "23:45"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Athens",
+    "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "01:55",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "El Al Israel Airlines",
+        "flightNumber": "LY548"
+      }
+    ],
+    "sampleSize": 2,
+    "averageDelay": 20.0,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.153,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-23",
+        "delayMin": 42.0,
+        "scheduledTime": "10:25"
+      },
+      {
+        "date": "2026-09-20",
+        "delayMin": -2.0,
+        "scheduledTime": "01:55"
       }
     ],
     "isTechnicalStop": false,
@@ -5070,64 +5283,20 @@
     "direction": "arrival",
     "origin": "Bucharest - Otopeni",
     "destination": "Tel Aviv (TLV)",
-    "scheduledTime": "08:25",
-    "isCodeshareGroup": true,
+    "scheduledTime": "22:00",
+    "isCodeshareGroup": false,
     "aliases": [
       {
         "airline": "Flyone Romania",
         "flightNumber": "OE7809"
-      },
-      {
-        "airline": "Wizz Air Malta",
-        "flightNumber": "W43257"
       }
     ],
-    "sampleSize": 14,
-    "averageDelay": 6.0,
-    "delayRate60": 0.071,
-    "delayProbability60": 0.125,
+    "sampleSize": 3,
+    "averageDelay": -3.0,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.14,
     "riskLevel": "low",
     "recentFlights": [
-      {
-        "date": "2026-09-25",
-        "delayMin": -18.0,
-        "scheduledTime": "08:25"
-      },
-      {
-        "date": "2026-09-24",
-        "delayMin": 1.0,
-        "scheduledTime": "08:25"
-      },
-      {
-        "date": "2026-09-23",
-        "delayMin": 6.0,
-        "scheduledTime": "08:25"
-      },
-      {
-        "date": "2026-09-22",
-        "delayMin": -5.0,
-        "scheduledTime": "08:25"
-      },
-      {
-        "date": "2026-09-20",
-        "delayMin": 88.5,
-        "scheduledTime": "08:25"
-      },
-      {
-        "date": "2026-09-19",
-        "delayMin": -24.0,
-        "scheduledTime": "08:25"
-      },
-      {
-        "date": "2026-09-18",
-        "delayMin": -11.0,
-        "scheduledTime": "08:25"
-      },
-      {
-        "date": "2026-09-17",
-        "delayMin": -7.0,
-        "scheduledTime": "08:25"
-      },
       {
         "date": "2026-09-17",
         "delayMin": 22.0,
@@ -5135,23 +5304,8 @@
       },
       {
         "date": "2026-09-16",
-        "delayMin": 59.0,
-        "scheduledTime": "08:25"
-      },
-      {
-        "date": "2026-09-16",
         "delayMin": -19.0,
         "scheduledTime": "22:00"
-      },
-      {
-        "date": "2026-09-15",
-        "delayMin": 15.0,
-        "scheduledTime": "08:25"
-      },
-      {
-        "date": "2026-09-14",
-        "delayMin": -12.0,
-        "scheduledTime": "08:25"
       },
       {
         "date": "2026-09-13",
@@ -5168,12 +5322,8 @@
     "origin": "Bucharest - Otopeni",
     "destination": "Tel Aviv (TLV)",
     "scheduledTime": "20:55",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
-      {
-        "airline": "El Al Israel Airlines",
-        "flightNumber": "LY9492"
-      },
       {
         "airline": "Tarom - Romanian Air Transport",
         "flightNumber": "RO2153"
@@ -5261,6 +5411,84 @@
         "date": "2026-09-14",
         "delayMin": -6.0,
         "scheduledTime": "02:00"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Bucharest - Otopeni",
+    "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "08:25",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Wizz Air Malta",
+        "flightNumber": "W43257"
+      }
+    ],
+    "sampleSize": 11,
+    "averageDelay": 8.4,
+    "delayRate60": 0.091,
+    "delayProbability60": 0.145,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-25",
+        "delayMin": -18.0,
+        "scheduledTime": "08:25"
+      },
+      {
+        "date": "2026-09-24",
+        "delayMin": 1.0,
+        "scheduledTime": "08:25"
+      },
+      {
+        "date": "2026-09-23",
+        "delayMin": 6.0,
+        "scheduledTime": "08:25"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": -5.0,
+        "scheduledTime": "08:25"
+      },
+      {
+        "date": "2026-09-20",
+        "delayMin": 88.5,
+        "scheduledTime": "08:25"
+      },
+      {
+        "date": "2026-09-19",
+        "delayMin": -24.0,
+        "scheduledTime": "08:25"
+      },
+      {
+        "date": "2026-09-18",
+        "delayMin": -11.0,
+        "scheduledTime": "08:25"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": -7.0,
+        "scheduledTime": "08:25"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 59.0,
+        "scheduledTime": "08:25"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 15.0,
+        "scheduledTime": "08:25"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": -12.0,
+        "scheduledTime": "08:25"
       }
     ],
     "isTechnicalStop": false,
@@ -5569,33 +5797,24 @@
     "direction": "arrival",
     "origin": "Bucharest - Otopeni",
     "destination": "Tel Aviv (TLV)",
-    "scheduledTime": "20:45",
-    "isCodeshareGroup": true,
+    "scheduledTime": "22:25",
+    "isCodeshareGroup": false,
     "aliases": [
       {
         "airline": "Anima Wings Aviation",
         "flightNumber": "A2700"
-      },
-      {
-        "airline": "Hisky Europe Srl",
-        "flightNumber": "H4237"
       }
     ],
-    "sampleSize": 6,
-    "averageDelay": 95.8,
-    "delayRate60": 0.333,
-    "delayProbability60": 0.268,
+    "sampleSize": 4,
+    "averageDelay": 5.9,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.147,
     "riskLevel": "low",
     "recentFlights": [
       {
         "date": "2026-09-24",
         "delayMin": -4.0,
         "scheduledTime": "22:25"
-      },
-      {
-        "date": "2026-09-23",
-        "delayMin": 325.0,
-        "scheduledTime": "20:45"
       },
       {
         "date": "2026-09-22",
@@ -5608,14 +5827,42 @@
         "scheduledTime": "22:25"
       },
       {
-        "date": "2026-09-16",
-        "delayMin": 226.0,
-        "scheduledTime": "20:45"
-      },
-      {
         "date": "2026-09-15",
         "delayMin": -8.0,
         "scheduledTime": "22:35"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Bucharest - Otopeni",
+    "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "20:45",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Hisky Europe Srl",
+        "flightNumber": "H4237"
+      }
+    ],
+    "sampleSize": 2,
+    "averageDelay": 275.5,
+    "delayRate60": 1.0,
+    "delayProbability60": 0.353,
+    "riskLevel": "medium",
+    "recentFlights": [
+      {
+        "date": "2026-09-23",
+        "delayMin": 325.0,
+        "scheduledTime": "20:45"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 226.0,
+        "scheduledTime": "20:45"
       }
     ],
     "isTechnicalStop": false,
@@ -5655,15 +5902,11 @@
     "origin": "Bucharest - Otopeni",
     "destination": "Tel Aviv (TLV)",
     "scheduledTime": "02:50",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
       {
         "airline": "El Al Israel Airlines",
         "flightNumber": "LY576"
-      },
-      {
-        "airline": "Tarom - Romanian Air Transport",
-        "flightNumber": "RO9105"
       }
     ],
     "sampleSize": 2,
@@ -7432,15 +7675,11 @@
     "origin": "Chisinau",
     "destination": "Tel Aviv (TLV)",
     "scheduledTime": "02:45",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
       {
         "airline": "El Al Israel Airlines",
         "flightNumber": "LY5428"
-      },
-      {
-        "airline": "El Al Israel Airlines",
-        "flightNumber": "LY5338"
       }
     ],
     "sampleSize": 1,
@@ -8496,46 +8735,28 @@
     "direction": "arrival",
     "origin": "Dubai",
     "destination": "Tel Aviv (TLV)",
-    "scheduledTime": "09:40",
+    "scheduledTime": "08:55",
     "isCodeshareGroup": true,
     "aliases": [
-      {
-        "airline": "Emirates",
-        "flightNumber": "EK2369"
-      },
       {
         "airline": "Emirates",
         "flightNumber": "EK2120"
       },
       {
         "airline": "Flydubai",
-        "flightNumber": "FZ1549"
-      },
-      {
-        "airline": "Flydubai",
         "flightNumber": "FZ1073"
       }
     ],
-    "sampleSize": 21,
-    "averageDelay": -1.0,
+    "sampleSize": 10,
+    "averageDelay": 1.2,
     "delayRate60": 0.0,
-    "delayProbability60": 0.061,
+    "delayProbability60": 0.098,
     "riskLevel": "low",
     "recentFlights": [
       {
         "date": "2026-09-25",
         "delayMin": 6.0,
-        "scheduledTime": "09:40"
-      },
-      {
-        "date": "2026-09-25",
-        "delayMin": 6.0,
         "scheduledTime": "08:45"
-      },
-      {
-        "date": "2026-09-24",
-        "delayMin": -4.0,
-        "scheduledTime": "09:40"
       },
       {
         "date": "2026-09-24",
@@ -8544,18 +8765,8 @@
       },
       {
         "date": "2026-09-23",
-        "delayMin": 5.0,
-        "scheduledTime": "09:40"
-      },
-      {
-        "date": "2026-09-23",
         "delayMin": 2.0,
         "scheduledTime": "09:10"
-      },
-      {
-        "date": "2026-09-22",
-        "delayMin": -10.0,
-        "scheduledTime": "09:40"
       },
       {
         "date": "2026-09-22",
@@ -8568,6 +8779,78 @@
         "scheduledTime": "08:55"
       },
       {
+        "date": "2026-09-19",
+        "delayMin": -3.0,
+        "scheduledTime": "08:55"
+      },
+      {
+        "date": "2026-09-18",
+        "delayMin": 0.0,
+        "scheduledTime": "08:45"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": -8.0,
+        "scheduledTime": "08:55"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": -6.0,
+        "scheduledTime": "08:55"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": -4.0,
+        "scheduledTime": "08:55"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Dubai",
+    "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "09:40",
+    "isCodeshareGroup": true,
+    "aliases": [
+      {
+        "airline": "Emirates",
+        "flightNumber": "EK2369"
+      },
+      {
+        "airline": "Flydubai",
+        "flightNumber": "FZ1549"
+      }
+    ],
+    "sampleSize": 11,
+    "averageDelay": -2.9,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.086,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-25",
+        "delayMin": 6.0,
+        "scheduledTime": "09:40"
+      },
+      {
+        "date": "2026-09-24",
+        "delayMin": -4.0,
+        "scheduledTime": "09:40"
+      },
+      {
+        "date": "2026-09-23",
+        "delayMin": 5.0,
+        "scheduledTime": "09:40"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": -10.0,
+        "scheduledTime": "09:40"
+      },
+      {
         "date": "2026-09-20",
         "delayMin": -19.0,
         "scheduledTime": "09:40"
@@ -8578,19 +8861,29 @@
         "scheduledTime": "09:40"
       },
       {
-        "date": "2026-09-19",
-        "delayMin": -3.0,
-        "scheduledTime": "08:55"
-      },
-      {
         "date": "2026-09-18",
         "delayMin": -2.0,
         "scheduledTime": "09:40"
       },
       {
-        "date": "2026-09-18",
-        "delayMin": 0.0,
-        "scheduledTime": "08:45"
+        "date": "2026-09-17",
+        "delayMin": -5.0,
+        "scheduledTime": "09:40"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 1.0,
+        "scheduledTime": "09:40"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 12.0,
+        "scheduledTime": "09:40"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": -8.0,
+        "scheduledTime": "09:40"
       }
     ],
     "isTechnicalStop": false,
@@ -12120,21 +12413,17 @@
     "origin": "Larnaca",
     "destination": "Tel Aviv (TLV)",
     "scheduledTime": "23:50",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
       {
         "airline": "El Al Israel Airlines",
         "flightNumber": "LY5134"
-      },
-      {
-        "airline": "Israir Airlines",
-        "flightNumber": "6H590"
       }
     ],
-    "sampleSize": 9,
-    "averageDelay": 29.7,
-    "delayRate60": 0.222,
-    "delayProbability60": 0.208,
+    "sampleSize": 8,
+    "averageDelay": 18.2,
+    "delayRate60": 0.125,
+    "delayProbability60": 0.158,
     "riskLevel": "low",
     "recentFlights": [
       {
@@ -12156,11 +12445,6 @@
         "date": "2026-09-20",
         "delayMin": 17.0,
         "scheduledTime": "00:45"
-      },
-      {
-        "date": "2026-09-18",
-        "delayMin": 122.0,
-        "scheduledTime": "21:50"
       },
       {
         "date": "2026-09-17",
@@ -12191,43 +12475,24 @@
     "direction": "arrival",
     "origin": "Larnaca",
     "destination": "Tel Aviv (TLV)",
-    "scheduledTime": "23:25",
-    "isCodeshareGroup": true,
+    "scheduledTime": "01:00",
+    "isCodeshareGroup": false,
     "aliases": [
-      {
-        "airline": "Arkia Israeli Airlines",
-        "flightNumber": "IZ170"
-      },
       {
         "airline": "Cyprus Airways",
         "flightNumber": "5B1110"
       }
     ],
-    "sampleSize": 6,
-    "averageDelay": 24.7,
-    "delayRate60": 0.167,
-    "delayProbability60": 0.181,
+    "sampleSize": 3,
+    "averageDelay": 10.3,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.14,
     "riskLevel": "low",
     "recentFlights": [
-      {
-        "date": "2026-09-23",
-        "delayMin": -5.0,
-        "scheduledTime": "23:25"
-      },
       {
         "date": "2026-09-22",
         "delayMin": -11.0,
         "scheduledTime": "02:00"
-      },
-      {
-        "date": "2026-09-22",
-        "delayMin": 95.0,
-        "scheduledTime": "23:25"
-      },
-      {
-        "date": "2026-09-16",
-        "delayMin": 27.0,
-        "scheduledTime": "23:25"
       },
       {
         "date": "2026-09-15",
@@ -12354,43 +12619,24 @@
     "direction": "arrival",
     "origin": "Larnaca",
     "destination": "Tel Aviv (TLV)",
-    "scheduledTime": "07:00",
-    "isCodeshareGroup": true,
+    "scheduledTime": "07:15",
+    "isCodeshareGroup": false,
     "aliases": [
       {
         "airline": "Aegean Airlines",
         "flightNumber": "A3526"
-      },
-      {
-        "airline": "Wizzair",
-        "flightNumber": "W64603"
       }
     ],
-    "sampleSize": 12,
-    "averageDelay": -3.9,
+    "sampleSize": 4,
+    "averageDelay": -14.5,
     "delayRate60": 0.0,
-    "delayProbability60": 0.088,
+    "delayProbability60": 0.136,
     "riskLevel": "low",
     "recentFlights": [
-      {
-        "date": "2026-09-25",
-        "delayMin": 0.0,
-        "scheduledTime": "07:00"
-      },
       {
         "date": "2026-09-24",
         "delayMin": -22.0,
         "scheduledTime": "07:15"
-      },
-      {
-        "date": "2026-09-23",
-        "delayMin": 1.0,
-        "scheduledTime": "07:10"
-      },
-      {
-        "date": "2026-09-22",
-        "delayMin": 7.0,
-        "scheduledTime": "15:10"
       },
       {
         "date": "2026-09-20",
@@ -12398,34 +12644,9 @@
         "scheduledTime": "07:00"
       },
       {
-        "date": "2026-09-19",
-        "delayMin": -18.0,
-        "scheduledTime": "07:25"
-      },
-      {
-        "date": "2026-09-18",
-        "delayMin": 19.0,
-        "scheduledTime": "07:00"
-      },
-      {
-        "date": "2026-09-17",
-        "delayMin": -22.0,
-        "scheduledTime": "07:10"
-      },
-      {
         "date": "2026-09-17",
         "delayMin": -23.0,
         "scheduledTime": "07:15"
-      },
-      {
-        "date": "2026-09-16",
-        "delayMin": 17.0,
-        "scheduledTime": "07:10"
-      },
-      {
-        "date": "2026-09-15",
-        "delayMin": 7.0,
-        "scheduledTime": "15:10"
       },
       {
         "date": "2026-09-14",
@@ -13175,6 +13396,69 @@
     "direction": "arrival",
     "origin": "Larnaca",
     "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "07:10",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Wizzair",
+        "flightNumber": "W64603"
+      }
+    ],
+    "sampleSize": 8,
+    "averageDelay": 1.4,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.11,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-25",
+        "delayMin": 0.0,
+        "scheduledTime": "07:00"
+      },
+      {
+        "date": "2026-09-23",
+        "delayMin": 1.0,
+        "scheduledTime": "07:10"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": 7.0,
+        "scheduledTime": "15:10"
+      },
+      {
+        "date": "2026-09-19",
+        "delayMin": -18.0,
+        "scheduledTime": "07:25"
+      },
+      {
+        "date": "2026-09-18",
+        "delayMin": 19.0,
+        "scheduledTime": "07:00"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": -22.0,
+        "scheduledTime": "07:10"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 17.0,
+        "scheduledTime": "07:10"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 7.0,
+        "scheduledTime": "15:10"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Larnaca",
+    "destination": "Tel Aviv (TLV)",
     "scheduledTime": "15:55",
     "isCodeshareGroup": false,
     "aliases": [
@@ -13276,6 +13560,44 @@
     "direction": "arrival",
     "origin": "Larnaca",
     "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "23:25",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Arkia Israeli Airlines",
+        "flightNumber": "IZ170"
+      }
+    ],
+    "sampleSize": 3,
+    "averageDelay": 39.0,
+    "delayRate60": 0.333,
+    "delayProbability60": 0.23,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-23",
+        "delayMin": -5.0,
+        "scheduledTime": "23:25"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": 95.0,
+        "scheduledTime": "23:25"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 27.0,
+        "scheduledTime": "23:25"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Larnaca",
+    "destination": "Tel Aviv (TLV)",
     "scheduledTime": "00:50",
     "isCodeshareGroup": false,
     "aliases": [
@@ -13342,6 +13664,34 @@
         "date": "2026-09-18",
         "delayMin": 21.0,
         "scheduledTime": "16:50"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Larnaca",
+    "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "21:50",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Israir Airlines",
+        "flightNumber": "6H590"
+      }
+    ],
+    "sampleSize": 1,
+    "averageDelay": 122.0,
+    "delayRate60": 1.0,
+    "delayProbability60": 0.282,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-18",
+        "delayMin": 122.0,
+        "scheduledTime": "21:50"
       }
     ],
     "isTechnicalStop": false,
@@ -13900,10 +14250,6 @@
       {
         "airline": "El Al Israel Airlines",
         "flightNumber": "LY216"
-      },
-      {
-        "airline": "SAS",
-        "flightNumber": "SK3186"
       },
       {
         "airline": "Virgin Atlantic Airways",
@@ -15114,28 +15460,19 @@
     "origin": "Miami International",
     "destination": "Tel Aviv (TLV)",
     "scheduledTime": "18:05",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
-      {
-        "airline": "El Al Israel Airlines",
-        "flightNumber": "LY118"
-      },
       {
         "airline": "Delta Airlines",
         "flightNumber": "DL7450"
       }
     ],
-    "sampleSize": 2,
-    "averageDelay": -16.0,
+    "sampleSize": 1,
+    "averageDelay": -1.0,
     "delayRate60": 0.0,
-    "delayProbability60": 0.163,
+    "delayProbability60": 0.181,
     "riskLevel": "low",
     "recentFlights": [
-      {
-        "date": "2026-09-22",
-        "delayMin": -31.0,
-        "scheduledTime": "19:30"
-      },
       {
         "date": "2026-09-14",
         "delayMin": -1.0,
@@ -15206,6 +15543,34 @@
         "date": "2026-09-15",
         "delayMin": -23.0,
         "scheduledTime": "07:55"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Miami International",
+    "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "19:30",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "El Al Israel Airlines",
+        "flightNumber": "LY118"
+      }
+    ],
+    "sampleSize": 1,
+    "averageDelay": -31.0,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.181,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-22",
+        "delayMin": -31.0,
+        "scheduledTime": "19:30"
       }
     ],
     "isTechnicalStop": false,
@@ -15844,32 +16209,51 @@
     "origin": "Milan-Malpensa",
     "destination": "Tel Aviv (TLV)",
     "scheduledTime": "05:15",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
-      {
-        "airline": "El Al Israel Airlines",
-        "flightNumber": "LY288"
-      },
       {
         "airline": "SAS",
         "flightNumber": "SK3182"
       }
     ],
-    "sampleSize": 2,
-    "averageDelay": -5.0,
+    "sampleSize": 1,
+    "averageDelay": -2.0,
     "delayRate60": 0.0,
-    "delayProbability60": 0.163,
+    "delayProbability60": 0.181,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-20",
+        "delayMin": -2.0,
+        "scheduledTime": "05:15"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Milan-Malpensa",
+    "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "05:45",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "El Al Israel Airlines",
+        "flightNumber": "LY288"
+      }
+    ],
+    "sampleSize": 1,
+    "averageDelay": -8.0,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.181,
     "riskLevel": "low",
     "recentFlights": [
       {
         "date": "2026-09-22",
         "delayMin": -8.0,
         "scheduledTime": "05:45"
-      },
-      {
-        "date": "2026-09-20",
-        "delayMin": -2.0,
-        "scheduledTime": "05:15"
       }
     ],
     "isTechnicalStop": false,
@@ -16875,14 +17259,6 @@
       {
         "airline": "El Al Israel Airlines",
         "flightNumber": "LY020"
-      },
-      {
-        "airline": "El Al Israel Airlines",
-        "flightNumber": "LY012"
-      },
-      {
-        "airline": "Aero Mexico",
-        "flightNumber": "AM7872"
       },
       {
         "airline": "Aero Mexico",
@@ -18687,10 +19063,6 @@
       {
         "airline": "Air France",
         "flightNumber": "AF6177"
-      },
-      {
-        "airline": "SAS",
-        "flightNumber": "SK3170"
       }
     ],
     "sampleSize": 3,
@@ -21768,33 +22140,19 @@
     "origin": "Rhodes-Paradisi",
     "destination": "Tel Aviv (TLV)",
     "scheduledTime": "18:05",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
       {
         "airline": "Israir Airlines",
         "flightNumber": "6H522"
-      },
-      {
-        "airline": "Israir Airlines",
-        "flightNumber": "6H514"
       }
     ],
-    "sampleSize": 3,
-    "averageDelay": 9.7,
+    "sampleSize": 1,
+    "averageDelay": -9.0,
     "delayRate60": 0.0,
-    "delayProbability60": 0.16,
+    "delayProbability60": 0.181,
     "riskLevel": "low",
     "recentFlights": [
-      {
-        "date": "2026-09-21",
-        "delayMin": 9.0,
-        "scheduledTime": "23:40"
-      },
-      {
-        "date": "2026-09-18",
-        "delayMin": 29.0,
-        "scheduledTime": "18:10"
-      },
       {
         "date": "2026-09-14",
         "delayMin": -9.0,
@@ -22121,6 +22479,39 @@
         "date": "2026-09-17",
         "delayMin": 103.0,
         "scheduledTime": "17:25"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Rhodes-Paradisi",
+    "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "18:10",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Israir Airlines",
+        "flightNumber": "6H514"
+      }
+    ],
+    "sampleSize": 2,
+    "averageDelay": 19.0,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.153,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-21",
+        "delayMin": 9.0,
+        "scheduledTime": "23:40"
+      },
+      {
+        "date": "2026-09-18",
+        "delayMin": 29.0,
+        "scheduledTime": "18:10"
       }
     ],
     "isTechnicalStop": false,
@@ -22717,39 +23108,19 @@
     "direction": "arrival",
     "origin": "Rome - Fiumicino",
     "destination": "Tel Aviv (TLV)",
-    "scheduledTime": "17:20",
-    "isCodeshareGroup": true,
+    "scheduledTime": "01:00",
+    "isCodeshareGroup": false,
     "aliases": [
       {
         "airline": "Arkia Israeli Airlines",
         "flightNumber": "IZ336"
-      },
-      {
-        "airline": "El Al Israel Airlines",
-        "flightNumber": "LY284"
-      },
-      {
-        "airline": "El Al Israel Airlines",
-        "flightNumber": "LY286"
-      },
-      {
-        "airline": "Aerolineas Argentinas S.A.",
-        "flightNumber": "AR7860"
-      },
-      {
-        "airline": "Israir Airlines",
-        "flightNumber": "6H344"
-      },
-      {
-        "airline": "SAS",
-        "flightNumber": "SK3172"
       }
     ],
-    "sampleSize": 16,
-    "averageDelay": 51.0,
-    "delayRate60": 0.188,
-    "delayProbability60": 0.193,
-    "riskLevel": "low",
+    "sampleSize": 3,
+    "averageDelay": 122.0,
+    "delayRate60": 0.667,
+    "delayProbability60": 0.342,
+    "riskLevel": "medium",
     "recentFlights": [
       {
         "date": "2026-09-25",
@@ -22757,10 +23128,42 @@
         "scheduledTime": "01:00"
       },
       {
-        "date": "2026-09-24",
-        "delayMin": 231.0,
-        "scheduledTime": "06:10"
+        "date": "2026-09-18",
+        "delayMin": 7.0,
+        "scheduledTime": "01:15"
       },
+      {
+        "date": "2026-09-14",
+        "delayMin": 81.0,
+        "scheduledTime": "14:30"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Rome - Fiumicino",
+    "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "17:20",
+    "isCodeshareGroup": true,
+    "aliases": [
+      {
+        "airline": "El Al Israel Airlines",
+        "flightNumber": "LY286"
+      },
+      {
+        "airline": "SAS",
+        "flightNumber": "SK3172"
+      }
+    ],
+    "sampleSize": 7,
+    "averageDelay": 32.9,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.113,
+    "riskLevel": "low",
+    "recentFlights": [
       {
         "date": "2026-09-24",
         "delayMin": 30.0,
@@ -22773,33 +23176,8 @@
       },
       {
         "date": "2026-09-22",
-        "delayMin": -7.5,
-        "scheduledTime": "04:15"
-      },
-      {
-        "date": "2026-09-22",
-        "delayMin": -8.0,
-        "scheduledTime": "05:05"
-      },
-      {
-        "date": "2026-09-22",
         "delayMin": 23.0,
         "scheduledTime": "17:20"
-      },
-      {
-        "date": "2026-09-20",
-        "delayMin": 6.0,
-        "scheduledTime": "04:15"
-      },
-      {
-        "date": "2026-09-18",
-        "delayMin": 7.0,
-        "scheduledTime": "01:15"
-      },
-      {
-        "date": "2026-09-17",
-        "delayMin": -27.0,
-        "scheduledTime": "04:40"
       },
       {
         "date": "2026-09-17",
@@ -22813,12 +23191,12 @@
       },
       {
         "date": "2026-09-15",
-        "delayMin": 26.0,
-        "scheduledTime": "05:20"
+        "delayMin": 38.0,
+        "scheduledTime": "17:20"
       },
       {
-        "date": "2026-09-15",
-        "delayMin": 38.0,
+        "date": "2026-09-14",
+        "delayMin": 14.0,
         "scheduledTime": "17:20"
       }
     ],
@@ -22888,6 +23266,49 @@
         "date": "2026-09-14",
         "delayMin": 13.0,
         "scheduledTime": "21:00"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Rome - Fiumicino",
+    "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "04:15",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Israir Airlines",
+        "flightNumber": "6H344"
+      }
+    ],
+    "sampleSize": 4,
+    "averageDelay": 55.6,
+    "delayRate60": 0.25,
+    "delayProbability60": 0.219,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-24",
+        "delayMin": 231.0,
+        "scheduledTime": "06:10"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": -7.5,
+        "scheduledTime": "04:15"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": -27.0,
+        "scheduledTime": "04:40"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 26.0,
+        "scheduledTime": "05:20"
       }
     ],
     "isTechnicalStop": false,
@@ -23088,6 +23509,43 @@
     "direction": "arrival",
     "origin": "Rome - Fiumicino",
     "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "04:15",
+    "isCodeshareGroup": true,
+    "aliases": [
+      {
+        "airline": "El Al Israel Airlines",
+        "flightNumber": "LY284"
+      },
+      {
+        "airline": "Aerolineas Argentinas S.A.",
+        "flightNumber": "AR7860"
+      }
+    ],
+    "sampleSize": 2,
+    "averageDelay": -1.0,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.176,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-22",
+        "delayMin": -8.0,
+        "scheduledTime": "05:05"
+      },
+      {
+        "date": "2026-09-20",
+        "delayMin": 6.0,
+        "scheduledTime": "04:15"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Rome - Fiumicino",
+    "destination": "Tel Aviv (TLV)",
     "scheduledTime": "04:25",
     "isCodeshareGroup": false,
     "aliases": [
@@ -23145,15 +23603,11 @@
     "origin": "Rzeszow-Jasionka",
     "destination": "Tel Aviv (TLV)",
     "scheduledTime": "01:10",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
       {
         "airline": "Arkia Israeli Airlines",
         "flightNumber": "IZ362"
-      },
-      {
-        "airline": "Enter Air- E4",
-        "flightNumber": "E4314"
       }
     ],
     "sampleSize": 1,
@@ -23205,12 +23659,8 @@
     "origin": "Rzeszow-Jasionka",
     "destination": "Tel Aviv (TLV)",
     "scheduledTime": "03:05",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
-      {
-        "airline": "Arkia Israeli Airlines",
-        "flightNumber": "IZ460"
-      },
       {
         "airline": "Israir Airlines",
         "flightNumber": "6H854"
@@ -28295,21 +28745,13 @@
       },
       {
         "airline": "LOT Polish Airlines",
-        "flightNumber": "LO5258"
-      },
-      {
-        "airline": "LOT Polish Airlines",
-        "flightNumber": "LO5252"
-      },
-      {
-        "airline": "LOT Polish Airlines",
         "flightNumber": "LO5256"
       }
     ],
-    "sampleSize": 7,
-    "averageDelay": 8.4,
-    "delayRate60": 0.143,
-    "delayProbability60": 0.18,
+    "sampleSize": 6,
+    "averageDelay": 6.3,
+    "delayRate60": 0.167,
+    "delayProbability60": 0.193,
     "riskLevel": "low",
     "recentFlights": [
       {
@@ -28341,7 +28783,30 @@
         "date": "2026-09-15",
         "delayMin": -3.0,
         "scheduledTime": "02:25"
-      },
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "arrival",
+    "origin": "Warsaw",
+    "destination": "Tel Aviv (TLV)",
+    "scheduledTime": "16:00",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "LOT Polish Airlines",
+        "flightNumber": "LO5252"
+      }
+    ],
+    "sampleSize": 1,
+    "averageDelay": 21.0,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.188,
+    "riskLevel": "low",
+    "recentFlights": [
       {
         "date": "2026-09-15",
         "delayMin": 21.0,
@@ -29096,11 +29561,11 @@
       },
       {
         "airline": "El Al Israel Airlines",
-        "flightNumber": "LY9615"
+        "flightNumber": "LY9601"
       },
       {
         "airline": "El Al Israel Airlines",
-        "flightNumber": "LY9601"
+        "flightNumber": "LY9615"
       },
       {
         "airline": "Srilanka Airlines",
@@ -29181,6 +29646,36 @@
       {
         "date": "2026-09-17",
         "delayMin": 11.0,
+        "scheduledTime": "15:05"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 18.0,
+        "scheduledTime": "15:15"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 14.0,
+        "scheduledTime": "15:05"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 8.0,
+        "scheduledTime": "15:15"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 16.0,
+        "scheduledTime": "15:05"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 5.0,
+        "scheduledTime": "15:15"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 24.0,
         "scheduledTime": "15:05"
       }
     ],
@@ -30270,50 +30765,24 @@
     "direction": "departure",
     "origin": "Tel Aviv (TLV)",
     "destination": "Athens",
-    "scheduledTime": "13:50",
-    "isCodeshareGroup": true,
+    "scheduledTime": "07:50",
+    "isCodeshareGroup": false,
     "aliases": [
-      {
-        "airline": "Arkia Israeli Airlines",
-        "flightNumber": "IZ213"
-      },
       {
         "airline": "Blue Bird Airways",
         "flightNumber": "BZ702"
-      },
-      {
-        "airline": "Aegean Airlines",
-        "flightNumber": "A3925"
-      },
-      {
-        "airline": "Air Serbia",
-        "flightNumber": "JU7613"
-      },
-      {
-        "airline": "Emirates",
-        "flightNumber": "EK4979"
       }
     ],
-    "sampleSize": 24,
-    "averageDelay": 71.6,
-    "delayRate60": 0.417,
-    "delayProbability60": 0.368,
+    "sampleSize": 10,
+    "averageDelay": 70.7,
+    "delayRate60": 0.5,
+    "delayProbability60": 0.363,
     "riskLevel": "medium",
     "recentFlights": [
       {
         "date": "2026-09-25",
-        "delayMin": 31.0,
-        "scheduledTime": "13:50"
-      },
-      {
-        "date": "2026-09-25",
         "delayMin": 77.0,
         "scheduledTime": "07:50"
-      },
-      {
-        "date": "2026-09-24",
-        "delayMin": 44.0,
-        "scheduledTime": "13:50"
       },
       {
         "date": "2026-09-24",
@@ -30322,38 +30791,13 @@
       },
       {
         "date": "2026-09-23",
-        "delayMin": 379.0,
-        "scheduledTime": "13:20"
-      },
-      {
-        "date": "2026-09-23",
         "delayMin": 61.0,
         "scheduledTime": "08:30"
       },
       {
         "date": "2026-09-22",
-        "delayMin": 88.0,
-        "scheduledTime": "13:50"
-      },
-      {
-        "date": "2026-09-22",
         "delayMin": 190.0,
         "scheduledTime": "07:50"
-      },
-      {
-        "date": "2026-09-22",
-        "delayMin": 17.0,
-        "scheduledTime": "03:15"
-      },
-      {
-        "date": "2026-09-20",
-        "delayMin": 29.0,
-        "scheduledTime": "13:30"
-      },
-      {
-        "date": "2026-09-19",
-        "delayMin": 21.0,
-        "scheduledTime": "14:00"
       },
       {
         "date": "2026-09-19",
@@ -30362,13 +30806,28 @@
       },
       {
         "date": "2026-09-18",
-        "delayMin": 40.0,
-        "scheduledTime": "14:00"
+        "delayMin": 49.0,
+        "scheduledTime": "07:50"
       },
       {
-        "date": "2026-09-18",
-        "delayMin": 64.0,
-        "scheduledTime": "13:50"
+        "date": "2026-09-17",
+        "delayMin": 71.0,
+        "scheduledTime": "09:00"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 41.0,
+        "scheduledTime": "08:30"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 24.0,
+        "scheduledTime": "07:50"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 34.0,
+        "scheduledTime": "09:00"
       }
     ],
     "isTechnicalStop": false,
@@ -30379,42 +30838,24 @@
     "direction": "departure",
     "origin": "Tel Aviv (TLV)",
     "destination": "Athens",
-    "scheduledTime": "19:30",
-    "isCodeshareGroup": true,
+    "scheduledTime": "19:00",
+    "isCodeshareGroup": false,
     "aliases": [
-      {
-        "airline": "El Al Israel Airlines",
-        "flightNumber": "LY543"
-      },
-      {
-        "airline": "Israir Airlines",
-        "flightNumber": "6H951"
-      },
       {
         "airline": "Israir Airlines",
         "flightNumber": "6H569"
       }
     ],
-    "sampleSize": 15,
-    "averageDelay": 64.3,
-    "delayRate60": 0.333,
-    "delayProbability60": 0.294,
-    "riskLevel": "low",
+    "sampleSize": 5,
+    "averageDelay": 99.2,
+    "delayRate60": 0.6,
+    "delayProbability60": 0.366,
+    "riskLevel": "medium",
     "recentFlights": [
-      {
-        "date": "2026-09-25",
-        "delayMin": 15.0,
-        "scheduledTime": "14:50"
-      },
       {
         "date": "2026-09-24",
         "delayMin": 229.0,
         "scheduledTime": "19:00"
-      },
-      {
-        "date": "2026-09-24",
-        "delayMin": 27.0,
-        "scheduledTime": "19:30"
       },
       {
         "date": "2026-09-23",
@@ -30422,49 +30863,14 @@
         "scheduledTime": "19:00"
       },
       {
-        "date": "2026-09-23",
-        "delayMin": 28.0,
-        "scheduledTime": "19:30"
-      },
-      {
-        "date": "2026-09-22",
-        "delayMin": 21.0,
-        "scheduledTime": "21:50"
-      },
-      {
-        "date": "2026-09-20",
-        "delayMin": 20.0,
-        "scheduledTime": "08:10"
-      },
-      {
         "date": "2026-09-19",
         "delayMin": 12.0,
         "scheduledTime": "18:40"
       },
       {
-        "date": "2026-09-18",
-        "delayMin": 26.0,
-        "scheduledTime": "14:45"
-      },
-      {
-        "date": "2026-09-17",
-        "delayMin": 27.5,
-        "scheduledTime": "19:30"
-      },
-      {
-        "date": "2026-09-16",
-        "delayMin": 42.0,
-        "scheduledTime": "19:30"
-      },
-      {
         "date": "2026-09-15",
         "delayMin": 91.0,
         "scheduledTime": "10:05"
-      },
-      {
-        "date": "2026-09-15",
-        "delayMin": 142.0,
-        "scheduledTime": "19:30"
       },
       {
         "date": "2026-09-14",
@@ -30548,6 +30954,130 @@
     "direction": "departure",
     "origin": "Tel Aviv (TLV)",
     "destination": "Athens",
+    "scheduledTime": "13:20",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Arkia Israeli Airlines",
+        "flightNumber": "IZ213"
+      }
+    ],
+    "sampleSize": 6,
+    "averageDelay": 98.2,
+    "delayRate60": 0.333,
+    "delayProbability60": 0.268,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-23",
+        "delayMin": 379.0,
+        "scheduledTime": "13:20"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": 17.0,
+        "scheduledTime": "03:15"
+      },
+      {
+        "date": "2026-09-19",
+        "delayMin": 21.0,
+        "scheduledTime": "14:00"
+      },
+      {
+        "date": "2026-09-18",
+        "delayMin": 40.0,
+        "scheduledTime": "14:00"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 22.0,
+        "scheduledTime": "13:20"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 110.0,
+        "scheduledTime": "13:10"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Athens",
+    "scheduledTime": "13:50",
+    "isCodeshareGroup": true,
+    "aliases": [
+      {
+        "airline": "Aegean Airlines",
+        "flightNumber": "A3925"
+      },
+      {
+        "airline": "Air Serbia",
+        "flightNumber": "JU7613"
+      },
+      {
+        "airline": "Emirates",
+        "flightNumber": "EK4979"
+      }
+    ],
+    "sampleSize": 8,
+    "averageDelay": 52.8,
+    "delayRate60": 0.375,
+    "delayProbability60": 0.289,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-25",
+        "delayMin": 31.0,
+        "scheduledTime": "13:50"
+      },
+      {
+        "date": "2026-09-24",
+        "delayMin": 44.0,
+        "scheduledTime": "13:50"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": 88.0,
+        "scheduledTime": "13:50"
+      },
+      {
+        "date": "2026-09-20",
+        "delayMin": 29.0,
+        "scheduledTime": "13:30"
+      },
+      {
+        "date": "2026-09-18",
+        "delayMin": 64.0,
+        "scheduledTime": "13:50"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": 95.0,
+        "scheduledTime": "13:50"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 42.0,
+        "scheduledTime": "13:50"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 29.0,
+        "scheduledTime": "13:50"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Athens",
     "scheduledTime": "11:00",
     "isCodeshareGroup": false,
     "aliases": [
@@ -30611,43 +31141,24 @@
     "direction": "departure",
     "origin": "Tel Aviv (TLV)",
     "destination": "Athens",
-    "scheduledTime": "23:30",
-    "isCodeshareGroup": true,
+    "scheduledTime": "13:30",
+    "isCodeshareGroup": false,
     "aliases": [
       {
         "airline": "Blue Bird Airways",
         "flightNumber": "BZ704"
-      },
-      {
-        "airline": "Sky Express S.A.",
-        "flightNumber": "GQ721"
       }
     ],
-    "sampleSize": 21,
-    "averageDelay": 82.9,
-    "delayRate60": 0.476,
-    "delayProbability60": 0.405,
+    "sampleSize": 9,
+    "averageDelay": 141.6,
+    "delayRate60": 0.889,
+    "delayProbability60": 0.566,
     "riskLevel": "medium",
     "recentFlights": [
-      {
-        "date": "2026-09-25",
-        "delayMin": 50.0,
-        "scheduledTime": "07:10"
-      },
-      {
-        "date": "2026-09-24",
-        "delayMin": 32.0,
-        "scheduledTime": "23:30"
-      },
       {
         "date": "2026-09-24",
         "delayMin": 426.0,
         "scheduledTime": "13:30"
-      },
-      {
-        "date": "2026-09-23",
-        "delayMin": 34.0,
-        "scheduledTime": "23:30"
       },
       {
         "date": "2026-09-23",
@@ -30656,28 +31167,8 @@
       },
       {
         "date": "2026-09-22",
-        "delayMin": 21.0,
-        "scheduledTime": "23:30"
-      },
-      {
-        "date": "2026-09-22",
         "delayMin": 110.0,
         "scheduledTime": "01:00"
-      },
-      {
-        "date": "2026-09-21",
-        "delayMin": 121.0,
-        "scheduledTime": "23:30"
-      },
-      {
-        "date": "2026-09-20",
-        "delayMin": 18.0,
-        "scheduledTime": "07:00"
-      },
-      {
-        "date": "2026-09-19",
-        "delayMin": 2.0,
-        "scheduledTime": "23:30"
       },
       {
         "date": "2026-09-19",
@@ -30690,14 +31181,24 @@
         "scheduledTime": "16:20"
       },
       {
-        "date": "2026-09-18",
-        "delayMin": 13.0,
-        "scheduledTime": "07:10"
+        "date": "2026-09-17",
+        "delayMin": 33.0,
+        "scheduledTime": "13:30"
       },
       {
-        "date": "2026-09-17",
-        "delayMin": 32.0,
-        "scheduledTime": "23:30"
+        "date": "2026-09-16",
+        "delayMin": 123.0,
+        "scheduledTime": "17:20"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 85.0,
+        "scheduledTime": "13:30"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 90.0,
+        "scheduledTime": "17:20"
       }
     ],
     "isTechnicalStop": false,
@@ -30751,6 +31252,79 @@
         "date": "2026-09-14",
         "delayMin": 79.0,
         "scheduledTime": "17:50"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Athens",
+    "scheduledTime": "19:30",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "El Al Israel Airlines",
+        "flightNumber": "LY543"
+      }
+    ],
+    "sampleSize": 10,
+    "averageDelay": 46.8,
+    "delayRate60": 0.2,
+    "delayProbability60": 0.209,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-25",
+        "delayMin": 15.0,
+        "scheduledTime": "14:50"
+      },
+      {
+        "date": "2026-09-24",
+        "delayMin": 27.0,
+        "scheduledTime": "19:30"
+      },
+      {
+        "date": "2026-09-23",
+        "delayMin": 28.0,
+        "scheduledTime": "19:30"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": 21.0,
+        "scheduledTime": "21:50"
+      },
+      {
+        "date": "2026-09-20",
+        "delayMin": 20.0,
+        "scheduledTime": "08:10"
+      },
+      {
+        "date": "2026-09-18",
+        "delayMin": 26.0,
+        "scheduledTime": "14:45"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": 27.5,
+        "scheduledTime": "19:30"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 42.0,
+        "scheduledTime": "19:30"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 142.0,
+        "scheduledTime": "19:30"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 120.0,
+        "scheduledTime": "19:30"
       }
     ],
     "isTechnicalStop": false,
@@ -30875,6 +31449,89 @@
         "date": "2026-09-14",
         "delayMin": 140.0,
         "scheduledTime": "20:45"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Athens",
+    "scheduledTime": "23:30",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Sky Express S.A.",
+        "flightNumber": "GQ721"
+      }
+    ],
+    "sampleSize": 12,
+    "averageDelay": 38.8,
+    "delayRate60": 0.167,
+    "delayProbability60": 0.177,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-25",
+        "delayMin": 50.0,
+        "scheduledTime": "07:10"
+      },
+      {
+        "date": "2026-09-24",
+        "delayMin": 32.0,
+        "scheduledTime": "23:30"
+      },
+      {
+        "date": "2026-09-23",
+        "delayMin": 34.0,
+        "scheduledTime": "23:30"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": 21.0,
+        "scheduledTime": "23:30"
+      },
+      {
+        "date": "2026-09-21",
+        "delayMin": 121.0,
+        "scheduledTime": "23:30"
+      },
+      {
+        "date": "2026-09-20",
+        "delayMin": 18.0,
+        "scheduledTime": "07:00"
+      },
+      {
+        "date": "2026-09-19",
+        "delayMin": 2.0,
+        "scheduledTime": "23:30"
+      },
+      {
+        "date": "2026-09-18",
+        "delayMin": 13.0,
+        "scheduledTime": "07:10"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": 32.0,
+        "scheduledTime": "23:30"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 49.0,
+        "scheduledTime": "23:30"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 67.0,
+        "scheduledTime": "23:30"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 27.0,
+        "scheduledTime": "23:30"
       }
     ],
     "isTechnicalStop": false,
@@ -33624,12 +34281,8 @@
     "origin": "Tel Aviv (TLV)",
     "destination": "Bucharest - Otopeni",
     "scheduledTime": "00:20",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
-      {
-        "airline": "El Al Israel Airlines",
-        "flightNumber": "LY9493"
-      },
       {
         "airline": "Tarom - Romanian Air Transport",
         "flightNumber": "RO2154"
@@ -36453,29 +37106,20 @@
     "direction": "departure",
     "origin": "Tel Aviv (TLV)",
     "destination": "Corfu",
-    "scheduledTime": "16:00",
-    "isCodeshareGroup": true,
+    "scheduledTime": "16:10",
+    "isCodeshareGroup": false,
     "aliases": [
-      {
-        "airline": "Arkia Israeli Airlines",
-        "flightNumber": "IZ053"
-      },
       {
         "airline": "TUS Airways",
         "flightNumber": "U8234"
       }
     ],
-    "sampleSize": 21,
-    "averageDelay": 85.4,
-    "delayRate60": 0.524,
-    "delayProbability60": 0.436,
+    "sampleSize": 10,
+    "averageDelay": 94.2,
+    "delayRate60": 0.6,
+    "delayProbability60": 0.424,
     "riskLevel": "medium",
     "recentFlights": [
-      {
-        "date": "2026-09-25",
-        "delayMin": 30.0,
-        "scheduledTime": "16:00"
-      },
       {
         "date": "2026-09-25",
         "delayMin": 282.0,
@@ -36487,24 +37131,9 @@
         "scheduledTime": "16:10"
       },
       {
-        "date": "2026-09-24",
-        "delayMin": 52.0,
-        "scheduledTime": "16:00"
-      },
-      {
         "date": "2026-09-23",
         "delayMin": 117.0,
         "scheduledTime": "17:00"
-      },
-      {
-        "date": "2026-09-23",
-        "delayMin": 175.0,
-        "scheduledTime": "16:00"
-      },
-      {
-        "date": "2026-09-22",
-        "delayMin": 156.0,
-        "scheduledTime": "16:10"
       },
       {
         "date": "2026-09-22",
@@ -36512,24 +37141,9 @@
         "scheduledTime": "08:50"
       },
       {
-        "date": "2026-09-20",
-        "delayMin": 9.5,
-        "scheduledTime": "06:00"
-      },
-      {
-        "date": "2026-09-19",
-        "delayMin": 26.0,
-        "scheduledTime": "17:05"
-      },
-      {
         "date": "2026-09-19",
         "delayMin": 24.0,
         "scheduledTime": "09:55"
-      },
-      {
-        "date": "2026-09-18",
-        "delayMin": 163.0,
-        "scheduledTime": "16:00"
       },
       {
         "date": "2026-09-18",
@@ -36540,6 +37154,21 @@
         "date": "2026-09-17",
         "delayMin": 119.0,
         "scheduledTime": "16:10"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 83.0,
+        "scheduledTime": "15:40"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 61.0,
+        "scheduledTime": "09:00"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 25.0,
+        "scheduledTime": "07:15"
       }
     ],
     "isTechnicalStop": false,
@@ -36616,6 +37245,84 @@
         "date": "2026-09-14",
         "delayMin": 102.0,
         "scheduledTime": "12:55"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Corfu",
+    "scheduledTime": "16:00",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Arkia Israeli Airlines",
+        "flightNumber": "IZ053"
+      }
+    ],
+    "sampleSize": 11,
+    "averageDelay": 77.3,
+    "delayRate60": 0.455,
+    "delayProbability60": 0.353,
+    "riskLevel": "medium",
+    "recentFlights": [
+      {
+        "date": "2026-09-25",
+        "delayMin": 30.0,
+        "scheduledTime": "16:00"
+      },
+      {
+        "date": "2026-09-24",
+        "delayMin": 52.0,
+        "scheduledTime": "16:00"
+      },
+      {
+        "date": "2026-09-23",
+        "delayMin": 175.0,
+        "scheduledTime": "16:00"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": 156.0,
+        "scheduledTime": "16:10"
+      },
+      {
+        "date": "2026-09-20",
+        "delayMin": 9.5,
+        "scheduledTime": "06:00"
+      },
+      {
+        "date": "2026-09-19",
+        "delayMin": 26.0,
+        "scheduledTime": "17:05"
+      },
+      {
+        "date": "2026-09-18",
+        "delayMin": 163.0,
+        "scheduledTime": "16:00"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": 68.0,
+        "scheduledTime": "16:00"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 42.0,
+        "scheduledTime": "16:00"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 33.0,
+        "scheduledTime": "12:35"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 96.0,
+        "scheduledTime": "16:35"
       }
     ],
     "isTechnicalStop": false,
@@ -38074,50 +38781,23 @@
     "origin": "Tel Aviv (TLV)",
     "destination": "Heraklion",
     "scheduledTime": "08:20",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
       {
         "airline": "Blue Bird Airways",
         "flightNumber": "BZ752"
-      },
-      {
-        "airline": "Blue Bird Airways",
-        "flightNumber": "BZ744"
-      },
-      {
-        "airline": "Blue Bird Airways",
-        "flightNumber": "BZ756"
-      },
-      {
-        "airline": "Aegean Airlines",
-        "flightNumber": "A34245"
       }
     ],
-    "sampleSize": 20,
-    "averageDelay": 96.2,
-    "delayRate60": 0.55,
-    "delayProbability60": 0.456,
+    "sampleSize": 10,
+    "averageDelay": 54.9,
+    "delayRate60": 0.4,
+    "delayProbability60": 0.32,
     "riskLevel": "medium",
     "recentFlights": [
       {
         "date": "2026-09-25",
-        "delayMin": 89.0,
-        "scheduledTime": "09:25"
-      },
-      {
-        "date": "2026-09-25",
         "delayMin": 175.0,
         "scheduledTime": "06:55"
-      },
-      {
-        "date": "2026-09-24",
-        "delayMin": 179.0,
-        "scheduledTime": "09:10"
-      },
-      {
-        "date": "2026-09-23",
-        "delayMin": 102.0,
-        "scheduledTime": "08:50"
       },
       {
         "date": "2026-09-23",
@@ -38126,23 +38806,8 @@
       },
       {
         "date": "2026-09-22",
-        "delayMin": 421.0,
-        "scheduledTime": "12:55"
-      },
-      {
-        "date": "2026-09-22",
-        "delayMin": 50.0,
-        "scheduledTime": "09:25"
-      },
-      {
-        "date": "2026-09-22",
         "delayMin": 94.0,
         "scheduledTime": "08:20"
-      },
-      {
-        "date": "2026-09-21",
-        "delayMin": 21.0,
-        "scheduledTime": "23:30"
       },
       {
         "date": "2026-09-20",
@@ -38151,23 +38816,33 @@
       },
       {
         "date": "2026-09-19",
-        "delayMin": 49.0,
-        "scheduledTime": "15:45"
-      },
-      {
-        "date": "2026-09-19",
         "delayMin": 20.0,
         "scheduledTime": "08:05"
       },
       {
         "date": "2026-09-18",
-        "delayMin": 203.0,
-        "scheduledTime": "08:55"
-      },
-      {
-        "date": "2026-09-18",
         "delayMin": 68.0,
         "scheduledTime": "06:55"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": 19.0,
+        "scheduledTime": "08:20"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 64.0,
+        "scheduledTime": "08:30"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 25.0,
+        "scheduledTime": "08:20"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 23.0,
+        "scheduledTime": "07:30"
       }
     ],
     "isTechnicalStop": false,
@@ -38241,43 +38916,24 @@
     "direction": "departure",
     "origin": "Tel Aviv (TLV)",
     "destination": "Heraklion",
-    "scheduledTime": "05:45",
-    "isCodeshareGroup": true,
+    "scheduledTime": "09:10",
+    "isCodeshareGroup": false,
     "aliases": [
-      {
-        "airline": "Israir Airlines",
-        "flightNumber": "6H501"
-      },
       {
         "airline": "Cyprus Airways",
         "flightNumber": "5B1462"
       }
     ],
-    "sampleSize": 12,
-    "averageDelay": 62.5,
-    "delayRate60": 0.5,
-    "delayProbability60": 0.385,
-    "riskLevel": "medium",
+    "sampleSize": 4,
+    "averageDelay": 35.5,
+    "delayRate60": 0.25,
+    "delayProbability60": 0.219,
+    "riskLevel": "low",
     "recentFlights": [
       {
         "date": "2026-09-25",
         "delayMin": 45.0,
         "scheduledTime": "14:25"
-      },
-      {
-        "date": "2026-09-24",
-        "delayMin": 19.0,
-        "scheduledTime": "14:45"
-      },
-      {
-        "date": "2026-09-23",
-        "delayMin": 66.0,
-        "scheduledTime": "09:50"
-      },
-      {
-        "date": "2026-09-22",
-        "delayMin": 20.0,
-        "scheduledTime": "05:45"
       },
       {
         "date": "2026-09-22",
@@ -38286,38 +38942,13 @@
       },
       {
         "date": "2026-09-18",
-        "delayMin": 118.0,
-        "scheduledTime": "14:25"
-      },
-      {
-        "date": "2026-09-18",
         "delayMin": 72.0,
         "scheduledTime": "14:40"
-      },
-      {
-        "date": "2026-09-17",
-        "delayMin": 190.0,
-        "scheduledTime": "14:45"
-      },
-      {
-        "date": "2026-09-16",
-        "delayMin": 74.0,
-        "scheduledTime": "09:50"
-      },
-      {
-        "date": "2026-09-15",
-        "delayMin": 35.0,
-        "scheduledTime": "05:45"
       },
       {
         "date": "2026-09-14",
         "delayMin": 15.0,
         "scheduledTime": "09:30"
-      },
-      {
-        "date": "2026-09-14",
-        "delayMin": 86.0,
-        "scheduledTime": "14:50"
       }
     ],
     "isTechnicalStop": false,
@@ -38396,22 +39027,81 @@
     "direction": "departure",
     "origin": "Tel Aviv (TLV)",
     "destination": "Heraklion",
-    "scheduledTime": "05:30",
-    "isCodeshareGroup": true,
+    "scheduledTime": "05:45",
+    "isCodeshareGroup": false,
     "aliases": [
       {
-        "airline": "Aegean Airlines",
-        "flightNumber": "A3457"
+        "airline": "Israir Airlines",
+        "flightNumber": "6H501"
+      }
+    ],
+    "sampleSize": 8,
+    "averageDelay": 76.0,
+    "delayRate60": 0.625,
+    "delayProbability60": 0.418,
+    "riskLevel": "medium",
+    "recentFlights": [
+      {
+        "date": "2026-09-24",
+        "delayMin": 19.0,
+        "scheduledTime": "14:45"
       },
+      {
+        "date": "2026-09-23",
+        "delayMin": 66.0,
+        "scheduledTime": "09:50"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": 20.0,
+        "scheduledTime": "05:45"
+      },
+      {
+        "date": "2026-09-18",
+        "delayMin": 118.0,
+        "scheduledTime": "14:25"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": 190.0,
+        "scheduledTime": "14:45"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 74.0,
+        "scheduledTime": "09:50"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 35.0,
+        "scheduledTime": "05:45"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 86.0,
+        "scheduledTime": "14:50"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Heraklion",
+    "scheduledTime": "05:45",
+    "isCodeshareGroup": false,
+    "aliases": [
       {
         "airline": "El Al Israel Airlines",
         "flightNumber": "LY5063"
       }
     ],
-    "sampleSize": 11,
-    "averageDelay": 27.5,
+    "sampleSize": 9,
+    "averageDelay": 29.7,
     "delayRate60": 0.0,
-    "delayProbability60": 0.089,
+    "delayProbability60": 0.1,
     "riskLevel": "low",
     "recentFlights": [
       {
@@ -38425,11 +39115,6 @@
         "scheduledTime": "05:45"
       },
       {
-        "date": "2026-09-24",
-        "delayMin": 23.0,
-        "scheduledTime": "06:30"
-      },
-      {
         "date": "2026-09-23",
         "delayMin": 18.0,
         "scheduledTime": "14:00"
@@ -38438,11 +39123,6 @@
         "date": "2026-09-22",
         "delayMin": 18.0,
         "scheduledTime": "13:45"
-      },
-      {
-        "date": "2026-09-20",
-        "delayMin": 12.5,
-        "scheduledTime": "05:30"
       },
       {
         "date": "2026-09-18",
@@ -38531,6 +39211,69 @@
         "date": "2026-09-14",
         "delayMin": 175.0,
         "scheduledTime": "15:20"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Heraklion",
+    "scheduledTime": "09:25",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Blue Bird Airways",
+        "flightNumber": "BZ756"
+      }
+    ],
+    "sampleSize": 8,
+    "averageDelay": 96.8,
+    "delayRate60": 0.625,
+    "delayProbability60": 0.422,
+    "riskLevel": "medium",
+    "recentFlights": [
+      {
+        "date": "2026-09-25",
+        "delayMin": 89.0,
+        "scheduledTime": "09:25"
+      },
+      {
+        "date": "2026-09-23",
+        "delayMin": 102.0,
+        "scheduledTime": "08:50"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": 50.0,
+        "scheduledTime": "09:25"
+      },
+      {
+        "date": "2026-09-21",
+        "delayMin": 21.0,
+        "scheduledTime": "23:30"
+      },
+      {
+        "date": "2026-09-19",
+        "delayMin": 49.0,
+        "scheduledTime": "15:45"
+      },
+      {
+        "date": "2026-09-18",
+        "delayMin": 203.0,
+        "scheduledTime": "08:55"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": 78.0,
+        "scheduledTime": "09:10"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 182.0,
+        "scheduledTime": "18:55"
       }
     ],
     "isTechnicalStop": false,
@@ -38989,6 +39732,39 @@
     "direction": "departure",
     "origin": "Tel Aviv (TLV)",
     "destination": "Heraklion",
+    "scheduledTime": "05:30",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Aegean Airlines",
+        "flightNumber": "A3457"
+      }
+    ],
+    "sampleSize": 2,
+    "averageDelay": 17.8,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.163,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-24",
+        "delayMin": 23.0,
+        "scheduledTime": "06:30"
+      },
+      {
+        "date": "2026-09-20",
+        "delayMin": 12.5,
+        "scheduledTime": "05:30"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Heraklion",
     "scheduledTime": "07:40",
     "isCodeshareGroup": false,
     "aliases": [
@@ -39050,6 +39826,62 @@
         "date": "2026-09-22",
         "delayMin": 1.0,
         "scheduledTime": "04:35"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Heraklion",
+    "scheduledTime": "12:55",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Blue Bird Airways",
+        "flightNumber": "BZ744"
+      }
+    ],
+    "sampleSize": 1,
+    "averageDelay": 421.0,
+    "delayRate60": 1.0,
+    "delayProbability60": 0.307,
+    "riskLevel": "medium",
+    "recentFlights": [
+      {
+        "date": "2026-09-22",
+        "delayMin": 421.0,
+        "scheduledTime": "12:55"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Heraklion",
+    "scheduledTime": "09:10",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Aegean Airlines",
+        "flightNumber": "A34245"
+      }
+    ],
+    "sampleSize": 1,
+    "averageDelay": 179.0,
+    "delayRate60": 1.0,
+    "delayProbability60": 0.307,
+    "riskLevel": "medium",
+    "recentFlights": [
+      {
+        "date": "2026-09-24",
+        "delayMin": 179.0,
+        "scheduledTime": "09:10"
       }
     ],
     "isTechnicalStop": false,
@@ -40394,21 +41226,17 @@
     "origin": "Tel Aviv (TLV)",
     "destination": "Larnaca",
     "scheduledTime": "08:50",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
-      {
-        "airline": "Israir Airlines",
-        "flightNumber": "6H585"
-      },
       {
         "airline": "TUS Airways",
         "flightNumber": "U8103"
       }
     ],
-    "sampleSize": 13,
-    "averageDelay": 49.2,
-    "delayRate60": 0.308,
-    "delayProbability60": 0.274,
+    "sampleSize": 9,
+    "averageDelay": 48.1,
+    "delayRate60": 0.333,
+    "delayProbability60": 0.28,
     "riskLevel": "low",
     "recentFlights": [
       {
@@ -40427,16 +41255,6 @@
         "scheduledTime": "09:00"
       },
       {
-        "date": "2026-09-23",
-        "delayMin": 107.0,
-        "scheduledTime": "19:10"
-      },
-      {
-        "date": "2026-09-22",
-        "delayMin": 23.0,
-        "scheduledTime": "01:00"
-      },
-      {
         "date": "2026-09-22",
         "delayMin": 116.0,
         "scheduledTime": "08:50"
@@ -40447,11 +41265,6 @@
         "scheduledTime": "09:30"
       },
       {
-        "date": "2026-09-19",
-        "delayMin": 30.0,
-        "scheduledTime": "21:00"
-      },
-      {
         "date": "2026-09-18",
         "delayMin": 88.0,
         "scheduledTime": "08:50"
@@ -40460,11 +41273,6 @@
         "date": "2026-09-17",
         "delayMin": 26.0,
         "scheduledTime": "08:15"
-      },
-      {
-        "date": "2026-09-16",
-        "delayMin": 46.0,
-        "scheduledTime": "19:10"
       },
       {
         "date": "2026-09-15",
@@ -40581,22 +41389,18 @@
     "direction": "departure",
     "origin": "Tel Aviv (TLV)",
     "destination": "Larnaca",
-    "scheduledTime": "13:05",
-    "isCodeshareGroup": true,
+    "scheduledTime": "12:15",
+    "isCodeshareGroup": false,
     "aliases": [
-      {
-        "airline": "El Al Israel Airlines",
-        "flightNumber": "LY5141"
-      },
       {
         "airline": "TUS Airways",
         "flightNumber": "U8105"
       }
     ],
-    "sampleSize": 16,
-    "averageDelay": 48.4,
-    "delayRate60": 0.188,
-    "delayProbability60": 0.193,
+    "sampleSize": 10,
+    "averageDelay": 50.8,
+    "delayRate60": 0.2,
+    "delayProbability60": 0.209,
     "riskLevel": "low",
     "recentFlights": [
       {
@@ -40610,11 +41414,6 @@
         "scheduledTime": "12:15"
       },
       {
-        "date": "2026-09-24",
-        "delayMin": 121.0,
-        "scheduledTime": "16:15"
-      },
-      {
         "date": "2026-09-23",
         "delayMin": 45.0,
         "scheduledTime": "13:05"
@@ -40622,16 +41421,6 @@
       {
         "date": "2026-09-22",
         "delayMin": 136.0,
-        "scheduledTime": "13:00"
-      },
-      {
-        "date": "2026-09-22",
-        "delayMin": 18.0,
-        "scheduledTime": "13:05"
-      },
-      {
-        "date": "2026-09-20",
-        "delayMin": 27.0,
         "scheduledTime": "13:00"
       },
       {
@@ -40655,19 +41444,14 @@
         "scheduledTime": "12:15"
       },
       {
-        "date": "2026-09-17",
-        "delayMin": 51.0,
-        "scheduledTime": "16:15"
-      },
-      {
         "date": "2026-09-16",
         "delayMin": 69.0,
         "scheduledTime": "09:00"
       },
       {
-        "date": "2026-09-16",
-        "delayMin": 18.0,
-        "scheduledTime": "13:05"
+        "date": "2026-09-14",
+        "delayMin": 24.0,
+        "scheduledTime": "13:00"
       }
     ],
     "isTechnicalStop": false,
@@ -40721,71 +41505,23 @@
     "direction": "departure",
     "origin": "Tel Aviv (TLV)",
     "destination": "Larnaca",
-    "scheduledTime": "17:10",
-    "isCodeshareGroup": true,
+    "scheduledTime": "14:55",
+    "isCodeshareGroup": false,
     "aliases": [
-      {
-        "airline": "Cyprus Airways",
-        "flightNumber": "5B113"
-      },
       {
         "airline": "Israir Airlines",
         "flightNumber": "6H589"
-      },
-      {
-        "airline": "TUS Airways",
-        "flightNumber": "U8107"
       }
     ],
-    "sampleSize": 16,
-    "averageDelay": 111.2,
-    "delayRate60": 0.625,
-    "delayProbability60": 0.49,
-    "riskLevel": "medium",
+    "sampleSize": 5,
+    "averageDelay": 76.4,
+    "delayRate60": 0.4,
+    "delayProbability60": 0.279,
+    "riskLevel": "low",
     "recentFlights": [
-      {
-        "date": "2026-09-24",
-        "delayMin": 77.0,
-        "scheduledTime": "15:55"
-      },
-      {
-        "date": "2026-09-24",
-        "delayMin": 433.0,
-        "scheduledTime": "19:40"
-      },
-      {
-        "date": "2026-09-23",
-        "delayMin": 92.0,
-        "scheduledTime": "19:00"
-      },
-      {
-        "date": "2026-09-22",
-        "delayMin": 20.0,
-        "scheduledTime": "14:45"
-      },
       {
         "date": "2026-09-22",
         "delayMin": 51.0,
-        "scheduledTime": "17:10"
-      },
-      {
-        "date": "2026-09-22",
-        "delayMin": 367.0,
-        "scheduledTime": "20:00"
-      },
-      {
-        "date": "2026-09-21",
-        "delayMin": 74.0,
-        "scheduledTime": "23:30"
-      },
-      {
-        "date": "2026-09-20",
-        "delayMin": 17.0,
-        "scheduledTime": "02:55"
-      },
-      {
-        "date": "2026-09-18",
-        "delayMin": 103.0,
         "scheduledTime": "17:10"
       },
       {
@@ -40794,24 +41530,19 @@
         "scheduledTime": "18:40"
       },
       {
-        "date": "2026-09-18",
-        "delayMin": 87.0,
-        "scheduledTime": "20:05"
-      },
-      {
-        "date": "2026-09-17",
-        "delayMin": 21.0,
-        "scheduledTime": "17:40"
-      },
-      {
-        "date": "2026-09-17",
-        "delayMin": 106.0,
-        "scheduledTime": "19:40"
-      },
-      {
         "date": "2026-09-16",
         "delayMin": 103.5,
         "scheduledTime": "18:50"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 24.0,
+        "scheduledTime": "21:45"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 49.5,
+        "scheduledTime": "14:55"
       }
     ],
     "isTechnicalStop": false,
@@ -41011,43 +41742,24 @@
     "direction": "departure",
     "origin": "Tel Aviv (TLV)",
     "destination": "Larnaca",
-    "scheduledTime": "21:50",
-    "isCodeshareGroup": true,
+    "scheduledTime": "09:25",
+    "isCodeshareGroup": false,
     "aliases": [
-      {
-        "airline": "Arkia Israeli Airlines",
-        "flightNumber": "IZ1161"
-      },
       {
         "airline": "TUS Airways",
         "flightNumber": "U8109"
       }
     ],
-    "sampleSize": 9,
-    "averageDelay": 55.6,
-    "delayRate60": 0.333,
-    "delayProbability60": 0.267,
+    "sampleSize": 4,
+    "averageDelay": 51.2,
+    "delayRate60": 0.25,
+    "delayProbability60": 0.211,
     "riskLevel": "low",
     "recentFlights": [
-      {
-        "date": "2026-09-24",
-        "delayMin": 118.0,
-        "scheduledTime": "21:55"
-      },
-      {
-        "date": "2026-09-23",
-        "delayMin": 55.0,
-        "scheduledTime": "21:50"
-      },
       {
         "date": "2026-09-19",
         "delayMin": 38.0,
         "scheduledTime": "18:25"
-      },
-      {
-        "date": "2026-09-19",
-        "delayMin": 30.0,
-        "scheduledTime": "20:30"
       },
       {
         "date": "2026-09-18",
@@ -41060,19 +41772,9 @@
         "scheduledTime": "09:25"
       },
       {
-        "date": "2026-09-17",
-        "delayMin": 12.0,
-        "scheduledTime": "21:55"
-      },
-      {
         "date": "2026-09-14",
         "delayMin": 99.0,
         "scheduledTime": "20:00"
-      },
-      {
-        "date": "2026-09-14",
-        "delayMin": 80.0,
-        "scheduledTime": "21:50"
       }
     ],
     "isTechnicalStop": false,
@@ -41126,6 +41828,54 @@
         "date": "2026-09-14",
         "delayMin": 89.0,
         "scheduledTime": "20:30"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Larnaca",
+    "scheduledTime": "21:50",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Arkia Israeli Airlines",
+        "flightNumber": "IZ1161"
+      }
+    ],
+    "sampleSize": 5,
+    "averageDelay": 59.0,
+    "delayRate60": 0.4,
+    "delayProbability60": 0.272,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-24",
+        "delayMin": 118.0,
+        "scheduledTime": "21:55"
+      },
+      {
+        "date": "2026-09-23",
+        "delayMin": 55.0,
+        "scheduledTime": "21:50"
+      },
+      {
+        "date": "2026-09-19",
+        "delayMin": 30.0,
+        "scheduledTime": "20:30"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": 12.0,
+        "scheduledTime": "21:55"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 80.0,
+        "scheduledTime": "21:50"
       }
     ],
     "isTechnicalStop": false,
@@ -41252,6 +42002,203 @@
         "date": "2026-09-15",
         "delayMin": 96.0,
         "scheduledTime": "10:30"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Larnaca",
+    "scheduledTime": "13:05",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "El Al Israel Airlines",
+        "flightNumber": "LY5141"
+      }
+    ],
+    "sampleSize": 6,
+    "averageDelay": 44.3,
+    "delayRate60": 0.167,
+    "delayProbability60": 0.188,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-24",
+        "delayMin": 121.0,
+        "scheduledTime": "16:15"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": 18.0,
+        "scheduledTime": "13:05"
+      },
+      {
+        "date": "2026-09-20",
+        "delayMin": 27.0,
+        "scheduledTime": "13:00"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": 51.0,
+        "scheduledTime": "16:15"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 18.0,
+        "scheduledTime": "13:05"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 31.0,
+        "scheduledTime": "13:05"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Larnaca",
+    "scheduledTime": "19:10",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Israir Airlines",
+        "flightNumber": "6H585"
+      }
+    ],
+    "sampleSize": 4,
+    "averageDelay": 51.5,
+    "delayRate60": 0.25,
+    "delayProbability60": 0.211,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-23",
+        "delayMin": 107.0,
+        "scheduledTime": "19:10"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": 23.0,
+        "scheduledTime": "01:00"
+      },
+      {
+        "date": "2026-09-19",
+        "delayMin": 30.0,
+        "scheduledTime": "21:00"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 46.0,
+        "scheduledTime": "19:10"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Larnaca",
+    "scheduledTime": "14:45",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Cyprus Airways",
+        "flightNumber": "5B113"
+      }
+    ],
+    "sampleSize": 4,
+    "averageDelay": 51.2,
+    "delayRate60": 0.5,
+    "delayProbability60": 0.302,
+    "riskLevel": "medium",
+    "recentFlights": [
+      {
+        "date": "2026-09-24",
+        "delayMin": 77.0,
+        "scheduledTime": "15:55"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": 20.0,
+        "scheduledTime": "14:45"
+      },
+      {
+        "date": "2026-09-18",
+        "delayMin": 87.0,
+        "scheduledTime": "20:05"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": 21.0,
+        "scheduledTime": "17:40"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Larnaca",
+    "scheduledTime": "19:40",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "TUS Airways",
+        "flightNumber": "U8107"
+      }
+    ],
+    "sampleSize": 7,
+    "averageDelay": 170.3,
+    "delayRate60": 0.857,
+    "delayProbability60": 0.517,
+    "riskLevel": "medium",
+    "recentFlights": [
+      {
+        "date": "2026-09-24",
+        "delayMin": 433.0,
+        "scheduledTime": "19:40"
+      },
+      {
+        "date": "2026-09-23",
+        "delayMin": 92.0,
+        "scheduledTime": "19:00"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": 367.0,
+        "scheduledTime": "20:00"
+      },
+      {
+        "date": "2026-09-21",
+        "delayMin": 74.0,
+        "scheduledTime": "23:30"
+      },
+      {
+        "date": "2026-09-20",
+        "delayMin": 17.0,
+        "scheduledTime": "02:55"
+      },
+      {
+        "date": "2026-09-18",
+        "delayMin": 103.0,
+        "scheduledTime": "17:10"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": 106.0,
+        "scheduledTime": "19:40"
       }
     ],
     "isTechnicalStop": false,
@@ -43337,12 +44284,8 @@
     "origin": "Tel Aviv (TLV)",
     "destination": "Miami International",
     "scheduledTime": "00:15",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
-      {
-        "airline": "El Al Israel Airlines",
-        "flightNumber": "LY121"
-      },
       {
         "airline": "Delta Airlines",
         "flightNumber": "DL7453"
@@ -43701,11 +44644,11 @@
     "aliases": [
       {
         "airline": "El Al Israel Airlines",
-        "flightNumber": "LY281"
+        "flightNumber": "LY387"
       },
       {
         "airline": "El Al Israel Airlines",
-        "flightNumber": "LY387"
+        "flightNumber": "LY281"
       },
       {
         "airline": "Air Portugal",
@@ -43794,6 +44737,16 @@
       {
         "date": "2026-09-15",
         "delayMin": 64.0,
+        "scheduledTime": "18:35"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 21.0,
+        "scheduledTime": "15:30"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 38.0,
         "scheduledTime": "18:35"
       }
     ],
@@ -44758,10 +45711,6 @@
         "flightNumber": "IZ991"
       },
       {
-        "airline": "Arkia Israeli Airlines",
-        "flightNumber": "IZ993"
-      },
-      {
         "airline": "El Al Israel Airlines",
         "flightNumber": "LY003"
       },
@@ -44774,10 +45723,10 @@
         "flightNumber": "DL7426"
       }
     ],
-    "sampleSize": 12,
-    "averageDelay": 40.8,
-    "delayRate60": 0.167,
-    "delayProbability60": 0.177,
+    "sampleSize": 10,
+    "averageDelay": 37.3,
+    "delayRate60": 0.1,
+    "delayProbability60": 0.141,
     "riskLevel": "low",
     "recentFlights": [
       {
@@ -44799,11 +45748,6 @@
         "date": "2026-09-22",
         "delayMin": 74.0,
         "scheduledTime": "00:55"
-      },
-      {
-        "date": "2026-09-22",
-        "delayMin": 70.0,
-        "scheduledTime": "08:00"
       },
       {
         "date": "2026-09-20",
@@ -44834,11 +45778,6 @@
         "date": "2026-09-14",
         "delayMin": 42.0,
         "scheduledTime": "00:05"
-      },
-      {
-        "date": "2026-09-14",
-        "delayMin": 47.0,
-        "scheduledTime": "23:05"
       }
     ],
     "isTechnicalStop": false,
@@ -45134,6 +46073,39 @@
     "direction": "departure",
     "origin": "Tel Aviv (TLV)",
     "destination": "New York - J.F.Kennedy",
+    "scheduledTime": "08:00",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Arkia Israeli Airlines",
+        "flightNumber": "IZ993"
+      }
+    ],
+    "sampleSize": 2,
+    "averageDelay": 58.5,
+    "delayRate60": 0.5,
+    "delayProbability60": 0.253,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-22",
+        "delayMin": 70.0,
+        "scheduledTime": "08:00"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 47.0,
+        "scheduledTime": "23:05"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "New York - J.F.Kennedy",
     "scheduledTime": "00:00",
     "isCodeshareGroup": false,
     "aliases": [
@@ -45277,31 +46249,50 @@
     "origin": "Tel Aviv (TLV)",
     "destination": "New York - J.F.Kennedy",
     "scheduledTime": "18:20",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
       {
         "airline": "El Al Israel Airlines",
         "flightNumber": "LY019"
-      },
+      }
+    ],
+    "sampleSize": 1,
+    "averageDelay": 31.0,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.181,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-16",
+        "delayMin": 31.0,
+        "scheduledTime": "18:20"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "New York - J.F.Kennedy",
+    "scheduledTime": "18:20",
+    "isCodeshareGroup": false,
+    "aliases": [
       {
         "airline": "Delta Airlines",
         "flightNumber": "DL7426A"
       }
     ],
-    "sampleSize": 2,
-    "averageDelay": 27.0,
+    "sampleSize": 1,
+    "averageDelay": 23.0,
     "delayRate60": 0.0,
-    "delayProbability60": 0.163,
+    "delayProbability60": 0.181,
     "riskLevel": "low",
     "recentFlights": [
       {
         "date": "2026-09-23",
         "delayMin": 23.0,
-        "scheduledTime": "18:20"
-      },
-      {
-        "date": "2026-09-16",
-        "delayMin": 31.0,
         "scheduledTime": "18:20"
       }
     ],
@@ -45782,22 +46773,46 @@
     "origin": "Tel Aviv (TLV)",
     "destination": "Palermo",
     "scheduledTime": "21:35",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
       {
         "airline": "El Al Israel Airlines",
         "flightNumber": "LY5425"
-      },
+      }
+    ],
+    "sampleSize": 1,
+    "averageDelay": 28.0,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.196,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-14",
+        "delayMin": 28.0,
+        "scheduledTime": "21:35"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Palermo",
+    "scheduledTime": "21:35",
+    "isCodeshareGroup": false,
+    "aliases": [
       {
         "airline": "Wizz Air Malta",
         "flightNumber": "W46640"
       }
     ],
-    "sampleSize": 4,
-    "averageDelay": 72.0,
-    "delayRate60": 0.5,
-    "delayProbability60": 0.295,
-    "riskLevel": "low",
+    "sampleSize": 3,
+    "averageDelay": 86.7,
+    "delayRate60": 0.667,
+    "delayProbability60": 0.321,
+    "riskLevel": "medium",
     "recentFlights": [
       {
         "date": "2026-09-23",
@@ -45812,11 +46827,6 @@
       {
         "date": "2026-09-16",
         "delayMin": 144.0,
-        "scheduledTime": "21:35"
-      },
-      {
-        "date": "2026-09-14",
-        "delayMin": 28.0,
         "scheduledTime": "21:35"
       }
     ],
@@ -45968,21 +46978,17 @@
     "origin": "Tel Aviv (TLV)",
     "destination": "Paphos",
     "scheduledTime": "09:00",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
       {
         "airline": "TUS Airways",
         "flightNumber": "U8152"
-      },
-      {
-        "airline": "TUS Airways",
-        "flightNumber": "U8158"
       }
     ],
-    "sampleSize": 13,
-    "averageDelay": 73.3,
-    "delayRate60": 0.538,
-    "delayProbability60": 0.417,
+    "sampleSize": 9,
+    "averageDelay": 64.7,
+    "delayRate60": 0.444,
+    "delayProbability60": 0.339,
     "riskLevel": "medium",
     "recentFlights": [
       {
@@ -45991,19 +46997,9 @@
         "scheduledTime": "09:00"
       },
       {
-        "date": "2026-09-25",
-        "delayMin": 100.0,
-        "scheduledTime": "09:20"
-      },
-      {
         "date": "2026-09-24",
         "delayMin": 146.0,
         "scheduledTime": "09:00"
-      },
-      {
-        "date": "2026-09-24",
-        "delayMin": 168.0,
-        "scheduledTime": "10:00"
       },
       {
         "date": "2026-09-23",
@@ -46021,18 +47017,8 @@
         "scheduledTime": "09:00"
       },
       {
-        "date": "2026-09-19",
-        "delayMin": 61.0,
-        "scheduledTime": "09:20"
-      },
-      {
         "date": "2026-09-18",
         "delayMin": 31.0,
-        "scheduledTime": "09:00"
-      },
-      {
-        "date": "2026-09-17",
-        "delayMin": 41.5,
         "scheduledTime": "09:00"
       },
       {
@@ -46236,42 +47222,24 @@
     "direction": "departure",
     "origin": "Tel Aviv (TLV)",
     "destination": "Paphos",
-    "scheduledTime": "09:10",
-    "isCodeshareGroup": true,
+    "scheduledTime": "09:20",
+    "isCodeshareGroup": false,
     "aliases": [
       {
         "airline": "Arkia Israeli Airlines",
         "flightNumber": "IZ151"
-      },
-      {
-        "airline": "El Al Israel Airlines",
-        "flightNumber": "LY5437"
-      },
-      {
-        "airline": "Israir Airlines",
-        "flightNumber": "6H593"
       }
     ],
-    "sampleSize": 13,
-    "averageDelay": 65.8,
-    "delayRate60": 0.385,
-    "delayProbability60": 0.322,
-    "riskLevel": "medium",
+    "sampleSize": 6,
+    "averageDelay": 38.0,
+    "delayRate60": 0.167,
+    "delayProbability60": 0.197,
+    "riskLevel": "low",
     "recentFlights": [
-      {
-        "date": "2026-09-25",
-        "delayMin": 74.0,
-        "scheduledTime": "09:10"
-      },
       {
         "date": "2026-09-24",
         "delayMin": 75.0,
         "scheduledTime": "11:35"
-      },
-      {
-        "date": "2026-09-24",
-        "delayMin": 256.0,
-        "scheduledTime": "21:15"
       },
       {
         "date": "2026-09-22",
@@ -46279,24 +47247,9 @@
         "scheduledTime": "09:20"
       },
       {
-        "date": "2026-09-22",
-        "delayMin": 17.0,
-        "scheduledTime": "14:00"
-      },
-      {
-        "date": "2026-09-20",
-        "delayMin": 19.0,
-        "scheduledTime": "08:00"
-      },
-      {
         "date": "2026-09-19",
         "delayMin": 30.0,
         "scheduledTime": "10:25"
-      },
-      {
-        "date": "2026-09-18",
-        "delayMin": 34.0,
-        "scheduledTime": "09:10"
       },
       {
         "date": "2026-09-18",
@@ -46309,14 +47262,62 @@
         "scheduledTime": "12:00"
       },
       {
-        "date": "2026-09-17",
-        "delayMin": 78.0,
-        "scheduledTime": "21:15"
-      },
-      {
         "date": "2026-09-15",
         "delayMin": 11.0,
         "scheduledTime": "10:35"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Paphos",
+    "scheduledTime": "09:10",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Israir Airlines",
+        "flightNumber": "6H593"
+      }
+    ],
+    "sampleSize": 7,
+    "averageDelay": 89.6,
+    "delayRate60": 0.571,
+    "delayProbability60": 0.384,
+    "riskLevel": "medium",
+    "recentFlights": [
+      {
+        "date": "2026-09-25",
+        "delayMin": 74.0,
+        "scheduledTime": "09:10"
+      },
+      {
+        "date": "2026-09-24",
+        "delayMin": 256.0,
+        "scheduledTime": "21:15"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": 17.0,
+        "scheduledTime": "14:00"
+      },
+      {
+        "date": "2026-09-20",
+        "delayMin": 19.0,
+        "scheduledTime": "08:00"
+      },
+      {
+        "date": "2026-09-18",
+        "delayMin": 34.0,
+        "scheduledTime": "09:10"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": 78.0,
+        "scheduledTime": "21:15"
       },
       {
         "date": "2026-09-15",
@@ -46484,6 +47485,49 @@
         "date": "2026-09-16",
         "delayMin": 252.0,
         "scheduledTime": "18:40"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Paphos",
+    "scheduledTime": "09:20",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "TUS Airways",
+        "flightNumber": "U8158"
+      }
+    ],
+    "sampleSize": 4,
+    "averageDelay": 92.6,
+    "delayRate60": 0.75,
+    "delayProbability60": 0.378,
+    "riskLevel": "medium",
+    "recentFlights": [
+      {
+        "date": "2026-09-25",
+        "delayMin": 100.0,
+        "scheduledTime": "09:20"
+      },
+      {
+        "date": "2026-09-24",
+        "delayMin": 168.0,
+        "scheduledTime": "10:00"
+      },
+      {
+        "date": "2026-09-19",
+        "delayMin": 61.0,
+        "scheduledTime": "09:20"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": 41.5,
+        "scheduledTime": "09:00"
       }
     ],
     "isTechnicalStop": false,
@@ -48614,21 +49658,17 @@
     "origin": "Tel Aviv (TLV)",
     "destination": "Ramon",
     "scheduledTime": "09:50",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
       {
         "airline": "Arkia Israeli Airlines",
         "flightNumber": "IZ807"
-      },
-      {
-        "airline": "Israir Airlines",
-        "flightNumber": "6H049"
       }
     ],
-    "sampleSize": 9,
-    "averageDelay": 50.3,
-    "delayRate60": 0.222,
-    "delayProbability60": 0.221,
+    "sampleSize": 6,
+    "averageDelay": 60.5,
+    "delayRate60": 0.333,
+    "delayProbability60": 0.259,
     "riskLevel": "low",
     "recentFlights": [
       {
@@ -48637,29 +49677,14 @@
         "scheduledTime": "09:50"
       },
       {
-        "date": "2026-09-24",
-        "delayMin": 24.0,
-        "scheduledTime": "11:00"
-      },
-      {
         "date": "2026-09-22",
         "delayMin": 20.0,
         "scheduledTime": "09:50"
       },
       {
-        "date": "2026-09-20",
-        "delayMin": 23.5,
-        "scheduledTime": "09:00"
-      },
-      {
         "date": "2026-09-17",
         "delayMin": 53.0,
         "scheduledTime": "09:50"
-      },
-      {
-        "date": "2026-09-17",
-        "delayMin": 42.0,
-        "scheduledTime": "11:00"
       },
       {
         "date": "2026-09-16",
@@ -49071,6 +50096,44 @@
     "direction": "departure",
     "origin": "Tel Aviv (TLV)",
     "destination": "Ramon",
+    "scheduledTime": "11:00",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Israir Airlines",
+        "flightNumber": "6H049"
+      }
+    ],
+    "sampleSize": 3,
+    "averageDelay": 29.8,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.16,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-24",
+        "delayMin": 24.0,
+        "scheduledTime": "11:00"
+      },
+      {
+        "date": "2026-09-20",
+        "delayMin": 23.5,
+        "scheduledTime": "09:00"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": 42.0,
+        "scheduledTime": "11:00"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Ramon",
     "scheduledTime": "09:10",
     "isCodeshareGroup": false,
     "aliases": [
@@ -49435,6 +50498,16 @@
         "date": "2026-09-15",
         "delayMin": 56.0,
         "scheduledTime": "09:20"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 35.0,
+        "scheduledTime": "07:25"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 21.0,
+        "scheduledTime": "09:10"
       }
     ],
     "isTechnicalStop": false,
@@ -49446,28 +50519,19 @@
     "origin": "Tel Aviv (TLV)",
     "destination": "Rhodes-Paradisi",
     "scheduledTime": "08:00",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
       {
         "airline": "Arkia Israeli Airlines",
         "flightNumber": "IZ1071"
-      },
-      {
-        "airline": "Israir Airlines",
-        "flightNumber": "6H517"
       }
     ],
-    "sampleSize": 17,
-    "averageDelay": 54.8,
-    "delayRate60": 0.176,
-    "delayProbability60": 0.19,
+    "sampleSize": 11,
+    "averageDelay": 40.7,
+    "delayRate60": 0.091,
+    "delayProbability60": 0.133,
     "riskLevel": "low",
     "recentFlights": [
-      {
-        "date": "2026-09-25",
-        "delayMin": 55.0,
-        "scheduledTime": "11:10"
-      },
       {
         "date": "2026-09-25",
         "delayMin": 117.0,
@@ -49484,16 +50548,6 @@
         "scheduledTime": "13:10"
       },
       {
-        "date": "2026-09-23",
-        "delayMin": 35.0,
-        "scheduledTime": "08:00"
-      },
-      {
-        "date": "2026-09-22",
-        "delayMin": 86.0,
-        "scheduledTime": "18:40"
-      },
-      {
         "date": "2026-09-22",
         "delayMin": 23.0,
         "scheduledTime": "07:05"
@@ -49505,18 +50559,8 @@
       },
       {
         "date": "2026-09-19",
-        "delayMin": 56.0,
-        "scheduledTime": "15:15"
-      },
-      {
-        "date": "2026-09-19",
         "delayMin": 30.0,
         "scheduledTime": "08:00"
-      },
-      {
-        "date": "2026-09-18",
-        "delayMin": 232.0,
-        "scheduledTime": "18:35"
       },
       {
         "date": "2026-09-18",
@@ -49531,6 +50575,16 @@
       {
         "date": "2026-09-16",
         "delayMin": 37.5,
+        "scheduledTime": "08:00"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 20.0,
+        "scheduledTime": "06:30"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 46.0,
         "scheduledTime": "08:00"
       }
     ],
@@ -49692,41 +50746,23 @@
     "origin": "Tel Aviv (TLV)",
     "destination": "Rhodes-Paradisi",
     "scheduledTime": "14:00",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
-      {
-        "airline": "Blue Bird Airways",
-        "flightNumber": "BZ694"
-      },
       {
         "airline": "El Al Israel Airlines",
         "flightNumber": "LY5031"
-      },
-      {
-        "airline": "Israir Airlines",
-        "flightNumber": "6H513"
       }
     ],
-    "sampleSize": 20,
-    "averageDelay": 72.2,
-    "delayRate60": 0.4,
-    "delayProbability60": 0.344,
-    "riskLevel": "medium",
+    "sampleSize": 10,
+    "averageDelay": 33.1,
+    "delayRate60": 0.3,
+    "delayProbability60": 0.257,
+    "riskLevel": "low",
     "recentFlights": [
-      {
-        "date": "2026-09-25",
-        "delayMin": 39.0,
-        "scheduledTime": "13:55"
-      },
       {
         "date": "2026-09-25",
         "delayMin": 12.0,
         "scheduledTime": "11:45"
-      },
-      {
-        "date": "2026-09-24",
-        "delayMin": 324.0,
-        "scheduledTime": "14:40"
       },
       {
         "date": "2026-09-24",
@@ -49744,14 +50780,67 @@
         "scheduledTime": "14:00"
       },
       {
-        "date": "2026-09-22",
-        "delayMin": 154.0,
-        "scheduledTime": "13:10"
-      },
-      {
         "date": "2026-09-20",
         "delayMin": 13.0,
         "scheduledTime": "12:10"
+      },
+      {
+        "date": "2026-09-18",
+        "delayMin": 73.0,
+        "scheduledTime": "11:25"
+      },
+      {
+        "date": "2026-09-17",
+        "delayMin": 31.0,
+        "scheduledTime": "12:20"
+      },
+      {
+        "date": "2026-09-16",
+        "delayMin": 19.0,
+        "scheduledTime": "14:00"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 17.0,
+        "scheduledTime": "14:00"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 34.5,
+        "scheduledTime": "13:55"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Rhodes-Paradisi",
+    "scheduledTime": "13:10",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Blue Bird Airways",
+        "flightNumber": "BZ694"
+      }
+    ],
+    "sampleSize": 8,
+    "averageDelay": 126.8,
+    "delayRate60": 0.5,
+    "delayProbability60": 0.36,
+    "riskLevel": "medium",
+    "recentFlights": [
+      {
+        "date": "2026-09-24",
+        "delayMin": 324.0,
+        "scheduledTime": "14:40"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": 154.0,
+        "scheduledTime": "13:10"
       },
       {
         "date": "2026-09-20",
@@ -49769,19 +50858,19 @@
         "scheduledTime": "14:40"
       },
       {
-        "date": "2026-09-18",
-        "delayMin": 61.0,
-        "scheduledTime": "13:55"
-      },
-      {
-        "date": "2026-09-18",
-        "delayMin": 73.0,
-        "scheduledTime": "11:25"
-      },
-      {
         "date": "2026-09-17",
         "delayMin": 17.0,
         "scheduledTime": "20:00"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 21.0,
+        "scheduledTime": "13:10"
+      },
+      {
+        "date": "2026-09-14",
+        "delayMin": 250.0,
+        "scheduledTime": "14:20"
       }
     ],
     "isTechnicalStop": false,
@@ -49835,6 +50924,59 @@
         "date": "2026-09-15",
         "delayMin": 31.0,
         "scheduledTime": "08:00"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Rhodes-Paradisi",
+    "scheduledTime": "18:40",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Israir Airlines",
+        "flightNumber": "6H517"
+      }
+    ],
+    "sampleSize": 6,
+    "averageDelay": 80.7,
+    "delayRate60": 0.333,
+    "delayProbability60": 0.268,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-25",
+        "delayMin": 55.0,
+        "scheduledTime": "11:10"
+      },
+      {
+        "date": "2026-09-23",
+        "delayMin": 35.0,
+        "scheduledTime": "08:00"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": 86.0,
+        "scheduledTime": "18:40"
+      },
+      {
+        "date": "2026-09-19",
+        "delayMin": 56.0,
+        "scheduledTime": "15:15"
+      },
+      {
+        "date": "2026-09-18",
+        "delayMin": 232.0,
+        "scheduledTime": "18:35"
+      },
+      {
+        "date": "2026-09-15",
+        "delayMin": 20.0,
+        "scheduledTime": "18:40"
       }
     ],
     "isTechnicalStop": false,
@@ -49997,6 +51139,39 @@
         "date": "2026-09-18",
         "delayMin": 75.0,
         "scheduledTime": "10:10"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Rhodes-Paradisi",
+    "scheduledTime": "13:55",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "Israir Airlines",
+        "flightNumber": "6H513"
+      }
+    ],
+    "sampleSize": 2,
+    "averageDelay": 50.0,
+    "delayRate60": 0.5,
+    "delayProbability60": 0.269,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-25",
+        "delayMin": 39.0,
+        "scheduledTime": "13:55"
+      },
+      {
+        "date": "2026-09-18",
+        "delayMin": 61.0,
+        "scheduledTime": "13:55"
       }
     ],
     "isTechnicalStop": false,
@@ -52225,37 +53400,23 @@
     "origin": "Tel Aviv (TLV)",
     "destination": "Tbilisi",
     "scheduledTime": "13:45",
-    "isCodeshareGroup": true,
+    "isCodeshareGroup": false,
     "aliases": [
-      {
-        "airline": "El Al Israel Airlines",
-        "flightNumber": "LY5417"
-      },
       {
         "airline": "One Click",
         "flightNumber": "4L102"
       }
     ],
-    "sampleSize": 4,
-    "averageDelay": 68.6,
-    "delayRate60": 0.5,
-    "delayProbability60": 0.302,
+    "sampleSize": 2,
+    "averageDelay": 115.2,
+    "delayRate60": 1.0,
+    "delayProbability60": 0.376,
     "riskLevel": "medium",
     "recentFlights": [
       {
         "date": "2026-09-24",
         "delayMin": 144.0,
         "scheduledTime": "20:00"
-      },
-      {
-        "date": "2026-09-23",
-        "delayMin": 24.0,
-        "scheduledTime": "15:20"
-      },
-      {
-        "date": "2026-09-22",
-        "delayMin": 20.0,
-        "scheduledTime": "13:45"
       },
       {
         "date": "2026-09-15",
@@ -52499,6 +53660,39 @@
         "date": "2026-09-21",
         "delayMin": 77.0,
         "scheduledTime": "23:55"
+      }
+    ],
+    "isTechnicalStop": false,
+    "technicalStopNote": null,
+    "trueDestination": null
+  },
+  {
+    "direction": "departure",
+    "origin": "Tel Aviv (TLV)",
+    "destination": "Tbilisi",
+    "scheduledTime": "13:45",
+    "isCodeshareGroup": false,
+    "aliases": [
+      {
+        "airline": "El Al Israel Airlines",
+        "flightNumber": "LY5417"
+      }
+    ],
+    "sampleSize": 2,
+    "averageDelay": 22.0,
+    "delayRate60": 0.0,
+    "delayProbability60": 0.163,
+    "riskLevel": "low",
+    "recentFlights": [
+      {
+        "date": "2026-09-23",
+        "delayMin": 24.0,
+        "scheduledTime": "15:20"
+      },
+      {
+        "date": "2026-09-22",
+        "delayMin": 20.0,
+        "scheduledTime": "13:45"
       }
     ],
     "isTechnicalStop": false,

@@ -1,7 +1,9 @@
 {
   "totalScanned": 7828,
   "totalFlightsAnalyzed": 1513,
-  "lastUpdated": "2026-09-26 06:49",
+  "lastUpdated": "2026-09-26 07:56",
+  "dataStartDate": "2026-09-13",
+  "daysOfDataCollected": 13,
   "mostPunctualAirlines": [
     {
       "airline": "Etihad Airways",
@@ -174,6 +176,147 @@
     {
       "direction": "departure",
       "origin": "Tel Aviv (TLV)",
+      "destination": "Athens",
+      "scheduledTime": "13:30",
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Blue Bird Airways",
+          "flightNumber": "BZ704"
+        }
+      ],
+      "sampleSize": 9,
+      "averageDelay": 141.6,
+      "delayRate60": 0.889,
+      "delayProbability60": 0.566,
+      "riskLevel": "medium",
+      "recentFlights": [
+        {
+          "date": "2026-09-24",
+          "delayMin": 426.0,
+          "scheduledTime": "13:30"
+        },
+        {
+          "date": "2026-09-23",
+          "delayMin": 128.0,
+          "scheduledTime": "17:20"
+        },
+        {
+          "date": "2026-09-22",
+          "delayMin": 110.0,
+          "scheduledTime": "01:00"
+        },
+        {
+          "date": "2026-09-19",
+          "delayMin": 65.0,
+          "scheduledTime": "15:25"
+        },
+        {
+          "date": "2026-09-18",
+          "delayMin": 214.0,
+          "scheduledTime": "16:20"
+        },
+        {
+          "date": "2026-09-17",
+          "delayMin": 33.0,
+          "scheduledTime": "13:30"
+        },
+        {
+          "date": "2026-09-16",
+          "delayMin": 123.0,
+          "scheduledTime": "17:20"
+        },
+        {
+          "date": "2026-09-15",
+          "delayMin": 85.0,
+          "scheduledTime": "13:30"
+        },
+        {
+          "date": "2026-09-14",
+          "delayMin": 90.0,
+          "scheduledTime": "17:20"
+        }
+      ],
+      "isTechnicalStop": false,
+      "technicalStopNote": null,
+      "trueDestination": null
+    },
+    {
+      "direction": "arrival",
+      "origin": "Athens",
+      "destination": "Tel Aviv (TLV)",
+      "scheduledTime": "18:40",
+      "isCodeshareGroup": false,
+      "aliases": [
+        {
+          "airline": "Blue Bird Airways",
+          "flightNumber": "BZ703"
+        }
+      ],
+      "sampleSize": 10,
+      "averageDelay": 153.1,
+      "delayRate60": 0.8,
+      "delayProbability60": 0.542,
+      "riskLevel": "medium",
+      "recentFlights": [
+        {
+          "date": "2026-09-25",
+          "delayMin": 346.0,
+          "scheduledTime": "08:55"
+        },
+        {
+          "date": "2026-09-24",
+          "delayMin": 416.0,
+          "scheduledTime": "18:40"
+        },
+        {
+          "date": "2026-09-23",
+          "delayMin": 97.0,
+          "scheduledTime": "22:30"
+        },
+        {
+          "date": "2026-09-20",
+          "delayMin": 296.0,
+          "scheduledTime": "07:45"
+        },
+        {
+          "date": "2026-09-19",
+          "delayMin": 17.0,
+          "scheduledTime": "14:25"
+        },
+        {
+          "date": "2026-09-18",
+          "delayMin": 91.0,
+          "scheduledTime": "12:45"
+        },
+        {
+          "date": "2026-09-17",
+          "delayMin": 74.0,
+          "scheduledTime": "18:40"
+        },
+        {
+          "date": "2026-09-16",
+          "delayMin": 92.0,
+          "scheduledTime": "22:30"
+        },
+        {
+          "date": "2026-09-15",
+          "delayMin": 73.0,
+          "scheduledTime": "18:40"
+        },
+        {
+          "date": "2026-09-14",
+          "delayMin": 29.0,
+          "scheduledTime": "22:30"
+        }
+      ],
+      "isTechnicalStop": false,
+      "technicalStopNote": null,
+      "trueDestination": null
+    },
+    {
+      "direction": "departure",
+      "origin": "Tel Aviv (TLV)",
       "destination": "Bergamo",
       "scheduledTime": "14:45",
       "isCodeshareGroup": false,
@@ -238,152 +381,6 @@
           "date": "2026-09-14",
           "delayMin": 107.0,
           "scheduledTime": "15:00"
-        }
-      ],
-      "isTechnicalStop": false,
-      "technicalStopNote": null,
-      "trueDestination": null
-    },
-    {
-      "direction": "departure",
-      "origin": "Tel Aviv (TLV)",
-      "destination": "Barcelona",
-      "scheduledTime": "13:35",
-      "isCodeshareGroup": false,
-      "aliases": [
-        {
-          "airline": "Blue Bird Airways",
-          "flightNumber": "BZ252"
-        }
-      ],
-      "sampleSize": 10,
-      "averageDelay": 132.9,
-      "delayRate60": 0.8,
-      "delayProbability60": 0.535,
-      "riskLevel": "medium",
-      "recentFlights": [
-        {
-          "date": "2026-09-24",
-          "delayMin": 129.0,
-          "scheduledTime": "14:20"
-        },
-        {
-          "date": "2026-09-23",
-          "delayMin": 359.0,
-          "scheduledTime": "13:35"
-        },
-        {
-          "date": "2026-09-22",
-          "delayMin": 105.0,
-          "scheduledTime": "14:25"
-        },
-        {
-          "date": "2026-09-20",
-          "delayMin": 41.0,
-          "scheduledTime": "12:55"
-        },
-        {
-          "date": "2026-09-19",
-          "delayMin": 120.0,
-          "scheduledTime": "13:30"
-        },
-        {
-          "date": "2026-09-18",
-          "delayMin": 124.0,
-          "scheduledTime": "14:10"
-        },
-        {
-          "date": "2026-09-17",
-          "delayMin": 201.0,
-          "scheduledTime": "14:20"
-        },
-        {
-          "date": "2026-09-16",
-          "delayMin": 122.0,
-          "scheduledTime": "13:35"
-        },
-        {
-          "date": "2026-09-15",
-          "delayMin": 72.0,
-          "scheduledTime": "14:30"
-        },
-        {
-          "date": "2026-09-14",
-          "delayMin": 56.0,
-          "scheduledTime": "13:35"
-        }
-      ],
-      "isTechnicalStop": false,
-      "technicalStopNote": null,
-      "trueDestination": null
-    },
-    {
-      "direction": "departure",
-      "origin": "Tel Aviv (TLV)",
-      "destination": "Vienna",
-      "scheduledTime": "14:00",
-      "isCodeshareGroup": false,
-      "aliases": [
-        {
-          "airline": "Blue Bird Airways",
-          "flightNumber": "BZ316"
-        }
-      ],
-      "sampleSize": 10,
-      "averageDelay": 196.1,
-      "delayRate60": 0.8,
-      "delayProbability60": 0.535,
-      "riskLevel": "medium",
-      "recentFlights": [
-        {
-          "date": "2026-09-24",
-          "delayMin": 467.0,
-          "scheduledTime": "11:55"
-        },
-        {
-          "date": "2026-09-23",
-          "delayMin": 170.0,
-          "scheduledTime": "15:00"
-        },
-        {
-          "date": "2026-09-22",
-          "delayMin": 259.0,
-          "scheduledTime": "14:00"
-        },
-        {
-          "date": "2026-09-20",
-          "delayMin": 33.0,
-          "scheduledTime": "12:30"
-        },
-        {
-          "date": "2026-09-19",
-          "delayMin": 99.0,
-          "scheduledTime": "14:00"
-        },
-        {
-          "date": "2026-09-18",
-          "delayMin": 131.0,
-          "scheduledTime": "15:00"
-        },
-        {
-          "date": "2026-09-17",
-          "delayMin": 171.0,
-          "scheduledTime": "13:55"
-        },
-        {
-          "date": "2026-09-16",
-          "delayMin": 115.0,
-          "scheduledTime": "15:00"
-        },
-        {
-          "date": "2026-09-15",
-          "delayMin": 476.0,
-          "scheduledTime": "14:10"
-        },
-        {
-          "date": "2026-09-14",
-          "delayMin": 40.0,
-          "scheduledTime": "14:00"
         }
       ],
       "isTechnicalStop": false,
@@ -850,32 +847,5 @@
         }
       ]
     }
-  ],
-  "onTimeSummary": {
-    "departure": {
-      "onTime": 3015,
-      "delayed": 913
-    },
-    "arrival": {
-      "onTime": 3181,
-      "delayed": 700
-    }
-  },
-  "overallStats": {
-    "departure": {
-      "onTime": 3015,
-      "delayed": 913,
-      "total": 3928
-    },
-    "arrival": {
-      "onTime": 3181,
-      "delayed": 700,
-      "total": 3881
-    },
-    "both": {
-      "onTime": 6196,
-      "delayed": 1613,
-      "total": 7809
-    }
-  }
+  ]
 }

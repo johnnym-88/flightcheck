@@ -289,6 +289,24 @@ function normalizeDestinationQuery(input) {
 // Hebrew airline names -> a substring that matches the English display
 // name. Not exhaustive (falls back to raw substring match on the English
 // name for anything not listed here, so English input always works too).
+// Some airline groups operate multiple legally-separate subsidiaries
+// (each its own AOC/entity) under one consumer-facing brand - e.g. Wizz
+// Air Hungary, Wizz Air UK, and Wizz Air Malta are all "Wizz Air" to a
+// passenger, even though our raw data reports them as distinct airline
+// names. This map groups them ONLY for the airline filter dropdown/
+// matching below - it does NOT merge their underlying delay statistics,
+// since different subsidiaries can genuinely have different fleets/
+// reliability, and blending that would lose real information.
+const AIRLINE_BRAND_FAMILY = {
+  'Wizzair': 'Wizz Air', 'Wizz Uk': 'Wizz Air', 'Wizz Air Malta': 'Wizz Air',
+  'Flyone': 'FlyOne', 'Flyone Armenia Llc': 'FlyOne', 'Flyone Romania': 'FlyOne',
+  'Hisky': 'HiSky', 'Hisky Europe Srl': 'HiSky',
+  'Sky Up Nistru': 'SkyUp', 'Skyup Malta': 'SkyUp',
+};
+function airlineFamily(name) {
+  return AIRLINE_BRAND_FAMILY[name] || name;
+}
+
 const HEBREW_AIRLINE_MAP = {
   "אל על": "el al", "ארקיע": "arkia", "ישראייר": "israir", "איזראייר": "israir",
   "ויז אייר": "wizz", "ויזאייר": "wizz", "וויז אייר": "wizz",
@@ -987,8 +1005,8 @@ function renderDestinationResult() {
   const inSummary = weightedSummary(destResults.inbound);
   const empty = destResults.outbound.length === 0 && destResults.inbound.length === 0;
 
-  const matchesAirline = g => !destAirlineFilter || g.aliases.some(a => a.airline === destAirlineFilter);
-  const allAirlines = [...new Set([...destResults.outbound, ...destResults.inbound].flatMap(g => g.aliases.map(a => a.airline)))].sort();
+  const matchesAirline = g => !destAirlineFilter || g.aliases.some(a => airlineFamily(a.airline) === destAirlineFilter);
+  const allAirlines = [...new Set([...destResults.outbound, ...destResults.inbound].flatMap(g => g.aliases.map(a => airlineFamily(a.airline))))].sort();
 
   // Stable ascending (most reliable first) order determines badges/medals,
   // independent of the display sort direction chosen by the user.

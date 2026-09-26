@@ -286,12 +286,52 @@ function normalizeDestinationQuery(input) {
   return (mapped || trimmed).toLowerCase();
 }
 
+// Hebrew airline names -> a substring that matches the English display
+// name. Not exhaustive (falls back to raw substring match on the English
+// name for anything not listed here, so English input always works too).
+const HEBREW_AIRLINE_MAP = {
+  "אל על": "el al", "ארקיע": "arkia", "ישראייר": "israir", "איזראייר": "israir",
+  "ויז אייר": "wizz", "ויזאייר": "wizz", "וויז אייר": "wizz",
+  "לופטהנזה": "lufthansa", "סוויס": "swiss", "אוסטריאן": "austrian",
+  "אמירויז": "emirates", "אמירטס": "emirates", "אתיחאד": "etihad",
+  "קיי.אל.אם": "k.l.m", "קלם": "k.l.m", "איר פרנס": "air france",
+  "בלו בירד": "blue bird", "קונדור": "condor", "אייר קנדה": "air canada",
+  "יונייטד": "united", "דלתא": "delta", "איביריה": "iberia",
+  "טארום": "tarom", "תאי איירווייס": "thai airways", "תאי": "thai airways",
+  "וייטנאם איירליינס": "vietnam airlines", "קוואנטס": "qantas", "קנטס": "qantas",
+  "לוט": "lot polish", "לוט פולנד": "lot polish", "בריסלס איירליינס": "brussels",
+  "איג'יאן": "aegean", "אייר סרביה": "air serbia", "סאס": "sas",
+  "פליי דובאי": "flydubai", "פלייגדובאי": "flydubai", "יורוווינגס": "eurowings",
+  "טי יו אס": "tus", "סמארטווינגס": "smartwings", "הישקי": "hisky",
+  "אייר בלטיק": "air baltic", "טורקיש איירווייס": "turkish", "בריטיש איירווייס": "british",
+};
+
+function normalizeAirlineQuery(input) {
+  const trimmed = input.trim();
+  const mapped = HEBREW_AIRLINE_MAP[trimmed] || HEBREW_AIRLINE_MAP[trimmed.toLowerCase()];
+  return (mapped || trimmed).toLowerCase();
+}
+
+function searchByAirlineAndDestination(airlineQuery, destQuery) {
+  const base = searchByDestination(destQuery);
+  const airlineNeedle = normalizeAirlineQuery(airlineQuery);
+  if (!airlineNeedle) return base;
+  const matchesAirline = g => g.aliases.some(a => a.airline.toLowerCase().includes(airlineNeedle));
+  return {
+    outbound: base.outbound.filter(matchesAirline),
+    inbound: base.inbound.filter(matchesAirline),
+    outboundTechStops: base.outboundTechStops.filter(matchesAirline),
+    inboundTechStops: base.inboundTechStops.filter(matchesAirline),
+  };
+}
+
 let view = 'home';
 let currentFlight = null;
 let searchMode = 'number'; // 'number' | 'destination'
 let destResults = null;
 let destDirectionFilter = 'both';
 let yesterdayDirectionFilter = 'both';
+let pieDirectionFilter = 'both';
 let destQueryLabel = '';
 
 function riskMeta(level) {
@@ -381,6 +421,7 @@ function renderHome() {
       <div class="mode-toggle">
         <button class="${searchMode === 'number' ? 'active' : ''}" onclick="setSearchMode('number')">לפי מספר טיסה</button>
         <button class="${searchMode === 'destination' ? 'active' : ''}" onclick="setSearchMode('destination')">לפי יעד</button>
+        <button class="${searchMode === 'airline' ? 'active' : ''}" onclick="setSearchMode('airline')">לפי חברת תעופה</button>
       </div>
 
       ${searchMode === 'number' ? `
@@ -395,7 +436,7 @@ function renderHome() {
           </div>
         </div>
         <button class="cta" onclick="submitSearch()">בדוק טיסה</button>
-      ` : `
+      ` : searchMode === 'destination' ? `
         <div class="field">
           <label>יעד</label>
           <input id="input-dest" placeholder="לדוגמה: רומא, אתונה, לרנקה" onkeydown="if(event.key==='Enter') submitDestSearch()" />
@@ -407,6 +448,19 @@ function renderHome() {
             ${['רומא','אתונה','לרנקה','פאפוס','לונדון','בודפשט'].map(c => `<button class="chip" onclick="quickDestSearch('${c}')">${c}</button>`).join('')}
           </div>
         </div>
+      ` : `
+        <div class="grid2">
+          <div class="field">
+            <label>חברת תעופה</label>
+            <input id="input-airline" placeholder="לדוגמה: ויז אייר, אל על, לופטהנזה" />
+          </div>
+          <div class="field">
+            <label>יעד</label>
+            <input id="input-airline-dest" placeholder="לדוגמה: רומא, אתונה" onkeydown="if(event.key==='Enter') submitAirlineSearch()" />
+          </div>
+        </div>
+        <button class="cta" onclick="submitAirlineSearch()">מצא טיסות של החברה ליעד</button>
+        <p style="font-size:11.5px;color:var(--ink-faint);margin-top:8px">התוצאות יכללו גם המראות ליעד וגם נחיתות בחזרה ממנו.</p>
       `}
     </section>
     ${homeStatsSection()}
@@ -536,6 +590,48 @@ function historyCard(recentFlights) {
   `;
 }
 
+function pieChartCard() {
+  const summary = META.onTimeSummary;
+  if (!summary) return '';
+  let onTime, delayed;
+  if (pieDirectionFilter === 'both') {
+    onTime = summary.departure.onTime + summary.arrival.onTime;
+    delayed = summary.departure.delayed + summary.arrival.delayed;
+  } else {
+    onTime = summary[pieDirectionFilter].onTime;
+    delayed = summary[pieDirectionFilter].delayed;
+  }
+  const total = onTime + delayed;
+  const onTimePct = total > 0 ? (onTime / total * 100) : 0;
+  const pieFilterBtn = (value, label) => `
+    <button onclick="setPieFilter('${value}')" style="font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid ${pieDirectionFilter===value?'var(--brand)':'var(--border)'};background:${pieDirectionFilter===value?'var(--brand)':'transparent'};color:${pieDirectionFilter===value?'#fff':'var(--ink-soft)'};cursor:pointer">${label}</button>
+  `;
+  return `
+    <section class="card">
+      <p class="why-title" style="margin-top:0">בזמן מול מתעכב</p>
+      <p class="dest-hint" style="margin-top:0">מבין כל הטיסות שנותחו (סף של 60+ דקות לאיחור).</p>
+      <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap">
+        ${pieFilterBtn('both', 'המראות ונחיתות')}
+        ${pieFilterBtn('departure', 'המראות')}
+        ${pieFilterBtn('arrival', 'נחיתות')}
+      </div>
+      <div style="display:flex;align-items:center;gap:20px">
+        <div style="width:100px;height:100px;border-radius:50%;flex-shrink:0;background:conic-gradient(var(--green) 0% ${onTimePct}%, var(--red) ${onTimePct}% 100%)"></div>
+        <div style="font-size:13px">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+            <span style="width:10px;height:10px;border-radius:50%;background:var(--green);display:inline-block"></span>
+            <span>בזמן: <strong>${Math.round(onTimePct)}%</strong> (${onTime.toLocaleString()})</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <span style="width:10px;height:10px;border-radius:50%;background:var(--red);display:inline-block"></span>
+            <span>מתעכב: <strong>${Math.round(100-onTimePct)}%</strong> (${delayed.toLocaleString()})</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
 function homeStatsSection() {
   if (!META || !META.mostDelayedFlights || !META.mostDelayedFlights.length) return '';
   const delayedRows = META.mostDelayedFlights.map((g, i) => {
@@ -586,6 +682,7 @@ function homeStatsSection() {
   return `
     <p class="why-title" style="margin-top:24px">סטטיסטיקות</p>
     <div class="stats-grid">
+      ${pieChartCard()}
       ${yesterdayAll.length > 0 ? `
       <section class="card">
         <p class="why-title" style="margin-top:0">5 הטיסות המאחרות אתמול</p>
@@ -887,6 +984,11 @@ function setYesterdayFilter(value) {
   render();
 }
 
+function setPieFilter(value) {
+  pieDirectionFilter = value;
+  render();
+}
+
 function renderDestinationResult() {
   const { outbound, inbound, outboundTechStops, inboundTechStops } = destResults;
   const empty = outbound.length === 0 && inbound.length === 0;
@@ -968,6 +1070,17 @@ function submitDestSearch() {
 function quickDestSearch(city) {
   destQueryLabel = city;
   destResults = searchByDestination(city);
+  destDirectionFilter = 'both';
+  view = 'destresult';
+  render();
+}
+
+function submitAirlineSearch() {
+  const airlineV = document.getElementById('input-airline').value;
+  const destV = document.getElementById('input-airline-dest').value;
+  if (!airlineV.trim() || !destV.trim()) return;
+  destQueryLabel = `${airlineV.trim()} · ${destV.trim()}`;
+  destResults = searchByAirlineAndDestination(airlineV, destV);
   destDirectionFilter = 'both';
   view = 'destresult';
   render();

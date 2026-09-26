@@ -330,6 +330,10 @@ let currentFlight = null;
 let searchMode = 'number'; // 'number' | 'destination'
 let destResults = null;
 let destDirectionFilter = 'both';
+let destSortOrder = 'asc';
+let destAirlineFilter = '';
+let destOutboundDisplay = [];
+let destInboundDisplay = [];
 let yesterdayDirectionFilter = 'both';
 let destQueryLabel = '';
 
@@ -673,8 +677,8 @@ function rankRow(g, pos, isBest, isWorst, dir, idx) {
   const others = g.aliases.slice(1);
   const medal = pos === 1 ? '🥇' : pos === 2 ? '🥈' : pos === 3 ? '🥉' : '';
   const aliasLine = g.isCodeshareGroup
-    ? `<span class="flight-num-highlight">${primary.flightNumber}</span> · אותה טיסה נמכרת גם כ-${others.map(a => `<span class="flight-num-highlight">${a.flightNumber}</span> (${a.airline})`).join(', ')} · ${g.sampleSize} תצפיות · איחור ממוצע ${g.averageDelay} min`
-    : `<span class="flight-num-highlight">${primary.flightNumber}</span> · ${g.sampleSize} תצפיות · איחור ממוצע ${g.averageDelay} min`;
+    ? `<span class="flight-num-highlight">${primary.flightNumber}</span> · אותה טיסה נמכרת גם כ-${others.map(a => `<span class="flight-num-highlight">${a.flightNumber}</span> (${a.airline})`).join(', ')} · איחור ממוצע ${g.averageDelay} min`
+    : `<span class="flight-num-highlight">${primary.flightNumber}</span> · איחור ממוצע ${g.averageDelay} min`;
   const badge = isBest
     ? `<span class="tag-illustrative" style="background:var(--green-bg);color:var(--green);margin-right:4px">הכי אמינה</span>`
     : isWorst
@@ -700,7 +704,8 @@ function weightedSummary(groups) {
   const totalSamples = groups.reduce((s, g) => s + g.sampleSize, 0);
   if (totalSamples === 0) return null;
   const weightedRate = groups.reduce((s, g) => s + g.delayRate60 * g.sampleSize, 0) / totalSamples;
-  return { rate: weightedRate, samples: totalSamples, flightCount: groups.length };
+  const weightedAvgDelay = groups.reduce((s, g) => s + g.averageDelay * g.sampleSize, 0) / totalSamples;
+  return { rate: weightedRate, samples: totalSamples, flightCount: groups.length, avgDelay: weightedAvgDelay };
 }
 
 // Actual clock time isn't stored directly - it's derived from the
@@ -774,6 +779,8 @@ function showFlightDetail(dir, idx) {
   }
   const group = dir === 'meta_delayed' ? META.mostDelayedFlights[idx]
     : dir === 'airline_list' ? currentAirlineFlights[idx]
+    : dir === 'outbound' ? destOutboundDisplay[idx]
+    : dir === 'inbound' ? destInboundDisplay[idx]
     : destResults[dir][idx];
   renderFlightDetailModal(group);
   document.getElementById('flight-detail-modal').style.display = 'flex';
@@ -945,7 +952,8 @@ function summaryBlock(label, icon, summary, filterValue) {
     <div onclick="setDestFilter('${filterValue}')" style="flex:1;text-align:center;padding:16px 10px;border-radius:14px;background:var(--bg);cursor:pointer;border:2px solid ${isActive ? 'var(--brand)' : 'transparent'}">
       <div style="font-size:12px;color:var(--ink-faint);margin-bottom:6px">${icon} ${label}</div>
       <div style="font-size:32px;font-weight:700;color:var(${m.varFg})">${pct}%</div>
-      <div style="font-size:11px;color:var(--ink-faint);margin-top:4px">מ-${summary.flightCount} טיסות · ${summary.samples} תצפיות</div>
+      <div style="font-size:11.5px;color:var(--ink-soft);margin-top:2px">${Math.round(summary.avgDelay)} דקות עיכוב ממוצע</div>
+      <div style="font-size:11px;color:var(--ink-faint);margin-top:4px">מ-${summary.flightCount} טיסות</div>
     </div>
   `;
 }
@@ -955,19 +963,50 @@ function setDestFilter(value) {
   render();
 }
 
+function setDestSortOrder(order) {
+  destSortOrder = order;
+  render();
+}
+
+function setDestAirlineFilter(airline) {
+  destAirlineFilter = airline;
+  render();
+}
+
 function setYesterdayFilter(value) {
   yesterdayDirectionFilter = value;
   render();
 }
 
 function renderDestinationResult() {
-  const { outbound, inbound, outboundTechStops, inboundTechStops } = destResults;
-  const empty = outbound.length === 0 && inbound.length === 0;
+  const { outboundTechStops, inboundTechStops } = destResults;
   const showOut = destDirectionFilter === 'both' || destDirectionFilter === 'outbound';
   const showIn = destDirectionFilter === 'both' || destDirectionFilter === 'inbound';
   const hasTechStops = (showOut && outboundTechStops.length > 0) || (showIn && inboundTechStops.length > 0);
-  const outSummary = weightedSummary(outbound);
-  const inSummary = weightedSummary(inbound);
+  const outSummary = weightedSummary(destResults.outbound);
+  const inSummary = weightedSummary(destResults.inbound);
+  const empty = destResults.outbound.length === 0 && destResults.inbound.length === 0;
+
+  const matchesAirline = g => !destAirlineFilter || g.aliases.some(a => a.airline === destAirlineFilter);
+  const allAirlines = [...new Set([...destResults.outbound, ...destResults.inbound].flatMap(g => g.aliases.map(a => a.airline)))].sort();
+
+  // Stable ascending (most reliable first) order determines badges/medals,
+  // independent of the display sort direction chosen by the user.
+  const outboundAsc = destResults.outbound.filter(matchesAirline).sort((a,b) => a.delayProbability60 - b.delayProbability60);
+  const inboundAsc = destResults.inbound.filter(matchesAirline).sort((a,b) => a.delayProbability60 - b.delayProbability60);
+  destOutboundDisplay = destSortOrder === 'asc' ? outboundAsc : [...outboundAsc].reverse();
+  destInboundDisplay = destSortOrder === 'asc' ? inboundAsc : [...inboundAsc].reverse();
+
+  const renderList = (displayArr, ascArr, dir) => displayArr.map((f, i) => {
+    const ascIdx = ascArr.indexOf(f);
+    const pos = destSortOrder === 'asc' ? i + 1 : ascArr.length - i;
+    return rankRow(f, pos, ascIdx === 0, ascIdx === ascArr.length - 1 && ascArr.length > 1, dir, i);
+  }).join('');
+
+  const sortBtn = (value, label) => `
+    <button onclick="setDestSortOrder('${value}')" style="font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid ${destSortOrder===value?'var(--brand)':'var(--border)'};background:${destSortOrder===value?'var(--brand)':'transparent'};color:${destSortOrder===value?'#fff':'var(--ink-soft)'};cursor:pointer">${label}</button>
+  `;
+
   return `
     <button class="back-btn" onclick="goHome()">→ חיפוש אחר</button>
     <div class="card" style="margin-top:14px">
@@ -983,12 +1022,22 @@ function renderDestinationResult() {
       ` : ''}
     </div>
     <div class="card" style="margin-top:14px">
-      <p class="dest-hint" style="margin-top:0">מדורגות מהכי אמינה להכי פחות אמינה, לפי אחוז הסיכוי לאיחור של 60+ דקות. דאטה אמיתי מ-${META && META.daysOfDataCollected ? META.daysOfDataCollected : ''} הימים האחרונים. טיסות המסומנות "קודשרינג" הן אותה טיסה פיזית הנמכרת תחת כמה מספרי/שמות חברות — לכן הן מוצגות כשורה אחת ולא כמה אפשרויות נפרדות.</p>
+      <p class="dest-hint" style="margin-top:0">לפי אחוז הסיכוי לאיחור של 60+ דקות. דאטה אמיתי מ-${META && META.daysOfDataCollected ? META.daysOfDataCollected : ''} הימים האחרונים. טיסות המסומנות "קודשרינג" הן אותה טיסה פיזית הנמכרת תחת כמה מספרי/שמות חברות — לכן הן מוצגות כשורה אחת ולא כמה אפשרויות נפרדות.</p>
+      ${!empty ? `
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:14px">
+        ${sortBtn('asc', 'מהכי אמין להכי מסוכן')}
+        ${sortBtn('desc', 'מהכי מסוכן להכי אמין')}
+        <select onchange="setDestAirlineFilter(this.value)" style="font-size:12px;padding:6px 10px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--ink-soft);cursor:pointer">
+          <option value="">כל החברות</option>
+          ${allAirlines.map(a => `<option value="${a}" ${destAirlineFilter===a?'selected':''}>${a}</option>`).join('')}
+        </select>
+      </div>
+      ` : ''}
       ${empty && !hasTechStops ? `
         <p style="font-size:14px;color:var(--ink-soft);margin-top:18px">לא נמצאו טיסות ליעד הזה במדגם הנוכחי. נסו לכתוב את שם העיר באנגלית, או יעד אחר.</p>
       ` : `
-        ${showOut && outbound.length ? `<div class="dest-section-title">🛫 טיסות ליעד (${outbound.length})</div>${outbound.map((f,i)=>rankRow(f,i+1,i===0,i===outbound.length-1 && outbound.length>1,'outbound',i)).join('')}` : ''}
-        ${showIn && inbound.length ? `<div class="dest-section-title">🛬 טיסות חזרה (${inbound.length})</div>${inbound.map((f,i)=>rankRow(f,i+1,i===0,i===inbound.length-1 && inbound.length>1,'inbound',i)).join('')}` : ''}
+        ${showOut && destOutboundDisplay.length ? `<div class="dest-section-title">🛫 טיסות ליעד (${destOutboundDisplay.length})</div>${renderList(destOutboundDisplay, outboundAsc, 'outbound')}` : ''}
+        ${showIn && destInboundDisplay.length ? `<div class="dest-section-title">🛬 טיסות חזרה (${destInboundDisplay.length})</div>${renderList(destInboundDisplay, inboundAsc, 'inbound')}` : ''}
       `}
     </div>
     ${hasTechStops ? `
@@ -1035,6 +1084,8 @@ function submitDestSearch() {
   destQueryLabel = v.trim();
   destResults = searchByDestination(v);
   destDirectionFilter = 'both';
+  destSortOrder = 'asc';
+  destAirlineFilter = '';
   view = 'destresult';
   render();
 }
@@ -1042,6 +1093,8 @@ function quickDestSearch(city) {
   destQueryLabel = city;
   destResults = searchByDestination(city);
   destDirectionFilter = 'both';
+  destSortOrder = 'asc';
+  destAirlineFilter = '';
   view = 'destresult';
   render();
 }
@@ -1053,6 +1106,8 @@ function submitAirlineSearch() {
   destQueryLabel = `${airlineV.trim()} · ${destV.trim()}`;
   destResults = searchByAirlineAndDestination(airlineV, destV);
   destDirectionFilter = 'both';
+  destSortOrder = 'asc';
+  destAirlineFilter = '';
   view = 'destresult';
   render();
 }

@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>FlightCheck — Know before you fly</title>
+<title>FlightChance — Know before you fly</title>
 <link rel="manifest" href="./manifest.json" />
 <meta name="theme-color" content="#1B4B66" />
 <link rel="icon" href="icon-192.png" type="image/png" />
 <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="FlightCheck" />
+<meta name="apple-mobile-web-app-title" content="FlightChance" />
 <style>
   :root {
     --bg: #FAFAF8;
@@ -65,7 +65,7 @@
     padding-top: env(safe-area-inset-top, 0px);
   }
   .topbar { max-width: 900px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
-  .brand-btn { background: none; border: none; font-size: 15px; font-weight: 600; color: var(--ink); cursor: pointer; font-family: inherit; }
+  .brand-btn { background: none; border: none; font-size: 15px; font-weight: 600; color: var(--ink); cursor: pointer; font-family: inherit; display: flex; align-items: center; padding: 0; }
   nav.links { display: flex; gap: 20px; }
   nav.links button { background: none; border: none; font-size: 14px; color: var(--ink-soft); cursor: pointer; font-family: inherit; }
 
@@ -201,7 +201,7 @@
 <body>
 <header class="top">
   <div class="topbar">
-    <button class="brand-btn" onclick="goHome()">FlightCheck</button>
+    <button class="brand-btn" onclick="goHome()"><picture><source srcset="logo-dark.png" media="(prefers-color-scheme: dark)" /><img src="logo.png" alt="FlightChance" style="height:30px;display:block" /></picture></button>
     <nav class="links">
       <button onclick="goHome(); setTimeout(()=>document.getElementById('search-card')?.scrollIntoView({behavior:'smooth'}),50)">בדיקת טיסה</button>
       <button onclick="goHome(); setTimeout(()=>document.getElementById('how')?.scrollIntoView({behavior:'smooth'}),50)">איך זה עובד</button>
@@ -217,7 +217,7 @@
 </main>
 
 <footer>
-  <div class="fname">FlightCheck</div>
+  <div class="fname">FlightChance</div>
   <div class="ftag">Know before you fly.</div>
 </footer>
 

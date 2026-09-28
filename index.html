@@ -76,7 +76,17 @@
   }
   .topbar { max-width: 900px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
   .brand-btn { background: none; border: none; font-size: 15px; font-weight: 600; color: var(--ink); cursor: pointer; font-family: inherit; display: flex; align-items: center; padding: 0; }
-  nav.links { display: flex; gap: 20px; }
+  nav.links { display: flex; gap: 20px; align-items: center; }
+  nav.links button { white-space: nowrap; }
+  nav.links .lang-btn { border: 1px solid var(--border); border-radius: 999px; padding: 4px 12px; font-size: 13px; color: var(--ink); }
+  @media (max-width: 480px) {
+    .topbar { padding: 0 14px; }
+    .brand-btn img { height: 26px !important; }
+    nav.links { gap: 10px; }
+    nav.links button { font-size: 12.5px; }
+    nav.links .lang-btn { padding: 3px 9px; font-size: 12px; }
+  }
+  @media (max-width: 400px) { nav.links .nav-check { display: none; } }
   nav.links button { background: none; border: none; font-size: 14px; color: var(--ink-soft); cursor: pointer; font-family: inherit; }
 
   .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--brand); text-transform: uppercase; margin: 0 0 14px; }
@@ -213,8 +223,9 @@
   <div class="topbar">
     <button class="brand-btn" onclick="goHome()"><picture><source srcset="logo-dark.png" media="(prefers-color-scheme: dark)" /><img src="logo.png" alt="FlightChance" style="height:30px;display:block" /></picture></button>
     <nav class="links">
-      <button onclick="goHome(); setTimeout(()=>document.getElementById('search-card')?.scrollIntoView({behavior:'smooth'}),50)">בדיקת טיסה</button>
-      <button onclick="goHome(); setTimeout(()=>document.getElementById('how')?.scrollIntoView({behavior:'smooth'}),50)">איך זה עובד</button>
+      <button class="nav-check" data-i18n="בדיקת טיסה" onclick="goHome(); setTimeout(()=>document.getElementById('search-card')?.scrollIntoView({behavior:'smooth'}),50)">בדיקת טיסה</button>
+      <button data-i18n="איך זה עובד" onclick="goHome(); setTimeout(()=>document.getElementById('how')?.scrollIntoView({behavior:'smooth'}),50)">איך זה עובד</button>
+      <button id="lang-toggle" class="lang-btn" onclick="toggleLang()" aria-label="Change language">English</button>
     </nav>
   </div>
 </header>
@@ -235,6 +246,183 @@
 
 <script>
 let SEED_DATA = [];
+
+// ---------------------------------------------------------------------
+// Language (Hebrew / English)
+// ---------------------------------------------------------------------
+// Hebrew strings double as the lookup keys: tr('עברית') returns the
+// Hebrew as-is in Hebrew mode, or the English from EN in English mode.
+// {name} placeholders are filled from the optional vars object. A key
+// missing from EN falls back to the Hebrew, so nothing ever breaks.
+let lang = 'he';
+try {
+  const q = new URLSearchParams(location.search).get('lang');
+  const saved = localStorage.getItem('fc_lang');
+  if (q === 'en' || q === 'he') lang = q;
+  else if (saved === 'en' || saved === 'he') lang = saved;
+} catch (e) {}
+
+const EN = {
+ "האם אפשר לסמוך על הטיסה שלי?": "Can I count on my flight?",
+ "בדקו את הסיכוי שהטיסה שלכם תאחר ב-60 דקות ומעלה - לפני שמזמינים.": "Check the chance your flight will be 60+ minutes late - before you book.",
+ "📡 {n} טיסות נסרקו עד כה במנוע שלנו · עודכן לאחרונה: {d}": "📡 {n} flights scanned so far by our engine · Last updated: {d}",
+ "🎫 לפי מספר טיסה": "🎫 By flight number",
+ "🌍 לפי יעד": "🌍 By destination",
+ "🛫 לפי חברת תעופה": "🛫 By airline",
+ "מספר טיסה": "Flight number",
+ "תאריך טיסה": "Flight date",
+ "בדוק טיסה": "Check flight",
+ "יעד": "Destination",
+ "מצא חברות לפי יעד": "Find airlines by destination",
+ "יעדים לדוגמה": "Example destinations",
+ "חברת תעופה": "Airline",
+ "מצא טיסות של החברה ליעד": "Find this airline's flights to the destination",
+ "התוצאות יכללו גם המראות ליעד וגם נחיתות בחזרה ממנו.": "Results include both departures to the destination and arrivals back from it.",
+ "לדוגמה: LY9255": "e.g. LY9255",
+ "לדוגמה: רומא, אתונה, לרנקה": "e.g. Rome, Athens, Larnaca",
+ "לדוגמה: ויז אייר, אל על, לופטהנזה": "e.g. Wizz Air, El Al, Lufthansa",
+ "לדוגמה: רומא, אתונה": "e.g. Rome, Athens",
+ "איך זה עובד": "How it works",
+ "הכניסו את הטיסה": "Enter your flight",
+ "חפשו לפי מספר טיסה ותאריך, ליציאה או נחיתה בבן גוריון.": "Search by flight number and date, for a departure from or an arrival at Ben Gurion.",
+ "ראו את הסיכון": "See the risk",
+ "קבלו הסתברות ברורה אחת לאיחור של 60 דקות ומעלה.": "Get one clear probability of a delay of 60+ minutes.",
+ "בדקו שוב מאוחר יותר": "Check again later",
+ "הסיכון עשוי להשתנות ככל שמתקרבים למועד הטיסה.": "The risk may change as your flight date gets closer.",
+ "בודק טיסה...": "Checking flight...",
+ "לא מצאנו את הטיסה הזו.": "We couldn't find this flight.",
+ "בדקו את מספר הטיסה והתאריך ונסו שוב.": "Check the flight number and date and try again.",
+ "(המאגר כולל כרגע כ-{n} זיהויי טיסה, מ-{d} הימים האחרונים בבן גוריון — טיסות חדשות/עונתיות עשויות עדיין לא להופיע.)": "(The database currently holds about {n} flight identifiers from the last {d} days at Ben Gurion — new or seasonal flights may not appear yet.)",
+ "נסו טיסה אחרת": "Try another flight",
+ "→ בדיקת טיסה אחרת": "← Check another flight",
+ "המראה": "Departure",
+ "נחיתה": "Arrival",
+ "דאטה אמיתי מתוך {n} תצפיות ב-{d} הימים האחרונים": "Real data from {n} observations over the last {d} days",
+ "סיכוי לאיחור של 60+ דקות בהמראה": "Chance of a 60+ minute delay on departure",
+ "סיכוי לאיחור של 60+ דקות בנחיתה": "Chance of a 60+ minute delay on arrival",
+ "בנחיתה": "on arrival",
+ "בהמראה": "on departure",
+ "לטיסה הזו יש היסטוריה של אמינות גבוהה יחסית.": "This flight has a relatively reliable track record.",
+ "לטיסה הזו יש סיכוי משמעותי לאיחור.": "This flight has a significant chance of delay.",
+ "כדאי לקחת בחשבון סיכוי גבוה לאיחור {verb}.": "Keep in mind there is a high chance of delay {verb}.",
+ "איחור ממוצע": "Average delay",
+ "איחרו 60+ דק'": "Delayed 60+ min",
+ "טיסות שנותחו": "Flights analyzed",
+ "מבוסס על היסטוריית הטיסות האחרונה": "Based on the flight's recent history",
+ "למה הציון הזה?": "Why this score?",
+ "ביצועים היסטוריים": "Historical performance",
+ "{pct}% מההמראות האחרונות איחרו ב-60+ דקות": "{pct}% of recent departures were delayed 60+ minutes",
+ "{pct}% מהנחיתות האחרונות איחרו ב-60+ דקות": "{pct}% of recent arrivals were delayed 60+ minutes",
+ "גודל המדגם": "Sample size",
+ "ההערכה מבוססת על {n} תצפיות אחרונות": "The estimate is based on {n} recent observations",
+ "ביצועי החברה": "Airline performance",
+ "ל{airline} שיעור איחור של {pct}% ב-60+ דקות על פני כלל הטיסות שלה": "{airline}: {pct}% of all its flights are delayed 60+ minutes",
+ "שיעור ביטולים": "Cancellation rate",
+ "{pct}% מהטיסות בוטלו לאחרונה": "{pct}% of flights were canceled recently",
+ "לא נרשמו ביטולים לאחרונה": "No cancellations recorded recently",
+ "כבר הזמנתם?": "Already booked?",
+ "דוגמה להמחשה": "Illustrative example",
+ "בדקו שוב קרוב יותר למועד הטיסה. ככל שמתקבל מידע תפעולי עדכני, רמת הסיכון עשויה להשתנות.": "Check again closer to your flight date. As up-to-date operational information comes in, the risk level may change.",
+ " -7 ימים": "7 days",
+ "24 שעות": "24 hours",
+ "6 שעות": "6 hours",
+ "2 שעות": "2 hours",
+ "{label} לפני": "{label} before",
+ "התחזיות מבוססות על נתונים היסטוריים ותפעוליים אמיתיים מרשות שדות התעופה. אין ודאות מוחלטת בשום תחזית.": "Predictions are based on real historical and operational data from the Israel Airports Authority. No prediction is ever completely certain.",
+ "היסטוריית טיסות אחרונה": "Recent flight history",
+ "עד 60 דק' איחור": "Up to 60 min late",
+ "60+ דק' איחור": "60+ min late",
+ "סטטיסטיקות": "Statistics",
+ "5 הטיסות עם הכי הרבה איחורים": "Top 5 most delayed flights",
+ "לפי אחוז הסיכוי לאיחור של 60+ דקות, מבין טיסות עם מדגם מספק.": "By chance of a 60+ minute delay, among flights with a sufficient sample.",
+ "החברות הדייקניות ביותר": "Most punctual airlines",
+ "שיעור איחור נמוך ביותר, מבין חברות עם מספיק טיסות שנותחו. לחצו על חברה כדי לראות אילו טיסות שלה נותחו.": "Lowest delay rate, among airlines with enough analyzed flights. Tap an airline to see which of its flights were analyzed.",
+ "5 הטיסות המאחרות של אתמול": "Yesterday's 5 most delayed flights",
+ "איחור בפועל, לפי אירועי אתמול (לא ממוצע היסטורי).": "Actual delay, based on yesterday's events (not a historical average).",
+ "המראות ונחיתות": "Departures & arrivals",
+ "המראות": "Departures",
+ "נחיתות": "Arrivals",
+ "אין אירועים בקטגוריה הזו אתמול.": "No events in this category yesterday.",
+ "קודשרינג": "Codeshare",
+ "הכי אמינה": "Most reliable",
+ "הכי הרבה איחורים": "Most delays",
+ "אותה טיסה נמכרת גם כ-{list}": "Same flight also sold as {list}",
+ "איחור ממוצע {d} min": "Average delay {d} min",
+ "מה זה קודשרינג?": "What is a codeshare?",
+ "לפעמים כמה חברות תעופה מוכרות כרטיסים על <strong>אותה טיסה פיזית בדיוק</strong> — אותו מטוס, אותו טייס, אותה שעת המראה — כל אחת תחת מספר טיסה משלה. זה נפוץ כדי לאפשר צבירת נקודות/סטטוס וחיבורי טיסות נוחים יותר.": "Sometimes several airlines sell tickets on <strong>the exact same physical flight</strong> — same plane, same pilot, same departure time — each under its own flight number. This is common to allow earning points/status and easier connecting itineraries.",
+ "במעשה, זה אומר שכל מספרי הטיסה המקושרים <strong>תמיד יאחרו באותה מידה בדיוק</strong> — הרי מדובר באותה טיסה עצמה. לכן אנחנו מציגים אותן כשורה אחת במקום להראות אותן כאילו הן אפשרויות שונות עם רמות אמינות שונות.": "In practice, this means all the linked flight numbers <strong>will always be delayed by exactly the same amount</strong> — it is the same flight, after all. That is why we show them as a single row instead of presenting them as different options with different reliability levels.",
+ "לא נמצאו טיסות.": "No flights found.",
+ "{n} טיסות נותחו · לחצו על טיסה לפרטים נוספים": "{n} flights analyzed · tap a flight for more details",
+ "{n} תצפיות": "{n} observations",
+ "תאריך": "Date",
+ "מתוכנן": "Scheduled",
+ "בפועל": "Actual",
+ "({d} יום)": "({d} day)",
+ "קודשרינג: גם {list}": "Codeshare: also {list}",
+ "אין עדיין נתוני היסטוריה זמינים לטיסה זו.": "No history data available for this flight yet.",
+ "טען עוד שבוע אחורה": "Load another week back",
+ "ביקורות נוסעים": "Passenger reviews",
+ "טוען ביקורות...": "Loading reviews...",
+ "שתפו את החוויה שלכם בטיסה הזו — לא משנה מתי היא הייתה": "Share your experience on this flight — no matter when it was",
+ "שם (אופציונלי)": "Name (optional)",
+ "איך הייתה הטיסה?": "How was the flight?",
+ "שליחת ביקורת": "Submit review",
+ "מערכת הביקורות עוד לא חוברה.": "The reviews system is not connected yet.",
+ "אין עדיין ביקורות לטיסה הזו. היו הראשונים לכתוב!": "No reviews for this flight yet. Be the first to write one!",
+ "לא הצלחנו לטעון ביקורות כרגע.": "We couldn't load reviews right now.",
+ "אנונימי": "Anonymous",
+ "נא לכתוב טקסט לביקורת.": "Please write some text for the review.",
+ "הביקורת ארוכה מדי (מקסימום 1000 תווים).": "The review is too long (maximum 1000 characters).",
+ "שולח...": "Sending...",
+ "הביקורת נשלחה, תודה!": "Review submitted, thank you!",
+ "שליחת הביקורת נכשלה. נסו שוב.": "Submitting the review failed. Please try again.",
+ "→ חיפוש אחר": "← Search again",
+ "{n} דקות עיכוב ממוצע": "{n} min average delay",
+ "מ-{n} טיסות": "from {n} flights",
+ "תוצאות עבור \"{q}\"": "Results for \"{q}\"",
+ "לכיוון היעד": "To the destination",
+ "בחזרה לישראל": "Back to Israel",
+ "לחצו על אחת מהתיבות כדי לסנן רק לכיוון הזה": "Tap one of the boxes to filter by that direction only",
+ "לפי אחוז הסיכוי לאיחור של 60+ דקות. דאטה אמיתי מ-{d} הימים האחרונים. טיסות המסומנות \"קודשרינג\" הן אותה טיסה פיזית הנמכרת תחת כמה מספרי/שמות חברות — לכן הן מוצגות כשורה אחת ולא כמה אפשרויות נפרדות.": "By chance of a 60+ minute delay. Real data from the last {d} days. Flights marked \"Codeshare\" are the same physical flight sold under several flight numbers/airline names — so they appear as a single row rather than several separate options.",
+ "מהכי אמין להכי מסוכן": "Most reliable first",
+ "מהכי מסוכן להכי אמין": "Riskiest first",
+ "כל החברות": "All airlines",
+ "לא נמצאו טיסות ליעד הזה במדגם הנוכחי. נסו לכתוב את שם העיר באנגלית, או יעד אחר.": "No flights to this destination were found in the current data. Try a different spelling of the city, or another destination.",
+ "🛫 טיסות ליעד ({n})": "🛫 Flights to the destination ({n})",
+ "🛬 טיסות חזרה ({n})": "🛬 Return flights ({n})",
+ "✈️🔄 עצירות ביניים ב{c} ({n})": "✈️🔄 Stopovers in {c} ({n})",
+ "הטיסות האלה <strong>עוצרות</strong> ב{c} לצורך החלפת צוות אווירי (בשל המצב הביטחוני), אך לא זהו יעדן הסופי — הנוסעים ממשיכים איתן ליעד אחר. אין לנו נתוני עיכוב עבור המשך הדרך, ולכן הן לא כלולות בדירוג למעלה.": "These flights <strong>stop</strong> in {c} for an air crew change (due to the security situation), but it is not their final destination — passengers continue on them to another destination. We have no delay data for the rest of the route, so they are not included in the ranking above.",
+ "(גם {list})": "(also {list})",
+ "הדירוג מבוסס על נתונים היסטוריים אמיתיים מ-{d} הימים האחרונים. עם עוד דאטה, הדירוג יהיה מדויק יותר.": "The ranking is based on real historical data from the last {d} days. With more data, the ranking will be more accurate.",
+ "עצירת ביניים בדרך ליעד אחר באירופה (לא מאומת במדויק)": "Stopover on the way to another destination in Europe (not precisely verified)",
+ "עצירת ביניים בדרך לאמסטרדם": "Stopover on the way to Amsterdam",
+ "בדיקת טיסה": "Check flight"
+};
+
+function tr(he, vars) {
+  let s = (lang === 'en' && EN[he] !== undefined) ? EN[he] : he;
+  if (vars) s = s.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m));
+  return s;
+}
+
+function applyLang() {
+  const el = document.documentElement;
+  el.lang = lang;
+  el.dir = lang === 'en' ? 'ltr' : 'rtl';
+  document.querySelectorAll('[data-i18n]').forEach(n => { n.textContent = tr(n.getAttribute('data-i18n')); });
+  const b = document.getElementById('lang-toggle');
+  if (b) b.textContent = lang === 'en' ? 'עברית' : 'English';
+}
+
+function toggleLang() { setLang(lang === 'en' ? 'he' : 'en'); }
+
+function setLang(l) {
+  lang = l;
+  try { localStorage.setItem('fc_lang', l); } catch (e) {}
+  applyLang();
+  closeFlightDetail();
+  render();
+}
 // Fill these in with your two n8n webhook Production URLs once created
 // (see "FlightCheck - Submit Review" and "FlightCheck - Get Reviews" workflows).
 const SUBMIT_REVIEW_URL = 'https://jomeital.app.n8n.cloud/webhook/submit-review';
@@ -371,10 +559,10 @@ function riskMeta(level) {
   return { label: 'HIGH RISK', varFg: '--red', varBg: '--red-bg', varBorder: '--red-border' };
 }
 function riskInterpretation(level, dir) {
-  const verb = dir === 'arrival' ? 'בנחיתה' : 'בהמראה';
-  if (level === 'low') return 'לטיסה הזו יש היסטוריה של אמינות גבוהה יחסית.';
-  if (level === 'medium') return 'לטיסה הזו יש סיכוי משמעותי לאיחור.';
-  return `כדאי לקחת בחשבון סיכוי גבוה לאיחור ${verb}.`;
+  const verb = dir === 'arrival' ? tr('בנחיתה') : tr('בהמראה');
+  if (level === 'low') return tr('לטיסה הזו יש היסטוריה של אמינות גבוהה יחסית.');
+  if (level === 'medium') return tr('לטיסה הזו יש סיכוי משמעותי לאיחור.');
+  return tr('כדאי לקחת בחשבון סיכוי גבוה לאיחור {verb}.', { verb });
 }
 
 let META = null;
@@ -444,79 +632,79 @@ function renderHome() {
   return `
     <section class="hero">
       <p class="eyebrow">FLIGHT DELAY PREDICTION</p>
-      <h1 class="headline">האם אפשר לסמוך על הטיסה שלי?</h1>
-      <p class="sub">בדקו את הסיכוי שהטיסה שלכם תאחר ב-60 דקות ומעלה - לפני שמזמינים.</p>
-      ${META ? `<p style="font-size:12.5px;color:var(--ink-faint);margin-top:10px">📡 ${META.totalScanned.toLocaleString()} טיסות נסרקו עד כה במנוע שלנו · עודכן לאחרונה: ${META.lastUpdated}</p>` : ''}
+      <h1 class="headline">${tr('האם אפשר לסמוך על הטיסה שלי?')}</h1>
+      <p class="sub">${tr('בדקו את הסיכוי שהטיסה שלכם תאחר ב-60 דקות ומעלה - לפני שמזמינים.')}</p>
+      ${META ? `<p style="font-size:12.5px;color:var(--ink-faint);margin-top:10px">${tr('📡 {n} טיסות נסרקו עד כה במנוע שלנו · עודכן לאחרונה: {d}', { n: META.totalScanned.toLocaleString(), d: META.lastUpdated })}</p>` : ''}
     </section>
     <section id="search-card" class="card">
       <div class="mode-toggle">
-        <button class="${searchMode === 'number' ? 'active' : ''}" onclick="setSearchMode('number')">🎫 לפי מספר טיסה</button>
-        <button class="${searchMode === 'destination' ? 'active' : ''}" onclick="setSearchMode('destination')">🌍 לפי יעד</button>
-        <button class="${searchMode === 'airline' ? 'active' : ''}" onclick="setSearchMode('airline')">🛫 לפי חברת תעופה</button>
+        <button class="${searchMode === 'number' ? 'active' : ''}" onclick="setSearchMode('number')">${tr('🎫 לפי מספר טיסה')}</button>
+        <button class="${searchMode === 'destination' ? 'active' : ''}" onclick="setSearchMode('destination')">${tr('🌍 לפי יעד')}</button>
+        <button class="${searchMode === 'airline' ? 'active' : ''}" onclick="setSearchMode('airline')">${tr('🛫 לפי חברת תעופה')}</button>
       </div>
 
       ${searchMode === 'number' ? `
         <div class="grid2">
           <div class="field">
-            <label>מספר טיסה</label>
-            <input id="input-flight" placeholder="לדוגמה: LY9255" />
+            <label>${tr('מספר טיסה')}</label>
+            <input id="input-flight" placeholder="${tr('לדוגמה: LY9255')}" />
           </div>
           <div class="field">
-            <label>תאריך טיסה</label>
+            <label>${tr('תאריך טיסה')}</label>
             <input id="input-date" type="date" />
           </div>
         </div>
-        <button class="cta" onclick="submitSearch()">בדוק טיסה</button>
+        <button class="cta" onclick="submitSearch()">${tr('בדוק טיסה')}</button>
       ` : searchMode === 'destination' ? `
         <div class="field">
-          <label>יעד</label>
-          <input id="input-dest" placeholder="לדוגמה: רומא, אתונה, לרנקה" onkeydown="if(event.key==='Enter') submitDestSearch()" />
+          <label>${tr('יעד')}</label>
+          <input id="input-dest" placeholder="${tr('לדוגמה: רומא, אתונה, לרנקה')}" onkeydown="if(event.key==='Enter') submitDestSearch()" />
         </div>
-        <button class="cta" onclick="submitDestSearch()">מצא חברות לפי יעד</button>
+        <button class="cta" onclick="submitDestSearch()">${tr('מצא חברות לפי יעד')}</button>
         <div class="divider-top">
-          <div class="chip-label">יעדים לדוגמה</div>
+          <div class="chip-label">${tr('יעדים לדוגמה')}</div>
           <div class="chips">
-            ${['רומא','אתונה','לרנקה','פאפוס','לונדון','בודפשט'].map(c => `<button class="chip" onclick="quickDestSearch('${c}')">${c}</button>`).join('')}
+            ${(lang === 'en' ? ['Rome','Athens','Larnaca','Paphos','London','Budapest'] : ['רומא','אתונה','לרנקה','פאפוס','לונדון','בודפשט']).map(c => `<button class="chip" onclick="quickDestSearch('${c}')">${c}</button>`).join('')}
           </div>
         </div>
       ` : `
         <div class="grid2">
           <div class="field">
-            <label>חברת תעופה</label>
-            <input id="input-airline" placeholder="לדוגמה: ויז אייר, אל על, לופטהנזה" />
+            <label>${tr('חברת תעופה')}</label>
+            <input id="input-airline" placeholder="${tr('לדוגמה: ויז אייר, אל על, לופטהנזה')}" />
           </div>
           <div class="field">
-            <label>יעד</label>
-            <input id="input-airline-dest" placeholder="לדוגמה: רומא, אתונה" onkeydown="if(event.key==='Enter') submitAirlineSearch()" />
+            <label>${tr('יעד')}</label>
+            <input id="input-airline-dest" placeholder="${tr('לדוגמה: רומא, אתונה')}" onkeydown="if(event.key==='Enter') submitAirlineSearch()" />
           </div>
         </div>
-        <button class="cta" onclick="submitAirlineSearch()">מצא טיסות של החברה ליעד</button>
-        <p style="font-size:11.5px;color:var(--ink-faint);margin-top:8px">התוצאות יכללו גם המראות ליעד וגם נחיתות בחזרה ממנו.</p>
+        <button class="cta" onclick="submitAirlineSearch()">${tr('מצא טיסות של החברה ליעד')}</button>
+        <p style="font-size:11.5px;color:var(--ink-faint);margin-top:8px">${tr('התוצאות יכללו גם המראות ליעד וגם נחיתות בחזרה ממנו.')}</p>
       `}
     </section>
     ${homeStatsSection()}
     <section id="how" class="how">
-      <h2>איך זה עובד</h2>
+      <h2>${tr('איך זה עובד')}</h2>
       <div class="how-grid">
-        <div><div class="step-n">1</div><h3>הכניסו את הטיסה</h3><p>חפשו לפי מספר טיסה ותאריך, ליציאה או נחיתה בבן גוריון.</p></div>
-        <div><div class="step-n">2</div><h3>ראו את הסיכון</h3><p>קבלו הסתברות ברורה אחת לאיחור של 60 דקות ומעלה.</p></div>
-        <div><div class="step-n">3</div><h3>בדקו שוב מאוחר יותר</h3><p>הסיכון עשוי להשתנות ככל שמתקרבים למועד הטיסה.</p></div>
+        <div><div class="step-n">1</div><h3>${tr('הכניסו את הטיסה')}</h3><p>${tr('חפשו לפי מספר טיסה ותאריך, ליציאה או נחיתה בבן גוריון.')}</p></div>
+        <div><div class="step-n">2</div><h3>${tr('ראו את הסיכון')}</h3><p>${tr('קבלו הסתברות ברורה אחת לאיחור של 60 דקות ומעלה.')}</p></div>
+        <div><div class="step-n">3</div><h3>${tr('בדקו שוב מאוחר יותר')}</h3><p>${tr('הסיכון עשוי להשתנות ככל שמתקרבים למועד הטיסה.')}</p></div>
       </div>
     </section>
   `;
 }
 
 function renderLoading() {
-  return `<div class="loading"><div class="spinner"></div>בודק טיסה...</div>`;
+  return `<div class="loading"><div class="spinner"></div>${tr('בודק טיסה...')}</div>`;
 }
 
 function renderNotFound() {
   return `
     <div class="not-found">
       <div class="nf-icon">🔍</div>
-      <p style="font-size:17px;font-weight:600;margin:0 0 6px">לא מצאנו את הטיסה הזו.</p>
-      <p style="font-size:14px;color:var(--ink-soft);margin:0 0 18px">בדקו את מספר הטיסה והתאריך ונסו שוב.<br/>(המאגר כולל כרגע כ-${META && META.totalFlightsAnalyzed ? META.totalFlightsAnalyzed.toLocaleString() : ''} זיהויי טיסה, מ-${META && META.daysOfDataCollected ? META.daysOfDataCollected : ''} הימים האחרונים בבן גוריון — טיסות חדשות/עונתיות עשויות עדיין לא להופיע.)</p>
-      <button class="cta" style="max-width:220px;margin:0 auto" onclick="goHome()">נסו טיסה אחרת</button>
+      <p style="font-size:17px;font-weight:600;margin:0 0 6px">${tr('לא מצאנו את הטיסה הזו.')}</p>
+      <p style="font-size:14px;color:var(--ink-soft);margin:0 0 18px">${tr('בדקו את מספר הטיסה והתאריך ונסו שוב.')}<br/>${tr('(המאגר כולל כרגע כ-{n} זיהויי טיסה, מ-{d} הימים האחרונים בבן גוריון — טיסות חדשות/עונתיות עשויות עדיין לא להופיע.)', { n: META && META.totalFlightsAnalyzed ? META.totalFlightsAnalyzed.toLocaleString() : '', d: META && META.daysOfDataCollected ? META.daysOfDataCollected : '' })}</p>
+      <button class="cta" style="max-width:220px;margin:0 auto" onclick="goHome()">${tr('נסו טיסה אחרת')}</button>
     </div>
   `;
 }
@@ -524,26 +712,28 @@ function renderNotFound() {
 function renderResult(f) {
   const m = riskMeta(f.riskLevel);
   const pct = Math.round(f.delayProbability60 * 100);
-  const label = f.direction === 'departure' ? 'סיכוי לאיחור של 60+ דקות בהמראה' : 'סיכוי לאיחור של 60+ דקות בנחיתה';
+  const label = f.direction === 'departure' ? tr('סיכוי לאיחור של 60+ דקות בהמראה') : tr('סיכוי לאיחור של 60+ דקות בנחיתה');
   const isDep = f.direction === 'departure';
   const recentCount7 = Math.min(7, f.sampleSize);
 
   const why = [
-    { icon: '📊', t: 'ביצועים היסטוריים', d: `${Math.round(f.delayRate60*100)}% מ-${isDep ? 'ההמראות' : 'הנחיתות'} האחרונות איחרו ב-60+ דקות` },
-    { icon: '🧮', t: 'גודל המדגם', d: `ההערכה מבוססת על ${f.sampleSize} תצפיות אחרונות` },
-    { icon: '🛡️', t: 'ביצועי החברה', d: `ל${f.airline} שיעור איחור של ${Math.round(f.airlineDelayRate*100)}% ב-60+ דקות על פני כלל הטיסות שלה` },
-    { icon: '⛔', t: 'שיעור ביטולים', d: f.cancellationRate > 0 ? `${Math.round(f.cancellationRate*100)}% מהטיסות בוטלו לאחרונה` : 'לא נרשמו ביטולים לאחרונה' },
+    { icon: '📊', t: tr('ביצועים היסטוריים'), d: isDep
+        ? tr('{pct}% מההמראות האחרונות איחרו ב-60+ דקות', { pct: Math.round(f.delayRate60*100) })
+        : tr('{pct}% מהנחיתות האחרונות איחרו ב-60+ דקות', { pct: Math.round(f.delayRate60*100) }) },
+    { icon: '🧮', t: tr('גודל המדגם'), d: tr('ההערכה מבוססת על {n} תצפיות אחרונות', { n: f.sampleSize }) },
+    { icon: '🛡️', t: tr('ביצועי החברה'), d: tr('ל{airline} שיעור איחור של {pct}% ב-60+ דקות על פני כלל הטיסות שלה', { airline: f.airline, pct: Math.round(f.airlineDelayRate*100) }) },
+    { icon: '⛔', t: tr('שיעור ביטולים'), d: f.cancellationRate > 0 ? tr('{pct}% מהטיסות בוטלו לאחרונה', { pct: Math.round(f.cancellationRate*100) }) : tr('לא נרשמו ביטולים לאחרונה') },
   ];
 
   return `
-    <button class="back-btn" onclick="goHome()">→ בדיקת טיסה אחרת</button>
+    <button class="back-btn" onclick="goHome()">${tr('→ בדיקת טיסה אחרת')}</button>
     <div class="card" style="margin-top:14px">
       <div class="flight-head">
         <div class="flight-title">${icon(f.direction)} ${f.flightNumber} <span class="flight-airline">${f.airline}</span></div>
-        <span class="direction-tag">${isDep ? 'המראה' : 'נחיתה'}</span>
+        <span class="direction-tag">${isDep ? tr('המראה') : tr('נחיתה')}</span>
       </div>
       <div class="route" dir="ltr">${f.origin} <span class="arrow">→</span> ${f.destination}</div>
-      <div class="sched">דאטה אמיתי מתוך ${f.sampleSize} תצפיות בשבוע האחרון</div>
+      <div class="sched">${tr('דאטה אמיתי מתוך {n} תצפיות ב-{d} הימים האחרונים', { n: f.sampleSize, d: META && META.daysOfDataCollected ? META.daysOfDataCollected : '' })}</div>
     </div>
 
     <div class="card score-card">
@@ -552,15 +742,15 @@ function renderResult(f) {
       <div class="badge" style="color:var(${m.varFg});background:var(${m.varBg});border:1px solid var(${m.varBorder})">${m.label}</div>
       <p class="interp">${riskInterpretation(f.riskLevel, f.direction)}</p>
       <div class="stats-row">
-        <div><div class="stat-v">${f.averageDelay} min</div><div class="stat-l">איחור ממוצע</div></div>
-        <div><div class="stat-v">${Math.round(f.delayRate60*100)}%</div><div class="stat-l">איחרו 60+ דק'</div></div>
-        <div><div class="stat-v">${f.sampleSize}</div><div class="stat-l">טיסות שנותחו</div></div>
+        <div><div class="stat-v">${f.averageDelay} min</div><div class="stat-l">${tr('איחור ממוצע')}</div></div>
+        <div><div class="stat-v">${Math.round(f.delayRate60*100)}%</div><div class="stat-l">${tr('איחרו 60+ דק\'')}</div></div>
+        <div><div class="stat-v">${f.sampleSize}</div><div class="stat-l">${tr('טיסות שנותחו')}</div></div>
       </div>
-      <div class="hist-label" style="margin-top:16px">מבוסס על היסטוריית הטיסות האחרונה</div>
+      <div class="hist-label" style="margin-top:16px">${tr('מבוסס על היסטוריית הטיסות האחרונה')}</div>
     </div>
 
     <div class="card">
-      <p class="why-title">למה הציון הזה?</p>
+      <p class="why-title">${tr('למה הציון הזה?')}</p>
       <div class="why-grid">
         ${why.map(w => `<div class="why-item"><div class="why-icon">${w.icon}</div><div><div class="why-t">${w.t}</div><div class="why-d">${w.d}</div></div></div>`).join('')}
       </div>
@@ -570,22 +760,22 @@ function renderResult(f) {
 
     <div class="card">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
-        <p class="why-title" style="margin:0">כבר הזמנתם?</p>
-        <span class="tag-illustrative">דוגמה להמחשה</span>
+        <p class="why-title" style="margin:0">${tr('כבר הזמנתם?')}</p>
+        <span class="tag-illustrative">${tr('דוגמה להמחשה')}</span>
       </div>
-      <p style="font-size:13.5px;color:var(--ink-soft);margin:8px 0 0">בדקו שוב קרוב יותר למועד הטיסה. ככל שמתקבל מידע תפעולי עדכני, רמת הסיכון עשויה להשתנות.</p>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin:8px 0 0">${tr('בדקו שוב קרוב יותר למועד הטיסה. ככל שמתקבל מידע תפעולי עדכני, רמת הסיכון עשויה להשתנות.')}</p>
       <div class="timeline-row">
         ${[[' -7 ימים',0.6],['24 שעות',0.75],['6 שעות',0.9],['2 שעות',1.0]].map(([label,mult])=>{
           const v = Math.round(f.delayProbability60*mult*100);
           const lvl = v<30?'low':v<60?'medium':'high';
           const mm = riskMeta(lvl);
-          return `<div class="tl-point"><div class="tl-dot" style="border-color:var(${mm.varFg});color:var(${mm.varFg})">${v}</div><div class="tl-label">${label} לפני</div></div>`;
+          return `<div class="tl-point"><div class="tl-dot" style="border-color:var(${mm.varFg});color:var(${mm.varFg})">${v}</div><div class="tl-label">${tr('{label} לפני', { label: tr(label) })}</div></div>`;
         }).join('')}
       </div>
     </div>
 
     <div class="card trust-box">
-      <p>התחזיות מבוססות על נתונים היסטוריים ותפעוליים אמיתיים מרשות שדות התעופה. אין ודאות מוחלטת בשום תחזית.</p>
+      <p>${tr('התחזיות מבוססות על נתונים היסטוריים ותפעוליים אמיתיים מרשות שדות התעופה. אין ודאות מוחלטת בשום תחזית.')}</p>
     </div>
 
     ${reviewsWidgetHTML('page', f.flightNumber)}
@@ -605,17 +795,17 @@ function historyCard(recentFlights) {
         <div style="flex:1;height:10px;border-radius:6px;background:var(--border-soft)">
           <div style="height:10px;border-radius:6px;width:${widthPct}%;background:${late ? 'var(--red)' : 'var(--green)'}"></div>
         </div>
-        <span style="font-size:12px;width:60px;text-align:left;flex-shrink:0;color:${late ? 'var(--red)' : 'var(--ink-soft)'};font-weight:${late ? 600 : 400}">${sign}${r.delayMin} min</span>
+        <span style="font-size:12px;width:60px;text-align:end;flex-shrink:0;color:${late ? 'var(--red)' : 'var(--ink-soft)'};font-weight:${late ? 600 : 400}">${sign}${r.delayMin} min</span>
       </div>
     `;
   }).join('');
   return `
     <div class="card" style="cursor:pointer" onclick="showFlightDetailForCurrent()">
-      <p class="why-title">היסטוריית טיסות אחרונה</p>
+      <p class="why-title">${tr('היסטוריית טיסות אחרונה')}</p>
       ${rows}
       <div style="display:flex;gap:16px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border-soft)">
-        <div style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:var(--green)"></span><span style="font-size:12px;color:var(--ink-faint)">עד 60 דק' איחור</span></div>
-        <div style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:var(--red)"></span><span style="font-size:12px;color:var(--ink-faint)">60+ דק' איחור</span></div>
+        <div style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:var(--green)"></span><span style="font-size:12px;color:var(--ink-faint)">${tr('עד 60 דק\' איחור')}</span></div>
+        <div style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:var(--red)"></span><span style="font-size:12px;color:var(--ink-faint)">${tr('60+ דק\' איחור')}</span></div>
       </div>
     </div>
   `;
@@ -645,7 +835,7 @@ function homeStatsSection() {
     const i = yesterdayAll.indexOf(e);
     const primary = e.aliases[0];
     const codeshareTag = e.isCodeshareGroup
-      ? ` <span class="tag-illustrative" style="margin-right:4px">קודשרינג</span>`
+      ? ` <span class="tag-illustrative" style="margin-inline-start:4px">${tr('קודשרינג')}</span>`
       : '';
     return `
       <div class="rank-row" onclick="showFlightDetail('yesterday', ${i})">
@@ -670,28 +860,28 @@ function homeStatsSection() {
     </div>
   `).join('');
   return `
-    <p class="why-title" style="margin-top:24px">סטטיסטיקות</p>
+    <p class="why-title" style="margin-top:24px">${tr('סטטיסטיקות')}</p>
     <div class="stats-grid">
       <section class="card">
-        <p class="why-title" style="margin-top:0">5 הטיסות עם הכי הרבה איחורים</p>
-        <p class="dest-hint" style="margin-top:0">לפי אחוז הסיכוי לאיחור של 60+ דקות, מבין טיסות עם מדגם מספק.</p>
+        <p class="why-title" style="margin-top:0">${tr('5 הטיסות עם הכי הרבה איחורים')}</p>
+        <p class="dest-hint" style="margin-top:0">${tr('לפי אחוז הסיכוי לאיחור של 60+ דקות, מבין טיסות עם מדגם מספק.')}</p>
         ${delayedRows}
       </section>
       <section class="card">
-        <p class="why-title" style="margin-top:0">החברות הדייקניות ביותר</p>
-        <p class="dest-hint" style="margin-top:0">שיעור איחור נמוך ביותר, מבין חברות עם מספיק טיסות שנותחו. לחצו על חברה כדי לראות אילו טיסות שלה נותחו.</p>
+        <p class="why-title" style="margin-top:0">${tr('החברות הדייקניות ביותר')}</p>
+        <p class="dest-hint" style="margin-top:0">${tr('שיעור איחור נמוך ביותר, מבין חברות עם מספיק טיסות שנותחו. לחצו על חברה כדי לראות אילו טיסות שלה נותחו.')}</p>
         ${punctualRows}
       </section>
       ${yesterdayAll.length > 0 ? `
       <section class="card">
-        <p class="why-title" style="margin-top:0">5 הטיסות המאחרות של אתמול</p>
-        <p class="dest-hint" style="margin-top:0">איחור בפועל, לפי אירועי אתמול (לא ממוצע היסטורי).</p>
+        <p class="why-title" style="margin-top:0">${tr('5 הטיסות המאחרות של אתמול')}</p>
+        <p class="dest-hint" style="margin-top:0">${tr('איחור בפועל, לפי אירועי אתמול (לא ממוצע היסטורי).')}</p>
         <div style="display:flex;gap:6px;margin-bottom:10px">
-          ${yesterdayFilterBtn('both', 'המראות ונחיתות')}
-          ${yesterdayFilterBtn('departure', 'המראות')}
-          ${yesterdayFilterBtn('arrival', 'נחיתות')}
+          ${yesterdayFilterBtn('both', tr('המראות ונחיתות'))}
+          ${yesterdayFilterBtn('departure', tr('המראות'))}
+          ${yesterdayFilterBtn('arrival', tr('נחיתות'))}
         </div>
-        ${yesterdayRows || `<p style="font-size:13px;color:var(--ink-soft)">אין אירועים בקטגוריה הזו אתמול.</p>`}
+        ${yesterdayRows || `<p style="font-size:13px;color:var(--ink-soft)">${tr('אין אירועים בקטגוריה הזו אתמול.')}</p>`}
       </section>
       ` : ''}
     </div>
@@ -705,15 +895,15 @@ function rankRow(g, pos, isBest, isWorst, dir, idx) {
   const others = g.aliases.slice(1);
   const medal = pos === 1 ? '🥇' : pos === 2 ? '🥈' : pos === 3 ? '🥉' : '';
   const aliasLine = g.isCodeshareGroup
-    ? `<span class="flight-num-highlight">${primary.flightNumber}</span> · אותה טיסה נמכרת גם כ-${others.map(a => `<span class="flight-num-highlight">${a.flightNumber}</span> (${a.airline})`).join(', ')} · איחור ממוצע ${g.averageDelay} min`
-    : `<span class="flight-num-highlight">${primary.flightNumber}</span> · איחור ממוצע ${g.averageDelay} min`;
+    ? `<span class="flight-num-highlight">${primary.flightNumber}</span> · ${tr('אותה טיסה נמכרת גם כ-{list}', { list: others.map(a => `<span class="flight-num-highlight">${a.flightNumber}</span> (${a.airline})`).join(', ') })} · ${tr('איחור ממוצע {d} min', { d: g.averageDelay })}`
+    : `<span class="flight-num-highlight">${primary.flightNumber}</span> · ${tr('איחור ממוצע {d} min', { d: g.averageDelay })}`;
   const badge = isBest
-    ? `<span class="tag-illustrative" style="background:var(--green-bg);color:var(--green);margin-right:4px">הכי אמינה</span>`
+    ? `<span class="tag-illustrative" style="background:var(--green-bg);color:var(--green);margin-inline-start:4px">${tr('הכי אמינה')}</span>`
     : isWorst
-    ? `<span class="tag-illustrative" style="background:var(--red-bg);color:var(--red);margin-right:4px">הכי הרבה איחורים</span>`
+    ? `<span class="tag-illustrative" style="background:var(--red-bg);color:var(--red);margin-inline-start:4px">${tr('הכי הרבה איחורים')}</span>`
     : '';
   const codeshareTag = g.isCodeshareGroup
-    ? ` <span class="tag-illustrative" style="margin-right:4px">קודשרינג</span><span class="info-dot" onclick="event.stopPropagation(); showCodeshareInfo();">?</span>`
+    ? ` <span class="tag-illustrative" style="margin-inline-start:4px">${tr('קודשרינג')}</span><span class="info-dot" onclick="event.stopPropagation(); showCodeshareInfo();">?</span>`
     : '';
   return `
     <div class="rank-row" onclick="showFlightDetail('${dir}', ${idx})">
@@ -753,14 +943,14 @@ function addMinutesToTime(hhmm, delayMin) {
 function showCodeshareInfo() {
   document.getElementById('flight-detail-content').innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-      <h3 style="margin:0">מה זה קודשרינג?</h3>
+      <h3 style="margin:0">${tr('מה זה קודשרינג?')}</h3>
       <button onclick="closeFlightDetail()" style="border:none;background:none;font-size:20px;color:var(--ink-faint);cursor:pointer;line-height:1">×</button>
     </div>
     <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0">
-      לפעמים כמה חברות תעופה מוכרות כרטיסים על <strong>אותה טיסה פיזית בדיוק</strong> — אותו מטוס, אותו טייס, אותה שעת המראה — כל אחת תחת מספר טיסה משלה. זה נפוץ כדי לאפשר צבירת נקודות/סטטוס וחיבורי טיסות נוחים יותר.
+      ${tr('לפעמים כמה חברות תעופה מוכרות כרטיסים על <strong>אותה טיסה פיזית בדיוק</strong> — אותו מטוס, אותו טייס, אותה שעת המראה — כל אחת תחת מספר טיסה משלה. זה נפוץ כדי לאפשר צבירת נקודות/סטטוס וחיבורי טיסות נוחים יותר.')}
     </p>
     <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:10px 0 0">
-      במעשה, זה אומר שכל מספרי הטיסה המקושרים <strong>תמיד יאחרו באותה מידה בדיוק</strong> — הרי מדובר באותה טיסה עצמה. לכן אנחנו מציגים אותן כשורה אחת במקום להראות אותן כאילו הן אפשרויות שונות עם רמות אמינות שונות.
+      ${tr('במעשה, זה אומר שכל מספרי הטיסה המקושרים <strong>תמיד יאחרו באותה מידה בדיוק</strong> — הרי מדובר באותה טיסה עצמה. לכן אנחנו מציגים אותן כשורה אחת במקום להראות אותן כאילו הן אפשרויות שונות עם רמות אמינות שונות.')}
     </p>
   `;
   document.getElementById('flight-detail-modal').style.display = 'flex';
@@ -781,7 +971,7 @@ function showAirlineDetail(idx) {
         <div class="rank-pos">${i+1}</div>
         <div class="rank-mid">
           <div class="rank-airline"><span class="flight-num-highlight">${alias.flightNumber}</span></div>
-          <div class="rank-flight"><span dir="ltr">${g.origin} → ${g.destination}</span> · ${g.sampleSize} תצפיות</div>
+          <div class="rank-flight"><span dir="ltr">${g.origin} → ${g.destination}</span> · ${tr('{n} תצפיות', { n: g.sampleSize })}</div>
         </div>
         <span class="rank-badge-mini" style="color:var(${m.varFg});background:var(${m.varBg})">${m.label}</span>
         <div class="rank-pct" style="color:var(${m.varFg})">${pct}%</div>
@@ -793,8 +983,8 @@ function showAirlineDetail(idx) {
       <h3 style="margin:0">${airline}</h3>
       <button onclick="closeFlightDetail()" style="border:none;background:none;font-size:20px;color:var(--ink-faint);cursor:pointer;line-height:1">×</button>
     </div>
-    <p style="font-size:12.5px;color:var(--ink-faint);margin:0 0 10px">${currentAirlineFlights.length} טיסות נותחו · לחצו על טיסה לפרטים נוספים</p>
-    ${rows || `<p style="font-size:13px;color:var(--ink-soft)">לא נמצאו טיסות.</p>`}
+    <p style="font-size:12.5px;color:var(--ink-faint);margin:0 0 10px">${tr('{n} טיסות נותחו · לחצו על טיסה לפרטים נוספים', { n: currentAirlineFlights.length })}</p>
+    ${rows || `<p style="font-size:13px;color:var(--ink-soft)">${tr('לא נמצאו טיסות.')}</p>`}
   `;
   document.getElementById('flight-detail-modal').style.display = 'flex';
 }
@@ -827,15 +1017,15 @@ function renderSingleEventModal(e) {
       <button onclick="closeFlightDetail()" style="border:none;background:none;font-size:20px;color:var(--ink-faint);cursor:pointer;line-height:1">×</button>
     </div>
     <div style="display:flex;gap:10px;font-size:11px;color:var(--ink-faint);padding:8px 0;border-bottom:1px solid var(--border);font-weight:600">
-      <span style="width:70px">תאריך</span><span style="width:60px">מתוכנן</span><span style="width:80px">בפועל</span>
+      <span style="width:70px">${tr('תאריך')}</span><span style="width:60px">${tr('מתוכנן')}</span><span style="width:80px">${tr('בפועל')}</span>
     </div>
     <div style="display:flex;align-items:center;gap:10px;padding:10px 0;font-size:13px">
       <span style="width:70px;color:var(--ink-faint)">${e.date}</span>
       <span style="width:60px">${e.scheduledTime}</span>
-      <span style="width:80px;color:${late ? 'var(--red)' : 'var(--ink)'};font-weight:600">${actual.time}${actual.dayOffset ? ` (${actual.dayOffset>0?'+':''}${actual.dayOffset} יום)` : ''}</span>
-      <span style="color:var(--ink-faint);margin-right:auto">${e.delayMin>=0?'+':''}${Math.round(e.delayMin)} min</span>
+      <span style="width:80px;color:${late ? 'var(--red)' : 'var(--ink)'};font-weight:600">${actual.time}${actual.dayOffset ? ` ${tr('({d} יום)', { d: (actual.dayOffset>0?'+':'') + actual.dayOffset })}` : ''}</span>
+      <span style="color:var(--ink-faint);margin-inline-start:auto">${e.delayMin>=0?'+':''}${Math.round(e.delayMin)} min</span>
     </div>
-    ${e.isCodeshareGroup ? `<p style="font-size:12px;color:var(--ink-faint);margin-top:10px">קודשרינג: גם ${e.aliases.slice(1).map(a=>`${a.airline} ${a.flightNumber}`).join(', ')}</p>` : ''}
+    ${e.isCodeshareGroup ? `<p style="font-size:12px;color:var(--ink-faint);margin-top:10px">${tr('קודשרינג: גם {list}', { list: e.aliases.slice(1).map(a=>`${a.airline} ${a.flightNumber}`).join(', ') })}</p>` : ''}
   `;
 }
 
@@ -868,8 +1058,8 @@ function renderFlightDetailModal(f, isSingleFlight, keepPage) {
       <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-soft);font-size:13px">
         <span style="width:70px;color:var(--ink-faint)">${r.date}</span>
         <span style="width:60px">${r.scheduledTime}</span>
-        <span style="width:80px;color:${late ? 'var(--red)' : 'var(--ink)'};font-weight:${late?600:400}">${actual.time}${actual.dayOffset ? ` (${actual.dayOffset>0?'+':''}${actual.dayOffset} יום)` : ''}</span>
-        <span style="color:var(--ink-faint);margin-right:auto">${r.delayMin>=0?'+':''}${r.delayMin} min</span>
+        <span style="width:80px;color:${late ? 'var(--red)' : 'var(--ink)'};font-weight:${late?600:400}">${actual.time}${actual.dayOffset ? ` ${tr('({d} יום)', { d: (actual.dayOffset>0?'+':'') + actual.dayOffset })}` : ''}</span>
+        <span style="color:var(--ink-faint);margin-inline-start:auto">${r.delayMin>=0?'+':''}${r.delayMin} min</span>
       </div>
     `;
   }).join('');
@@ -883,10 +1073,10 @@ function renderFlightDetailModal(f, isSingleFlight, keepPage) {
       <button onclick="closeFlightDetail()" style="border:none;background:none;font-size:20px;color:var(--ink-faint);cursor:pointer;line-height:1">×</button>
     </div>
     <div style="display:flex;gap:10px;font-size:11px;color:var(--ink-faint);padding:8px 0;border-bottom:1px solid var(--border);font-weight:600">
-      <span style="width:70px">תאריך</span><span style="width:60px">מתוכנן</span><span style="width:80px">בפועל</span>
+      <span style="width:70px">${tr('תאריך')}</span><span style="width:60px">${tr('מתוכנן')}</span><span style="width:80px">${tr('בפועל')}</span>
     </div>
-    ${rows || `<p style="font-size:13px;color:var(--ink-soft)">אין עדיין נתוני היסטוריה זמינים לטיסה זו.</p>`}
-    ${hasMore ? `<button onclick="loadMoreHistory()" style="width:100%;margin-top:10px;background:none;border:1px solid var(--border);border-radius:8px;padding:9px;font-size:13px;color:var(--brand);cursor:pointer">טען עוד שבוע אחורה</button>` : ''}
+    ${rows || `<p style="font-size:13px;color:var(--ink-soft)">${tr('אין עדיין נתוני היסטוריה זמינים לטיסה זו.')}</p>`}
+    ${hasMore ? `<button onclick="loadMoreHistory()" style="width:100%;margin-top:10px;background:none;border:1px solid var(--border);border-radius:8px;padding:9px;font-size:13px;color:var(--brand);cursor:pointer">${tr('טען עוד שבוע אחורה')}</button>` : ''}
   `;
 }
 
@@ -898,14 +1088,14 @@ function loadMoreHistory() {
 function reviewsWidgetHTML(prefix, flightNumber) {
   return `
     <div class="card" id="${prefix}-reviews-section">
-      <p class="why-title">ביקורות נוסעים</p>
-      <div id="${prefix}-reviews-list"><p style="font-size:12.5px;color:var(--ink-faint)">טוען ביקורות...</p></div>
+      <p class="why-title">${tr('ביקורות נוסעים')}</p>
+      <div id="${prefix}-reviews-list"><p style="font-size:12.5px;color:var(--ink-faint)">${tr('טוען ביקורות...')}</p></div>
       <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border-soft)">
-        <p style="font-size:12px;color:var(--ink-faint);margin:0 0 8px">שתפו את החוויה שלכם בטיסה הזו — לא משנה מתי היא הייתה</p>
+        <p style="font-size:12px;color:var(--ink-faint);margin:0 0 8px">${tr('שתפו את החוויה שלכם בטיסה הזו — לא משנה מתי היא הייתה')}</p>
         <input id="${prefix}-review-date" type="date" style="width:100%;border:1px solid var(--border);border-radius:8px;padding:8px;font-size:13px;margin-bottom:6px;background:var(--bg);color:var(--ink)" />
-        <input id="${prefix}-review-name" type="text" placeholder="שם (אופציונלי)" style="width:100%;border:1px solid var(--border);border-radius:8px;padding:8px;font-size:13px;margin-bottom:6px;background:var(--bg);color:var(--ink)" />
-        <textarea id="${prefix}-review-text" placeholder="איך הייתה הטיסה?" rows="3" style="width:100%;border:1px solid var(--border);border-radius:8px;padding:8px;font-size:13px;margin-bottom:8px;background:var(--bg);color:var(--ink);resize:vertical"></textarea>
-        <button id="${prefix}-review-submit-btn" onclick="submitReview('${flightNumber}', '${prefix}')" style="width:100%;background:var(--brand);color:#fff;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:600;cursor:pointer">שליחת ביקורת</button>
+        <input id="${prefix}-review-name" type="text" placeholder="${tr('שם (אופציונלי)')}" style="width:100%;border:1px solid var(--border);border-radius:8px;padding:8px;font-size:13px;margin-bottom:6px;background:var(--bg);color:var(--ink)" />
+        <textarea id="${prefix}-review-text" placeholder="${tr('איך הייתה הטיסה?')}" rows="3" style="width:100%;border:1px solid var(--border);border-radius:8px;padding:8px;font-size:13px;margin-bottom:8px;background:var(--bg);color:var(--ink);resize:vertical"></textarea>
+        <button id="${prefix}-review-submit-btn" onclick="submitReview('${flightNumber}', '${prefix}')" style="width:100%;background:var(--brand);color:#fff;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:600;cursor:pointer">${tr('שליחת ביקורת')}</button>
         <p id="${prefix}-review-status" style="font-size:12px;margin:6px 0 0"></p>
       </div>
     </div>
@@ -916,26 +1106,26 @@ async function loadReviewsForFlight(flightNumber, prefix) {
   const listEl = document.getElementById(`${prefix}-reviews-list`);
   if (!listEl) return;
   if (GET_REVIEWS_URL.startsWith('REPLACE_')) {
-    listEl.innerHTML = `<p style="font-size:12.5px;color:var(--ink-faint)">מערכת הביקורות עוד לא חוברה.</p>`;
+    listEl.innerHTML = `<p style="font-size:12.5px;color:var(--ink-faint)">${tr('מערכת הביקורות עוד לא חוברה.')}</p>`;
     return;
   }
   try {
     const res = await fetch(`${GET_REVIEWS_URL}?flightNumber=${encodeURIComponent(flightNumber)}`);
     const reviews = await res.json();
     if (!Array.isArray(reviews) || reviews.length === 0) {
-      listEl.innerHTML = `<p style="font-size:12.5px;color:var(--ink-faint)">אין עדיין ביקורות לטיסה הזו. היו הראשונים לכתוב!</p>`;
+      listEl.innerHTML = `<p style="font-size:12.5px;color:var(--ink-faint)">${tr('אין עדיין ביקורות לטיסה הזו. היו הראשונים לכתוב!')}</p>`;
       return;
     }
     listEl.innerHTML = reviews.map(r => `
       <div style="padding:8px 0;border-bottom:1px solid var(--border-soft);font-size:13px">
         <div style="display:flex;justify-content:space-between;color:var(--ink-faint);font-size:11.5px;margin-bottom:3px">
-          <span>${r.reviewerName || 'אנונימי'}</span><span>${r.flightDate || ''}</span>
+          <span>${r.reviewerName || tr('אנונימי')}</span><span>${r.flightDate || ''}</span>
         </div>
         <div style="color:var(--ink-soft)">${(r.reviewText || '').replace(/</g,'&lt;')}</div>
       </div>
     `).join('');
   } catch (e) {
-    listEl.innerHTML = `<p style="font-size:12.5px;color:var(--ink-faint)">לא הצלחנו לטעון ביקורות כרגע.</p>`;
+    listEl.innerHTML = `<p style="font-size:12.5px;color:var(--ink-faint)">${tr('לא הצלחנו לטעון ביקורות כרגע.')}</p>`;
   }
 }
 
@@ -946,29 +1136,29 @@ async function submitReview(flightNumber, prefix) {
   const name = document.getElementById(`${prefix}-review-name`).value.trim();
   const text = document.getElementById(`${prefix}-review-text`).value.trim();
 
-  if (!text) { statusEl.textContent = 'נא לכתוב טקסט לביקורת.'; statusEl.style.color = 'var(--red)'; return; }
-  if (text.length > 1000) { statusEl.textContent = 'הביקורת ארוכה מדי (מקסימום 1000 תווים).'; statusEl.style.color = 'var(--red)'; return; }
-  if (SUBMIT_REVIEW_URL.startsWith('REPLACE_')) { statusEl.textContent = 'מערכת הביקורות עוד לא חוברה.'; statusEl.style.color = 'var(--red)'; return; }
+  if (!text) { statusEl.textContent = tr('נא לכתוב טקסט לביקורת.'); statusEl.style.color = 'var(--red)'; return; }
+  if (text.length > 1000) { statusEl.textContent = tr('הביקורת ארוכה מדי (מקסימום 1000 תווים).'); statusEl.style.color = 'var(--red)'; return; }
+  if (SUBMIT_REVIEW_URL.startsWith('REPLACE_')) { statusEl.textContent = tr('מערכת הביקורות עוד לא חוברה.'); statusEl.style.color = 'var(--red)'; return; }
 
   btn.disabled = true;
-  btn.textContent = 'שולח...';
+  btn.textContent = tr('שולח...');
   try {
     await fetch(SUBMIT_REVIEW_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ flightNumber, flightDate: date, reviewerName: name, reviewText: text }),
     });
-    statusEl.textContent = 'הביקורת נשלחה, תודה!';
+    statusEl.textContent = tr('הביקורת נשלחה, תודה!');
     statusEl.style.color = 'var(--green)';
     document.getElementById(`${prefix}-review-text`).value = '';
     document.getElementById(`${prefix}-review-name`).value = '';
     loadReviewsForFlight(flightNumber, prefix);
   } catch (e) {
-    statusEl.textContent = 'שליחת הביקורת נכשלה. נסו שוב.';
+    statusEl.textContent = tr('שליחת הביקורת נכשלה. נסו שוב.');
     statusEl.style.color = 'var(--red)';
   }
   btn.disabled = false;
-  btn.textContent = 'שליחת ביקורת';
+  btn.textContent = tr('שליחת ביקורת');
 }
 
 function summaryBlock(label, icon, summary, filterValue) {
@@ -980,8 +1170,8 @@ function summaryBlock(label, icon, summary, filterValue) {
     <div onclick="setDestFilter('${filterValue}')" style="flex:1;text-align:center;padding:16px 10px;border-radius:14px;background:var(--bg);cursor:pointer;border:2px solid ${isActive ? 'var(--brand)' : 'transparent'}">
       <div style="font-size:12px;color:var(--ink-faint);margin-bottom:6px">${icon} ${label}</div>
       <div style="font-size:32px;font-weight:700;color:var(${m.varFg})">${pct}%</div>
-      <div style="font-size:11.5px;color:var(--ink-soft);margin-top:2px">${Math.round(summary.avgDelay)} דקות עיכוב ממוצע</div>
-      <div style="font-size:11px;color:var(--ink-faint);margin-top:4px">מ-${summary.flightCount} טיסות</div>
+      <div style="font-size:11.5px;color:var(--ink-soft);margin-top:2px">${tr('{n} דקות עיכוב ממוצע', { n: Math.round(summary.avgDelay) })}</div>
+      <div style="font-size:11px;color:var(--ink-faint);margin-top:4px">${tr('מ-{n} טיסות', { n: summary.flightCount })}</div>
     </div>
   `;
 }
@@ -1036,54 +1226,54 @@ function renderDestinationResult() {
   `;
 
   return `
-    <button class="back-btn" onclick="goHome()">→ חיפוש אחר</button>
+    <button class="back-btn" onclick="goHome()">${tr('→ חיפוש אחר')}</button>
     <div class="card" style="margin-top:14px">
       <div class="dest-title-row">
-        <p class="why-title" style="margin:0">תוצאות עבור "${destQueryLabel}"</p>
+        <p class="why-title" style="margin:0">${tr('תוצאות עבור "{q}"', { q: destQueryLabel })}</p>
       </div>
       ${!empty ? `
         <div style="display:flex;gap:10px;margin-top:14px">
-          ${summaryBlock('לכיוון היעד', '🛫', outSummary, 'outbound')}
-          ${summaryBlock('בחזרה לישראל', '🛬', inSummary, 'inbound')}
+          ${summaryBlock(tr('לכיוון היעד'), '🛫', outSummary, 'outbound')}
+          ${summaryBlock(tr('בחזרה לישראל'), '🛬', inSummary, 'inbound')}
         </div>
-        <p style="font-size:11.5px;color:var(--ink-faint);margin:10px 0 0;text-align:center">לחצו על אחת מהתיבות כדי לסנן רק לכיוון הזה</p>
+        <p style="font-size:11.5px;color:var(--ink-faint);margin:10px 0 0;text-align:center">${tr('לחצו על אחת מהתיבות כדי לסנן רק לכיוון הזה')}</p>
       ` : ''}
     </div>
     <div class="card" style="margin-top:14px">
-      <p class="dest-hint" style="margin-top:0">לפי אחוז הסיכוי לאיחור של 60+ דקות. דאטה אמיתי מ-${META && META.daysOfDataCollected ? META.daysOfDataCollected : ''} הימים האחרונים. טיסות המסומנות "קודשרינג" הן אותה טיסה פיזית הנמכרת תחת כמה מספרי/שמות חברות — לכן הן מוצגות כשורה אחת ולא כמה אפשרויות נפרדות.</p>
+      <p class="dest-hint" style="margin-top:0">${tr('לפי אחוז הסיכוי לאיחור של 60+ דקות. דאטה אמיתי מ-{d} הימים האחרונים. טיסות המסומנות "קודשרינג" הן אותה טיסה פיזית הנמכרת תחת כמה מספרי/שמות חברות — לכן הן מוצגות כשורה אחת ולא כמה אפשרויות נפרדות.', { d: META && META.daysOfDataCollected ? META.daysOfDataCollected : '' })}</p>
       ${!empty ? `
       <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:14px">
-        ${sortBtn('asc', 'מהכי אמין להכי מסוכן')}
-        ${sortBtn('desc', 'מהכי מסוכן להכי אמין')}
+        ${sortBtn('asc', tr('מהכי אמין להכי מסוכן'))}
+        ${sortBtn('desc', tr('מהכי מסוכן להכי אמין'))}
         <select onchange="setDestAirlineFilter(this.value)" style="font-size:12px;padding:6px 10px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--ink-soft);cursor:pointer">
-          <option value="">כל החברות</option>
+          <option value="">${tr('כל החברות')}</option>
           ${allAirlines.map(a => `<option value="${a}" ${destAirlineFilter===a?'selected':''}>${a}</option>`).join('')}
         </select>
       </div>
       ` : ''}
       ${empty && !hasTechStops ? `
-        <p style="font-size:14px;color:var(--ink-soft);margin-top:18px">לא נמצאו טיסות ליעד הזה במדגם הנוכחי. נסו לכתוב את שם העיר באנגלית, או יעד אחר.</p>
+        <p style="font-size:14px;color:var(--ink-soft);margin-top:18px">${tr('לא נמצאו טיסות ליעד הזה במדגם הנוכחי. נסו לכתוב את שם העיר באנגלית, או יעד אחר.')}</p>
       ` : `
-        ${showOut && destOutboundDisplay.length ? `<div class="dest-section-title">🛫 טיסות ליעד (${destOutboundDisplay.length})</div>${renderList(destOutboundDisplay, outboundAsc, 'outbound')}` : ''}
-        ${showIn && destInboundDisplay.length ? `<div class="dest-section-title">🛬 טיסות חזרה (${destInboundDisplay.length})</div>${renderList(destInboundDisplay, inboundAsc, 'inbound')}` : ''}
+        ${showOut && destOutboundDisplay.length ? `<div class="dest-section-title">${tr('🛫 טיסות ליעד ({n})', { n: destOutboundDisplay.length })}</div>${renderList(destOutboundDisplay, outboundAsc, 'outbound')}` : ''}
+        ${showIn && destInboundDisplay.length ? `<div class="dest-section-title">${tr('🛬 טיסות חזרה ({n})', { n: destInboundDisplay.length })}</div>${renderList(destInboundDisplay, inboundAsc, 'inbound')}` : ''}
       `}
     </div>
     ${hasTechStops ? `
     <div class="card" style="margin-top:14px">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-        <p class="why-title" style="margin:0">✈️🔄 עצירות ביניים ב${destQueryLabel} (${(showOut?outboundTechStops.length:0) + (showIn?inboundTechStops.length:0)})</p>
+        <p class="why-title" style="margin:0">${tr('✈️🔄 עצירות ביניים ב{c} ({n})', { c: destQueryLabel, n: (showOut?outboundTechStops.length:0) + (showIn?inboundTechStops.length:0) })}</p>
       </div>
-      <p class="dest-hint" style="margin-top:0">הטיסות האלה <strong>עוצרות</strong> ב${destQueryLabel} לצורך החלפת צוות אווירי (בשל המצב הביטחוני), אך לא זהו יעדן הסופי — הנוסעים ממשיכים איתן ליעד אחר. אין לנו נתוני עיכוב עבור המשך הדרך, ולכן הן לא כלולות בדירוג למעלה.</p>
+      <p class="dest-hint" style="margin-top:0">${tr('הטיסות האלה <strong>עוצרות</strong> ב{c} לצורך החלפת צוות אווירי (בשל המצב הביטחוני), אך לא זהו יעדן הסופי — הנוסעים ממשיכים איתן ליעד אחר. אין לנו נתוני עיכוב עבור המשך הדרך, ולכן הן לא כלולות בדירוג למעלה.', { c: destQueryLabel })}</p>
       ${[...(showOut?outboundTechStops:[]), ...(showIn?inboundTechStops:[])].map(g => `
         <div style="padding:10px 0;border-bottom:1px solid var(--border-soft);font-size:13px">
-          <div style="font-weight:500">${g.aliases[0].airline} ${g.aliases[0].flightNumber}${g.aliases.length>1 ? ` (גם ${g.aliases.slice(1).map(a=>a.flightNumber).join(', ')})` : ''}</div>
-          <div style="color:var(--ink-soft);margin-top:2px"><span dir="ltr">${g.origin} → ${g.destination}</span> · ${g.technicalStopNote}</div>
+          <div style="font-weight:500">${g.aliases[0].airline} ${g.aliases[0].flightNumber}${g.aliases.length>1 ? ` ${tr('(גם {list})', { list: g.aliases.slice(1).map(a=>a.flightNumber).join(', ') })}` : ''}</div>
+          <div style="color:var(--ink-soft);margin-top:2px"><span dir="ltr">${g.origin} → ${g.destination}</span> · ${tr(g.technicalStopNote)}</div>
         </div>
       `).join('')}
     </div>
     ` : ''}
     <div class="card trust-box">
-      <p>הדירוג מבוסס על נתונים היסטוריים אמיתיים מ-${META && META.daysOfDataCollected ? META.daysOfDataCollected : ''} הימים האחרונים. עם עוד דאטה, הדירוג יהיה מדויק יותר.</p>
+      <p>${tr('הדירוג מבוסס על נתונים היסטוריים אמיתיים מ-{d} הימים האחרונים. עם עוד דאטה, הדירוג יהיה מדויק יותר.', { d: META && META.daysOfDataCollected ? META.daysOfDataCollected : '' })}</p>
     </div>
   `;
 }
@@ -1141,6 +1331,7 @@ function submitAirlineSearch() {
 }
 
 (async function boot() {
+  applyLang();
   document.getElementById('app').innerHTML = `
     <div class="loading"><div class="spinner"></div>Loading flight data...</div>
   `;

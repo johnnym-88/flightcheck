@@ -88,6 +88,8 @@
   }
   @media (max-width: 400px) { nav.links .nav-check { display: none; } }
   nav.links button { background: none; border: none; font-size: 14px; color: var(--ink-soft); cursor: pointer; font-family: inherit; }
+  nav.links .nav-x { font-size: 14px; color: var(--ink-soft); text-decoration: none; white-space: nowrap; }
+  @media (max-width: 480px) { nav.links .nav-x { display: none; } }
 
   .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--brand); text-transform: uppercase; margin: 0 0 14px; }
   h1.headline { font-size: 40px; font-weight: 700; line-height: 1.15; margin: 0; }
@@ -228,6 +230,7 @@
     <nav class="links">
       <button class="nav-check" data-i18n="בדיקת טיסה" onclick="goHome(); setTimeout(()=>document.getElementById('search-card')?.scrollIntoView({behavior:'smooth'}),50)">בדיקת טיסה</button>
       <button data-i18n="איך זה עובד" onclick="goHome(); setTimeout(()=>document.getElementById('how')?.scrollIntoView({behavior:'smooth'}),50)">איך זה עובד</button>
+      <a class="nav-x" href="https://x.com/FlightChance" target="_blank" rel="noopener">𝕏 <span data-i18n="עקבו אחרינו">עקבו אחרינו</span></a>
       <button id="lang-toggle" class="lang-btn" onclick="toggleLang()" aria-label="Change language">English</button>
     </nav>
   </div>
@@ -242,7 +245,7 @@
 
 <footer>
   <div class="fname">FlightChance</div>
-  <div class="ftag">Know before you fly.</div>
+  <div class="ftag" dir="ltr">Know before you fly.</div>
   <a class="fx" href="https://x.com/FlightChance" target="_blank" rel="noopener">𝕏 <span data-i18n="עקבו אחרינו">עקבו אחרינו</span></a>
   <p class="fdisc" data-i18n="הנתונים באתר מבוססים על מידע ממאגר המידע הממשלתי data.gov.il, שמפרסמת רשות שדות התעופה, ומוצגים כפי שהם. FlightChance אינו קשור לרשות שדות התעופה או ל-data.gov.il. איננו מתחייבים לדיוק הנתונים, לשלמותם או לעדכניותם. הסיכוי לעיכוב המוצג הוא הערכה סטטיסטית בלבד, ואינו מבטיח או מנבא את מועד ההמראה או הנחיתה בפועל. האתר אינו ממליץ על חברת תעופה כלשהי, ואין לראות במידע המופיע בו המלצה או ייעוץ. לפני קבלת החלטות, יש לבדוק את פרטי הטיסה מול חברת התעופה.">הנתונים באתר מבוססים על מידע ממאגר המידע הממשלתי data.gov.il, שמפרסמת רשות שדות התעופה, ומוצגים כפי שהם. FlightChance אינו קשור לרשות שדות התעופה או ל-data.gov.il. איננו מתחייבים לדיוק הנתונים, לשלמותם או לעדכניותם. הסיכוי לעיכוב המוצג הוא הערכה סטטיסטית בלבד, ואינו מבטיח או מנבא את מועד ההמראה או הנחיתה בפועל. האתר אינו ממליץ על חברת תעופה כלשהי, ואין לראות במידע המופיע בו המלצה או ייעוץ. לפני קבלת החלטות, יש לבדוק את פרטי הטיסה מול חברת התעופה.</p>
 </footer>
@@ -690,15 +693,9 @@ function renderHome() {
       </div>
 
       ${searchMode === 'number' ? `
-        <div class="grid2">
-          <div class="field">
-            <label>${tr('מספר טיסה')}</label>
-            <input id="input-flight" placeholder="${tr('לדוגמה: LY9255')}" />
-          </div>
-          <div class="field">
-            <label>${tr('תאריך טיסה')}</label>
-            <input id="input-date" type="date" />
-          </div>
+        <div class="field">
+          <label>${tr('מספר טיסה')}</label>
+          <input id="input-flight" placeholder="${tr('לדוגמה: LY9255')}" onkeydown="if(event.key==='Enter') submitSearch()" />
         </div>
         <button class="cta" onclick="submitSearch()">${tr('בדוק טיסה')}</button>
       ` : searchMode === 'destination' ? `

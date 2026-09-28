@@ -174,6 +174,7 @@
   footer { border-top: 1px solid var(--border-soft); padding: 26px 0; text-align: center; }
   footer .fname { font-size: 14px; font-weight: 500; }
   footer .ftag { font-size: 12px; color: var(--ink-faint); margin-top: 4px; }
+  footer .fdisc { font-size: 11.5px; line-height: 1.6; color: var(--ink-faint); max-width: 640px; margin: 14px auto 0; padding: 0 16px; }
 
   .card + .card { margin-top: 18px; }
 
@@ -242,6 +243,7 @@
 <footer>
   <div class="fname">FlightChance</div>
   <div class="ftag">Know before you fly.</div>
+  <p class="fdisc" data-i18n="הנתונים באתר מבוססים על מידע ממאגר המידע הממשלתי data.gov.il, שמפרסמת רשות שדות התעופה, ומוצגים כפי שהם. FlightChance אינו קשור לרשות שדות התעופה או ל-data.gov.il. איננו מתחייבים לדיוק הנתונים, לשלמותם או לעדכניותם. הסיכוי לעיכוב המוצג הוא הערכה סטטיסטית בלבד, ואינו מבטיח או מנבא את מועד ההמראה או הנחיתה בפועל. האתר אינו ממליץ על חברת תעופה כלשהי, ואין לראות במידע המופיע בו המלצה או ייעוץ. לפני קבלת החלטות, יש לבדוק את פרטי הטיסה מול חברת התעופה.">הנתונים באתר מבוססים על מידע ממאגר המידע הממשלתי data.gov.il, שמפרסמת רשות שדות התעופה, ומוצגים כפי שהם. FlightChance אינו קשור לרשות שדות התעופה או ל-data.gov.il. איננו מתחייבים לדיוק הנתונים, לשלמותם או לעדכניותם. הסיכוי לעיכוב המוצג הוא הערכה סטטיסטית בלבד, ואינו מבטיח או מנבא את מועד ההמראה או הנחיתה בפועל. האתר אינו ממליץ על חברת תעופה כלשהי, ואין לראות במידע המופיע בו המלצה או ייעוץ. לפני קבלת החלטות, יש לבדוק את פרטי הטיסה מול חברת התעופה.</p>
 </footer>
 
 
@@ -265,6 +267,7 @@ try {
 } catch (e) {}
 
 const EN = {
+ "הנתונים באתר מבוססים על מידע ממאגר המידע הממשלתי data.gov.il, שמפרסמת רשות שדות התעופה, ומוצגים כפי שהם. FlightChance אינו קשור לרשות שדות התעופה או ל-data.gov.il. איננו מתחייבים לדיוק הנתונים, לשלמותם או לעדכניותם. הסיכוי לעיכוב המוצג הוא הערכה סטטיסטית בלבד, ואינו מבטיח או מנבא את מועד ההמראה או הנחיתה בפועל. האתר אינו ממליץ על חברת תעופה כלשהי, ואין לראות במידע המופיע בו המלצה או ייעוץ. לפני קבלת החלטות, יש לבדוק את פרטי הטיסה מול חברת התעופה.": "The data on this site is based on information from the Israeli government open data portal data.gov.il, published by the Israel Airports Authority (IAA), and is provided as is. FlightChance is not affiliated with the Israel Airports Authority or data.gov.il. We make no guarantee that the data is accurate, complete or up to date. The delay chance shown is a statistical estimate only, and does not guarantee or predict actual departure or arrival times. This site does not recommend any airline, and nothing on it should be taken as a recommendation or advice. Before making decisions, check your flight details with the airline.",
  "האם אפשר לסמוך על הטיסה שלי?": "Can I count on my flight?",
  "בדקו את הסיכוי שהטיסה שלכם תאחר ב-60 דקות ומעלה - לפני שמזמינים.": "Check the chance your flight will be 60+ minutes late - before you book.",
  "📡 {n} טיסות נסרקו עד כה במנוע שלנו · עודכן לאחרונה: {d}": "📡 {n} flights scanned so far by our engine · Last updated: {d}",

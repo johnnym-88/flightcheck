@@ -172,6 +172,8 @@
   footer { border-top: 1px solid var(--border-soft); padding: 26px 0; text-align: center; }
   footer .fname { font-size: 14px; font-weight: 500; }
   footer .ftag { font-size: 12px; color: var(--ink-faint); margin-top: 4px; }
+  footer .fx { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; font-size: 12.5px; color: var(--ink-soft); text-decoration: none; border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px; }
+  footer .fx:hover { color: var(--ink); border-color: var(--ink-soft); }
   footer .fdisc { font-size: 11.5px; line-height: 1.6; color: var(--ink-faint); max-width: 640px; margin: 14px auto 0; padding: 0 16px; }
 
   .card + .card { margin-top: 18px; }
@@ -241,6 +243,7 @@
 <footer>
   <div class="fname">FlightChance</div>
   <div class="ftag">Know before you fly.</div>
+  <a class="fx" href="https://x.com/FlightChance" target="_blank" rel="noopener">𝕏 <span data-i18n="עקבו אחרינו">עקבו אחרינו</span></a>
   <p class="fdisc" data-i18n="הנתונים באתר מבוססים על מידע ממאגר המידע הממשלתי data.gov.il, שמפרסמת רשות שדות התעופה, ומוצגים כפי שהם. FlightChance אינו קשור לרשות שדות התעופה או ל-data.gov.il. איננו מתחייבים לדיוק הנתונים, לשלמותם או לעדכניותם. הסיכוי לעיכוב המוצג הוא הערכה סטטיסטית בלבד, ואינו מבטיח או מנבא את מועד ההמראה או הנחיתה בפועל. האתר אינו ממליץ על חברת תעופה כלשהי, ואין לראות במידע המופיע בו המלצה או ייעוץ. לפני קבלת החלטות, יש לבדוק את פרטי הטיסה מול חברת התעופה.">הנתונים באתר מבוססים על מידע ממאגר המידע הממשלתי data.gov.il, שמפרסמת רשות שדות התעופה, ומוצגים כפי שהם. FlightChance אינו קשור לרשות שדות התעופה או ל-data.gov.il. איננו מתחייבים לדיוק הנתונים, לשלמותם או לעדכניותם. הסיכוי לעיכוב המוצג הוא הערכה סטטיסטית בלבד, ואינו מבטיח או מנבא את מועד ההמראה או הנחיתה בפועל. האתר אינו ממליץ על חברת תעופה כלשהי, ואין לראות במידע המופיע בו המלצה או ייעוץ. לפני קבלת החלטות, יש לבדוק את פרטי הטיסה מול חברת התעופה.</p>
 </footer>
 
@@ -265,12 +268,14 @@ try {
 } catch (e) {}
 
 const EN = {
+ "עקבו אחרינו": "Follow us",
  "כל הטיסות שיצאו מנתב\"ג אתמול באיחור של 60+ דקות": "All flights that departed Ben Gurion yesterday, delayed 60+ minutes",
  "{n} מתוך {total} הטיסות שיצאו אתמול איחרו ב-60+ דקות": "{n} of {total} flights that departed yesterday were delayed 60+ minutes",
  "אין נתונים זמינים.": "No data available.",
  "בחרו חברת תעופה": "Choose an airline",
  "הצג טיסות של החברה": "Show the airline's flights",
- "מהטיסות שיצאו מנתב\"ג אתמול איחרו ב-60+ דקות": "of flights that departed Ben Gurion yesterday were delayed 60+ minutes",
+ "מהטיסות שהמריאו מנתב\"ג אתמול התעכבו ב-60+ דקות": "of flights that took off from Ben Gurion yesterday were delayed 60+ minutes",
+ "לרשימה המלאה": "See full list",
  "האם אפשר לסמוך על הטיסה שלי?": "Can I count on my flight?",
  "בדקו את הסיכוי שהטיסה שלכם תאחר ב-60 דקות ומעלה - לפני שמזמינים.": "Check the chance your flight will be 60+ minutes late - before you book.",
  "📡 {n} טיסות נסרקו עד כה במנוע שלנו · עודכן לאחרונה: {d}": "📡 {n} flights scanned so far by our engine · Last updated: {d}",
@@ -623,9 +628,12 @@ function yesterdayHeroStat() {
   const pct = Math.round(s.delayedPct60 * 100);
   const m = riskMeta(pct < 30 ? 'low' : pct < 60 ? 'medium' : 'high');
   return `
-    <div onclick="goToYesterdayDetail()" style="cursor:pointer;display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:8px 16px;border-radius:999px;background:var(${m.varBg});border:1px solid var(${m.varBorder})">
-      <span style="font-size:20px;font-weight:700;color:var(${m.varFg})">${pct}%</span>
-      <span style="font-size:12.5px;color:var(${m.varFg})">${tr('מהטיסות שיצאו מנתב"ג אתמול איחרו ב-60+ דקות', { n: s.sampleSize })}</span>
+    <div onclick="goToYesterdayDetail()" style="cursor:pointer;display:inline-flex;flex-direction:column;align-items:center;gap:4px;margin-top:14px">
+      <div style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:var(${m.varBg});border:1px solid var(${m.varBorder})">
+        <span style="font-size:20px;font-weight:700;color:var(${m.varFg})">${pct}%</span>
+        <span style="font-size:12.5px;color:var(${m.varFg})">${tr('מהטיסות שהמריאו מנתב"ג אתמול התעכבו ב-60+ דקות', { n: s.sampleSize })}</span>
+      </div>
+      <span style="font-size:11px;color:var(--ink-faint);text-decoration:underline">${tr('לרשימה המלאה')}</span>
     </div>
   `;
 }

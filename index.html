@@ -172,6 +172,7 @@
   footer { border-top: 1px solid var(--border-soft); padding: 26px 0; text-align: center; }
   footer .fname { font-size: 14px; font-weight: 500; }
   footer .ftag { font-size: 12px; color: var(--ink-faint); margin-top: 4px; }
+  footer .disclaimer { font-size: 11px; color: var(--ink-faint); margin-top: 10px; max-width: 420px; margin-left: auto; margin-right: auto; line-height: 1.5; }
 
   .card + .card { margin-top: 18px; }
 
@@ -240,6 +241,7 @@
 <footer>
   <div class="fname">FlightChance</div>
   <div class="ftag">Know before you fly.</div>
+  <p class="disclaimer" data-i18n="התחזיות מבוססות על נתונים היסטוריים ותפעוליים אמיתיים מרשות שדות התעופה. אין ודאות מוחלטת בשום תחזית.">התחזיות מבוססות על נתונים היסטוריים ותפעוליים אמיתיים מרשות שדות התעופה. אין ודאות מוחלטת בשום תחזית.</p>
 </footer>
 
 
@@ -263,6 +265,11 @@ try {
 } catch (e) {}
 
 const EN = {
+ "כל הטיסות שיצאו מנתב\"ג אתמול באיחור של 60+ דקות": "All flights that departed Ben Gurion yesterday, delayed 60+ minutes",
+ "{n} מתוך {total} הטיסות שיצאו אתמול איחרו ב-60+ דקות": "{n} of {total} flights that departed yesterday were delayed 60+ minutes",
+ "אין נתונים זמינים.": "No data available.",
+ "בחרו חברת תעופה": "Choose an airline",
+ "הצג טיסות של החברה": "Show the airline's flights",
  "מהטיסות שיצאו מנתב\"ג אתמול איחרו ב-60+ דקות": "of flights that departed Ben Gurion yesterday were delayed 60+ minutes",
  "האם אפשר לסמוך על הטיסה שלי?": "Can I count on my flight?",
  "בדקו את הסיכוי שהטיסה שלכם תאחר ב-60 דקות ומעלה - לפני שמזמינים.": "Check the chance your flight will be 60+ minutes late - before you book.",
@@ -506,40 +513,21 @@ function airlineFamily(name) {
   return AIRLINE_BRAND_FAMILY[name] || name;
 }
 
-const HEBREW_AIRLINE_MAP = {
-  "אל על": "el al", "ארקיע": "arkia", "ישראייר": "israir", "איזראייר": "israir",
-  "ויז אייר": "wizz", "ויזאייר": "wizz", "וויז אייר": "wizz",
-  "לופטהנזה": "lufthansa", "סוויס": "swiss", "אוסטריאן": "austrian",
-  "אמירויז": "emirates", "אמירטס": "emirates", "אתיחאד": "etihad",
-  "קיי.אל.אם": "k.l.m", "קלם": "k.l.m", "איר פרנס": "air france",
-  "בלו בירד": "blue bird", "קונדור": "condor", "אייר קנדה": "air canada",
-  "יונייטד": "united", "דלתא": "delta", "איביריה": "iberia",
-  "טארום": "tarom", "תאי איירווייס": "thai airways", "תאי": "thai airways",
-  "וייטנאם איירליינס": "vietnam airlines", "קוואנטס": "qantas", "קנטס": "qantas",
-  "לוט": "lot polish", "לוט פולנד": "lot polish", "בריסלס איירליינס": "brussels",
-  "איג'יאן": "aegean", "אייר סרביה": "air serbia", "סאס": "sas",
-  "פליי דובאי": "flydubai", "פלייגדובאי": "flydubai", "יורוווינגס": "eurowings",
-  "טי יו אס": "tus", "סמארטווינגס": "smartwings", "הישקי": "hisky",
-  "אייר בלטיק": "air baltic", "טורקיש איירווייס": "turkish", "בריטיש איירווייס": "british",
-};
-
-function normalizeAirlineQuery(input) {
-  const trimmed = input.trim();
-  const mapped = HEBREW_AIRLINE_MAP[trimmed] || HEBREW_AIRLINE_MAP[trimmed.toLowerCase()];
-  return (mapped || trimmed).toLowerCase();
+function searchByAirline(airlineFamilyName) {
+  if (!airlineFamilyName) return { outbound: [], inbound: [], outboundTechStops: [], inboundTechStops: [] };
+  const matches = g => g.aliases.some(a => airlineFamily(a.airline) === airlineFamilyName);
+  const byProb = (a, b) => a.delayProbability60 - b.delayProbability60;
+  const outbound = ROUTE_GROUPS.filter(g => g.direction === 'departure' && matches(g) && !g.isTechnicalStop).sort(byProb);
+  const inbound = ROUTE_GROUPS.filter(g => g.direction === 'arrival' && matches(g) && !g.isTechnicalStop).sort(byProb);
+  const outboundTechStops = ROUTE_GROUPS.filter(g => g.direction === 'departure' && matches(g) && g.isTechnicalStop);
+  const inboundTechStops = ROUTE_GROUPS.filter(g => g.direction === 'arrival' && matches(g) && g.isTechnicalStop);
+  return { outbound, inbound, outboundTechStops, inboundTechStops };
 }
 
-function searchByAirlineAndDestination(airlineQuery, destQuery) {
-  const base = searchByDestination(destQuery);
-  const airlineNeedle = normalizeAirlineQuery(airlineQuery);
-  if (!airlineNeedle) return base;
-  const matchesAirline = g => g.aliases.some(a => a.airline.toLowerCase().includes(airlineNeedle));
-  return {
-    outbound: base.outbound.filter(matchesAirline),
-    inbound: base.inbound.filter(matchesAirline),
-    outboundTechStops: base.outboundTechStops.filter(matchesAirline),
-    inboundTechStops: base.inboundTechStops.filter(matchesAirline),
-  };
+function allAirlineNames() {
+  const names = new Set();
+  for (const g of ROUTE_GROUPS) for (const a of g.aliases) names.add(airlineFamily(a.airline));
+  return [...names].sort();
 }
 
 let view = 'home';
@@ -635,9 +623,44 @@ function yesterdayHeroStat() {
   const pct = Math.round(s.delayedPct60 * 100);
   const m = riskMeta(pct < 30 ? 'low' : pct < 60 ? 'medium' : 'high');
   return `
-    <div style="display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:8px 16px;border-radius:999px;background:var(${m.varBg});border:1px solid var(${m.varBorder})">
+    <div onclick="goToYesterdayDetail()" style="cursor:pointer;display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:8px 16px;border-radius:999px;background:var(${m.varBg});border:1px solid var(${m.varBorder})">
       <span style="font-size:20px;font-weight:700;color:var(${m.varFg})">${pct}%</span>
       <span style="font-size:12.5px;color:var(${m.varFg})">${tr('מהטיסות שיצאו מנתב"ג אתמול איחרו ב-60+ דקות', { n: s.sampleSize })}</span>
+    </div>
+  `;
+}
+
+let yesterdayDetailList = [];
+
+function goToYesterdayDetail() {
+  const all = (META && META.mostDelayedYesterday) || [];
+  yesterdayDetailList = all
+    .filter(e => e.direction === 'departure' && e.delayMin >= 60)
+    .sort((a, b) => b.delayMin - a.delayMin);
+  view = 'yesterdayDetail';
+  render();
+}
+
+function renderYesterdayDetail() {
+  const s = META && META.yesterdayDepartureDelay;
+  const rows = yesterdayDetailList.map((e, i) => {
+    return `
+      <div class="rank-row" onclick="showFlightDetail('yesterday_detail', ${i})">
+        <div class="rank-pos">${i + 1}</div>
+        <div class="rank-mid">
+          <div class="rank-airline">${e.aliases[0].airline} <span class="flight-num-highlight">${e.aliases[0].flightNumber}</span></div>
+          <div class="rank-flight" dir="ltr">${e.origin} → ${e.destination}</div>
+        </div>
+        <div class="rank-pct" style="color:var(--red)">+${Math.round(e.delayMin)} min</div>
+      </div>
+    `;
+  }).join('');
+  return `
+    <button class="back-btn" onclick="goHome()">${tr('→ חיפוש אחר')}</button>
+    <div class="card" style="margin-top:14px">
+      <p class="why-title" style="margin:0">${tr('כל הטיסות שיצאו מנתב"ג אתמול באיחור של 60+ דקות')}</p>
+      <p class="dest-hint" style="margin-top:6px">${s ? tr('{n} מתוך {total} הטיסות שיצאו אתמול איחרו ב-60+ דקות', { n: yesterdayDetailList.length, total: s.sampleSize }) : ''}</p>
+      ${rows || `<p style="font-size:14px;color:var(--ink-soft)">${tr('אין נתונים זמינים.')}</p>`}
     </div>
   `;
 }
@@ -683,18 +706,14 @@ function renderHome() {
           </div>
         </div>
       ` : `
-        <div class="grid2">
-          <div class="field">
-            <label>${tr('חברת תעופה')}</label>
-            <input id="input-airline" placeholder="${tr('לדוגמה: ויז אייר, אל על, לופטהנזה')}" />
-          </div>
-          <div class="field">
-            <label>${tr('יעד')}</label>
-            <input id="input-airline-dest" placeholder="${tr('לדוגמה: רומא, אתונה')}" onkeydown="if(event.key==='Enter') submitAirlineSearch()" />
-          </div>
+        <div class="field">
+          <label>${tr('חברת תעופה')}</label>
+          <select id="input-airline">
+            <option value="">${tr('בחרו חברת תעופה')}</option>
+            ${allAirlineNames().map(a => `<option value="${a}">${a}</option>`).join('')}
+          </select>
         </div>
-        <button class="cta" onclick="submitAirlineSearch()">${tr('מצא טיסות של החברה ליעד')}</button>
-        <p style="font-size:11.5px;color:var(--ink-faint);margin-top:8px">${tr('התוצאות יכללו גם המראות ליעד וגם נחיתות בחזרה ממנו.')}</p>
+        <button class="cta" onclick="submitAirlineSearch()">${tr('הצג טיסות של החברה')}</button>
       `}
     </section>
     ${homeStatsSection()}
@@ -787,10 +806,6 @@ function renderResult(f) {
           return `<div class="tl-point"><div class="tl-dot" style="border-color:var(${mm.varFg});color:var(${mm.varFg})">${v}</div><div class="tl-label">${tr('{label} לפני', { label: tr(label) })}</div></div>`;
         }).join('')}
       </div>
-    </div>
-
-    <div class="card trust-box">
-      <p>${tr('התחזיות מבוססות על נתונים היסטוריים ותפעוליים אמיתיים מרשות שדות התעופה. אין ודאות מוחלטת בשום תחזית.')}</p>
     </div>
 
     ${reviewsWidgetHTML('page', f.flightNumber)}
@@ -1007,6 +1022,11 @@ function showAirlineDetail(idx) {
 function showFlightDetail(dir, idx) {
   if (dir === 'yesterday') {
     renderSingleEventModal(META.mostDelayedYesterday[idx]);
+    document.getElementById('flight-detail-modal').style.display = 'flex';
+    return;
+  }
+  if (dir === 'yesterday_detail') {
+    renderSingleEventModal(yesterdayDetailList[idx]);
     document.getElementById('flight-detail-modal').style.display = 'flex';
     return;
   }
@@ -1303,6 +1323,7 @@ function render() {
     loadReviewsForFlight(currentFlight.flightNumber, 'page');
   }
   else if (view === 'destresult') app.innerHTML = renderDestinationResult();
+  else if (view === 'yesterdayDetail') app.innerHTML = renderYesterdayDetail();
 }
 
 function setSearchMode(m) { searchMode = m; render(); }
@@ -1334,10 +1355,9 @@ function quickDestSearch(city) {
 
 function submitAirlineSearch() {
   const airlineV = document.getElementById('input-airline').value;
-  const destV = document.getElementById('input-airline-dest').value;
-  if (!airlineV.trim() || !destV.trim()) return;
-  destQueryLabel = `${airlineV.trim()} · ${destV.trim()}`;
-  destResults = searchByAirlineAndDestination(airlineV, destV);
+  if (!airlineV) return;
+  destQueryLabel = airlineV;
+  destResults = searchByAirline(airlineV);
   destDirectionFilter = 'both';
   destSortOrder = 'asc';
   destAirlineFilter = '';

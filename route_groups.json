@@ -12020,11 +12020,11 @@
     "aliases": [
       {
         "airline": "Aegean Airlines",
-        "flightNumber": "A3458"
+        "flightNumber": "A3456"
       },
       {
         "airline": "Aegean Airlines",
-        "flightNumber": "A3456"
+        "flightNumber": "A3458"
       }
     ],
     "sampleSize": 8,
@@ -19596,11 +19596,11 @@
     "aliases": [
       {
         "airline": "El Al Israel Airlines",
-        "flightNumber": "LY020"
+        "flightNumber": "LY012"
       },
       {
         "airline": "El Al Israel Airlines",
-        "flightNumber": "LY012"
+        "flightNumber": "LY020"
       },
       {
         "airline": "El Al Israel Airlines",
@@ -33391,11 +33391,11 @@
       },
       {
         "airline": "El Al Israel Airlines",
-        "flightNumber": "LY9615"
+        "flightNumber": "LY9601"
       },
       {
         "airline": "El Al Israel Airlines",
-        "flightNumber": "LY9601"
+        "flightNumber": "LY9615"
       },
       {
         "airline": "Srilanka Airlines",
@@ -39564,11 +39564,11 @@
       },
       {
         "airline": "Tarom - Romanian Air Transport",
-        "flightNumber": "RO9103"
+        "flightNumber": "RO9104"
       },
       {
         "airline": "Tarom - Romanian Air Transport",
-        "flightNumber": "RO9104"
+        "flightNumber": "RO9103"
       }
     ],
     "sampleSize": 2,
@@ -50634,19 +50634,19 @@
     "aliases": [
       {
         "airline": "El Al Israel Airlines",
-        "flightNumber": "LY281"
-      },
-      {
-        "airline": "El Al Israel Airlines",
         "flightNumber": "LY387"
       },
       {
-        "airline": "Air Portugal",
-        "flightNumber": "TP8908"
+        "airline": "El Al Israel Airlines",
+        "flightNumber": "LY281"
       },
       {
         "airline": "Air Portugal",
         "flightNumber": "TP8912"
+      },
+      {
+        "airline": "Air Portugal",
+        "flightNumber": "TP8908"
       },
       {
         "airline": "SAS",
@@ -56338,10 +56338,10 @@
         "flightNumber": "IZ807"
       }
     ],
-    "sampleSize": 8,
-    "averageDelay": 52.2,
-    "delayRate60": 0.25,
-    "delayProbability60": 0.226,
+    "sampleSize": 9,
+    "averageDelay": 49.1,
+    "delayRate60": 0.222,
+    "delayProbability60": 0.213,
     "riskLevel": "low",
     "recentFlights": [
       {
@@ -56363,6 +56363,11 @@
         "date": "2026-09-22",
         "delayMin": 20.0,
         "scheduledTime": "09:50"
+      },
+      {
+        "date": "2026-09-20",
+        "delayMin": 23.5,
+        "scheduledTime": "09:00"
       },
       {
         "date": "2026-09-17",
@@ -56847,8 +56852,8 @@
         "flightNumber": "6H049"
       }
     ],
-    "sampleSize": 4,
-    "averageDelay": 31.1,
+    "sampleSize": 3,
+    "averageDelay": 33.7,
     "delayRate60": 0.0,
     "delayProbability60": 0.147,
     "riskLevel": "low",
@@ -56862,11 +56867,6 @@
         "date": "2026-09-24",
         "delayMin": 24.0,
         "scheduledTime": "11:00"
-      },
-      {
-        "date": "2026-09-20",
-        "delayMin": 23.5,
-        "scheduledTime": "09:00"
       },
       {
         "date": "2026-09-17",

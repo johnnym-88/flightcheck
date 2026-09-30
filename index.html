@@ -16,10 +16,10 @@
 <meta name="description" content="בדקו את הסיכוי לעיכוב בטיסה, לפי נתוני איחורים אמיתיים מנתב״ג. מתעדכן באופן שוטף" />
 <link rel="canonical" href="https://flightchance.com/" />
 <meta name="google-site-verification" content="RyKxKiJmsyXL8CH1WcQ0xbKz8WMedlSPc2I9jtXlwBg" />
-<link rel="manifest" href="./manifest.json" />
+<link rel="manifest" href="/manifest.json" />
 <meta name="theme-color" content="#1B4B66" />
-<link rel="icon" href="icon-192.png" type="image/png" />
-<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="icon" href="/icon-192.png" type="image/png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="FlightChance" />
@@ -234,7 +234,7 @@
 <body>
 <header class="top">
   <div class="topbar">
-    <button class="brand-btn" onclick="goHome()"><picture><source srcset="logo-dark.png" media="(prefers-color-scheme: dark)" /><img src="logo.png" alt="FlightChance" style="height:30px;display:block" /></picture></button>
+    <button class="brand-btn" onclick="goHome()"><picture><source srcset="/logo-dark.png" media="(prefers-color-scheme: dark)" /><img src="/logo.png" alt="FlightChance" style="height:30px;display:block" /></picture></button>
     <nav class="links">
       <button class="nav-check" data-i18n="בדיקת טיסה" onclick="goHome(); setTimeout(()=>document.getElementById('search-card')?.scrollIntoView({behavior:'smooth'}),50)">בדיקת טיסה</button>
       <button data-i18n="איך זה עובד" onclick="goHome(); setTimeout(()=>document.getElementById('how')?.scrollIntoView({behavior:'smooth'}),50)">איך זה עובד</button>
@@ -279,6 +279,7 @@ try {
 } catch (e) {}
 
 const EN = {
+ "{fn} – מה הסיכוי שהטיסה תתעכב? | FlightChance": "{fn} – Will this flight be delayed? | FlightChance",
  "איך מחושב האחוז?": "How is this percentage calculated?",
  "בטיסה הזו {late} מתוך {n} הטיסות האחרונות איחרו ב-60+ דקות ({raw}%).": "For this flight, {late} of the last {n} flights were delayed 60+ minutes ({raw}%).",
  "כשיש מעט טיסות, ממוצע פשוט עלול להטעות: טיסה אחת שאיחרה מתוך אחת הייתה מקבלת 100%. לכן אנחנו משלבים את ההיסטוריה של הטיסה עם שיעור האיחור של טיסות דומות, ומגיעים להערכה של {pct}%.": "With only a few flights, a simple average can be misleading: one late flight out of one would score 100%. So we combine this flight's history with the delay rate of similar flights, which gives an estimate of {pct}%.",
@@ -581,9 +582,9 @@ let META = null;
 async function loadData() {
   try {
     const [flightsRes, routesRes, metaRes] = await Promise.all([
-      fetch('./flight_stats.json'),
-      fetch('./route_groups.json'),
-      fetch('./meta.json'),
+      fetch('/flight_stats.json'),
+      fetch('/route_groups.json'),
+      fetch('/meta.json'),
     ]);
     ALL_FLIGHTS = await flightsRes.json();
     ROUTE_GROUPS = await routesRes.json();
@@ -617,16 +618,64 @@ function searchByDestination(query) {
   return { outbound, inbound, outboundTechStops, inboundTechStops };
 }
 
+const DEFAULT_TITLE = document.title;
+const SITE_ORIGIN = 'https://flightchance.com';
+let routingFromHistory = false;
+
+function flightPath(f) { return '/flight/' + encodeURIComponent(f.flightNumber); }
+
+function flightFromPath(pathname) {
+  const m = /^\/flight\/([^\/?#]+)\/?$/i.exec(pathname);
+  return m ? decodeURIComponent(m[1]) : null;
+}
+
+function syncUrlAndTitle() {
+  if (view === 'loading') return;
+  const want = view === 'result' && currentFlight ? flightPath(currentFlight)
+    : view === 'notfound' ? location.pathname
+    : '/';
+  if (want !== location.pathname) {
+    if (!routingFromHistory) history.pushState({}, '', want);
+    else if (view === 'result') history.replaceState({}, '', want);
+  }
+  if (view === 'result' && currentFlight) {
+    document.title = tr('{fn} – מה הסיכוי שהטיסה תתעכב? | FlightChance', { fn: currentFlight.flightNumber });
+  } else {
+    document.title = DEFAULT_TITLE;
+  }
+  const canon = document.querySelector('link[rel="canonical"]');
+  if (canon) canon.href = SITE_ORIGIN + (view === 'result' && currentFlight ? flightPath(currentFlight) : '/');
+}
+
+async function routeFromLocation() {
+  const fn = flightFromPath(location.pathname);
+  routingFromHistory = true;
+  try {
+    if (fn) await handleSearch(fn, { instant: true });
+    else { view = 'home'; currentFlight = null; render(); }
+  } finally {
+    routingFromHistory = false;
+  }
+}
+
+window.addEventListener('popstate', () => {
+  closeFlightDetail();
+  routeFromLocation();
+});
+
 function goHome() {
   view = 'home';
   currentFlight = null;
   render();
+  window.scrollTo(0, 0);
 }
 
-async function handleSearch(flightNumber) {
-  view = 'loading';
-  render();
-  await new Promise(r => setTimeout(r, 600));
+async function handleSearch(flightNumber, opts = {}) {
+  if (!opts.instant) {
+    view = 'loading';
+    render();
+    await new Promise(r => setTimeout(r, 600));
+  }
   const result = await lookupFlight(flightNumber);
   if (result) {
     currentFlight = result;
@@ -1427,6 +1476,7 @@ function render() {
   }
   else if (view === 'destresult') app.innerHTML = renderDestinationResult();
   else if (view === 'yesterdayDetail') app.innerHTML = renderYesterdayDetail();
+  syncUrlAndTitle();
 }
 
 function setSearchMode(m) { searchMode = m; render(); }
@@ -1482,11 +1532,11 @@ function submitAirlineSearch() {
     `;
     return;
   }
-  render();
+  await routeFromLocation();
 })();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
   });
 }
 </script>

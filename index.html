@@ -847,6 +847,27 @@ function toggleScoreInfo(btn) {
   btn.setAttribute('aria-expanded', String(open));
 }
 
+function chartTip(el) {
+  const svg = el.ownerSVGElement;
+  const tip = svg && svg.querySelector('.ctip');
+  if (!tip) return;
+  if (tip.style.display !== 'none' && tip.dataset.for === el.dataset.i) { tip.style.display = 'none'; return; }
+  const px = Number(el.dataset.x), py = Number(el.dataset.y);
+  const text = tip.querySelector('text'), rect = tip.querySelector('rect');
+  text.textContent = el.dataset.t;
+  tip.style.display = '';
+  tip.dataset.for = el.dataset.i;
+  const w = text.getComputedTextLength() + 18;
+  const lo = Number(svg.dataset.l), hi = Number(svg.dataset.r);
+  const cx = Math.min(Math.max(px, lo + w / 2), hi - w / 2);
+  const top = py - 44 < 0 ? py + 14 : py - 42;
+  rect.setAttribute('x', (cx - w / 2).toFixed(1));
+  rect.setAttribute('y', top.toFixed(1));
+  rect.setAttribute('width', w.toFixed(1));
+  text.setAttribute('x', cx.toFixed(1));
+  text.setAttribute('y', (top + 19).toFixed(1));
+}
+
 function delayChartCard(recentFlights) {
   if (!recentFlights || recentFlights.length < 2) return '';
   const pts = [...recentFlights].sort((a, b) => String(a.date).localeCompare(String(b.date)));
@@ -854,30 +875,39 @@ function delayChartCard(recentFlights) {
   const vals = pts.map(p => p.delayMin);
   const yMin = Math.min(0, ...vals);
   const yMax = Math.max(90, ...vals) * 1.08;
-  const x = i => pts.length === 1 ? (L + W - R) / 2 : L + i * (W - L - R) / (pts.length - 1);
+  const dayNum = d => { const t = Date.parse(String(d).slice(0, 10)); return isNaN(t) ? null : t / 864e5; };
+  const days = pts.map(p => dayNum(p.date));
+  const byDate = days.every(v => v !== null) && days[days.length - 1] > days[0];
+  const x = i => byDate
+    ? L + (days[i] - days[0]) * (W - L - R) / (days[days.length - 1] - days[0])
+    : L + i * (W - L - R) / (pts.length - 1);
   const y = v => T + (yMax - v) * (H - T - B) / (yMax - yMin);
   const fmt = d => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(d); return m ? `${Number(m[3])}.${Number(m[2])}` : d; };
   const nLab = Math.min(pts.length, 5);
   const labelIdx = new Set(Array.from({ length: nLab }, (_, j) => Math.round(j * (pts.length - 1) / (nLab - 1))));
   const line = pts.map((p, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)} ${y(p.delayMin).toFixed(1)}`).join(' ');
   const xLabels = pts.map((p, i) => labelIdx.has(i)
-    ? `<text x="${x(i).toFixed(1)}" y="${H - 10}" text-anchor="middle" font-size="12" fill="var(--ink-faint)">${fmt(p.date)}</text>` : '').join('');
+    ? `<text x="${x(i).toFixed(1)}" y="${H - 10}" text-anchor="middle" font-size="13" fill="var(--ink-faint)">${fmt(p.date)}</text>` : '').join('');
   const dots = pts.map((p, i) => {
     const late = p.delayMin >= 60;
-    return `<circle cx="${x(i).toFixed(1)}" cy="${y(p.delayMin).toFixed(1)}" r="4.5" fill="${late ? 'var(--red)' : 'var(--green)'}" stroke="var(--surface, #fff)" stroke-width="1.5"><title>${fmt(p.date)} · ${p.delayMin >= 0 ? '+' : ''}${p.delayMin} min</title></circle>`;
+    const cx = x(i).toFixed(1), cy = y(p.delayMin).toFixed(1);
+    const label = `${fmt(p.date)} · ${p.delayMin >= 0 ? '+' : ''}${p.delayMin} min`;
+    return `<g data-i="${i}" data-x="${cx}" data-y="${cy}" data-t="${label}" onclick="chartTip(this)" style="cursor:pointer;-webkit-tap-highlight-color:transparent"><circle cx="${cx}" cy="${cy}" r="14" fill="transparent"/><circle cx="${cx}" cy="${cy}" r="4.5" fill="${late ? 'var(--red)' : 'var(--green)'}" stroke="var(--surface, #fff)" stroke-width="1.5"/><title>${label}</title></g>`;
   }).join('');
+  const tip = `<g class="ctip" style="display:none;pointer-events:none"><rect rx="7" height="28" fill="var(--ink)"/><text font-size="14.5" font-weight="600" fill="var(--surface, #fff)" text-anchor="middle"></text></g>`;
   const topTick = Math.floor(yMax / 60) * 60;
   const yTicks = topTick > 60 ? [0, 60, topTick] : [0, 60];
-  const grid = yTicks.map(v => `<line x1="${L}" x2="${W - R}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}" stroke="${v === 60 ? 'var(--red)' : 'var(--border-soft)'}" stroke-width="1" ${v === 60 ? 'stroke-dasharray="5 5" opacity="0.7"' : ''}/><text x="${L - 8}" y="${(y(v) + 4).toFixed(1)}" text-anchor="end" font-size="12" fill="var(--ink-faint)">${v}</text>`).join('');
+  const grid = yTicks.map(v => `<line x1="${L}" x2="${W - R}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}" stroke="${v === 60 ? 'var(--red)' : 'var(--border-soft)'}" stroke-width="1" ${v === 60 ? 'stroke-dasharray="5 5" opacity="0.7"' : ''}/><text x="${L - 8}" y="${(y(v) + 4).toFixed(1)}" text-anchor="end" font-size="13" fill="var(--ink-faint)">${v}</text>`).join('');
   return `
     <div class="card">
       <p class="why-title">${tr('איחור לפי יום')}</p>
       <div dir="ltr" style="width:100%">
-        <svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${tr('איחור לפי יום')}" style="display:block;overflow:visible">
+        <svg viewBox="0 0 ${W} ${H}" data-l="${L}" data-r="${W - R}" width="100%" role="img" aria-label="${tr('איחור לפי יום')}" style="display:block;overflow:visible">
           ${grid}
           <path d="${line}" fill="none" stroke="var(--ink-soft)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
           ${dots}
           ${xLabels}
+          ${tip}
         </svg>
       </div>
       <p style="font-size:12px;color:var(--ink-faint);margin:10px 0 0">${tr('דקות איחור בכל יום. הקו המקווקו מסמן איחור של 60 דקות.')}</p>

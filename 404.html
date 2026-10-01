@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>העמוד לא נמצא | FlightChance</title>
+<meta name="robots" content="noindex" />
+<link rel="icon" href="/icon-192.png" type="image/png" />
+<style>
+  :root {
+    --bg: #FAFAF8;
+    --ink: #14171B;
+    --ink-soft: #585F68;
+    --brand: #1B4B66;
+    --board: #14212E;
+    --board-line: #223447;
+    --flap: #1B2B3B;
+    --amber: #F4B63F;
+    --white-flap: #E9EEF3;
+    --red: #E05A47;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #14171B; --ink: #F2F1EE; --ink-soft: #A9AEB5; --brand: #6FA8C4; --board: #0D1318; --board-line: #22303B; --flap: #18232C; }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    display: flex; flex-direction: column; align-items: center;
+    padding: max(24px, env(safe-area-inset-top)) 20px max(32px, env(safe-area-inset-bottom));
+  }
+  .logo { display: block; margin-bottom: 48px; }
+  .logo img { height: 30px; display: block; }
+  main { width: 100%; max-width: 560px; display: flex; flex-direction: column; align-items: center; text-align: center; margin: auto 0; }
+
+  .board { width: 100%; background: var(--board); border-radius: 14px; padding: 18px 18px 20px; color: var(--white-flap); box-shadow: 0 1px 0 var(--board-line) inset; }
+  .board-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; color: #8FA3B6; padding: 0 4px 12px; border-bottom: 1px solid var(--board-line); }
+  .board-head strong { color: var(--white-flap); font-weight: 600; font-size: 14px; }
+  .clock { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--amber); direction: ltr; }
+  .row { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: end; padding-top: 16px; }
+  .cellbox { height: 60px; display: flex; align-items: center; }
+  .cell-label { font-size: 11.5px; color: #8FA3B6; margin-bottom: 6px; text-align: start; }
+  .flaps { display: flex; gap: 4px; direction: ltr; }
+  .flap {
+    position: relative; width: 44px; height: 60px; border-radius: 6px; background: var(--flap);
+    display: flex; align-items: center; justify-content: center;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 38px; font-weight: 700; color: var(--amber);
+    overflow: hidden;
+  }
+  .flap::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: var(--board); }
+  .dest { text-align: start; font-size: 17px; font-weight: 600; line-height: 1.3; }
+  .status { font-size: 13px; font-weight: 700; color: var(--board); background: var(--red); border-radius: 6px; padding: 7px 10px; white-space: nowrap; }
+
+  h1 { font-size: 26px; line-height: 1.25; margin: 36px 0 10px; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
+  p.lead { font-size: 16px; line-height: 1.6; color: var(--ink-soft); margin: 0 0 6px; max-width: 30em; }
+  p.en { font-size: 13.5px; color: var(--ink-soft); margin: 0 0 28px; direction: ltr; }
+  .cta {
+    display: inline-block; background: var(--brand); color: var(--bg); text-decoration: none;
+    font-size: 16px; font-weight: 600; padding: 13px 26px; border-radius: 999px;
+  }
+  .cta:hover { filter: brightness(1.08); }
+  .cta:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+
+  @media (max-width: 420px) {
+    .flap { width: 36px; height: 50px; font-size: 30px; }
+    .cellbox { height: 50px; }
+    .row { gap: 10px; }
+    .dest { font-size: 15px; }
+    h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+  <a class="logo" href="/" aria-label="FlightChance – עמוד הבית">
+    <picture>
+      <source srcset="/logo-dark.png" media="(prefers-color-scheme: dark)" />
+      <img src="/logo.png" alt="FlightChance" />
+    </picture>
+  </a>
+
+  <main>
+    <div class="board" role="img" aria-label="לוח המראות: טיסה 404, יעד: העמוד שחיפשתם, סטטוס: לא נמצא">
+      <div class="board-head" aria-hidden="true">
+        <strong>המראות</strong>
+        <span class="clock" id="clock"></span>
+      </div>
+      <div class="row" aria-hidden="true">
+        <div>
+          <div class="cell-label">טיסה</div>
+          <div class="flaps"><span class="flap" data-final="4">4</span><span class="flap" data-final="0">0</span><span class="flap" data-final="4">4</span></div>
+        </div>
+        <div>
+          <div class="cell-label">יעד</div>
+          <div class="cellbox dest">העמוד שחיפשתם</div>
+        </div>
+        <div>
+          <div class="cell-label">סטטוס</div>
+          <div class="cellbox"><div class="status">לא נמצא</div></div>
+        </div>
+      </div>
+    </div>
+
+    <h1>העמוד הזה לא מופיע בלוח הטיסות</h1>
+    <p class="lead">יכול להיות שהקישור שגוי, או שהעמוד הועבר. מעמוד הבית אפשר לבדוק כל טיסה לפי מספר, יעד או חברת תעופה.</p>
+    <p class="en" dir="ltr" lang="en">This page isn't on the departures board. Head back to check any flight.</p>
+    <a class="cta" href="/">חזרה לעמוד הבית</a>
+  </main>
+
+<script>
+  (function () {
+    var clock = document.getElementById('clock');
+    function tick() {
+      clock.textContent = new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Jerusalem' });
+    }
+    tick(); setInterval(tick, 15000);
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var chars = '0123456789ABCDEFGHJKLMNPRSTUVXYZ';
+    document.querySelectorAll('.flap').forEach(function (el, i) {
+      var final = el.getAttribute('data-final');
+      var flips = 10 + i * 6, n = 0;
+      var t = setInterval(function () {
+        n++;
+        if (n >= flips) { el.textContent = final; clearInterval(t); return; }
+        el.textContent = chars[Math.floor(Math.random() * chars.length)];
+      }, 55);
+    });
+  })();
+</script>
+</body>
+</html>

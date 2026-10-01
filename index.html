@@ -279,6 +279,8 @@ try {
 } catch (e) {}
 
 const EN = {
+ "{a} – סיכויי עיכוב בטיסות מנתב״ג | FlightChance": "{a} – Delay chances for flights at Ben Gurion | FlightChance",
+ "{c} – טיסות וסיכויי עיכוב מנתב״ג | FlightChance": "{c} – flights and delay chances from TLV | FlightChance",
  "{fn} – מה הסיכוי שהטיסה תתעכב? | FlightChance": "{fn} – Will this flight be delayed? | FlightChance",
  "איך מחושב האחוז?": "How is this percentage calculated?",
  "בטיסה הזו {late} מתוך {n} הטיסות האחרונות איחרו ב-60+ דקות ({raw}%).": "For this flight, {late} of the last {n} flights were delayed 60+ minutes ({raw}%).",
@@ -564,6 +566,8 @@ let destOutboundDisplay = [];
 let destInboundDisplay = [];
 let yesterdayDirectionFilter = 'both';
 let destQueryLabel = '';
+let destMode = 'destination';
+let currentDestSlug = '';
 
 function riskMeta(level) {
   if (level === 'low') return { label: 'LOW RISK', varFg: '--green', varBg: '--green-bg', varBorder: '--green-border' };
@@ -629,29 +633,57 @@ function flightFromPath(pathname) {
   return m ? decodeURIComponent(m[1]) : null;
 }
 
+function destFromPath(pathname) {
+  const m = /^\/destination\/([^\/?#]+)\/?$/i.exec(pathname);
+  return m ? decodeURIComponent(m[1]) : null;
+}
+
+function airlineSlug(name) {
+  return String(name).toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+function airlineFromPath(pathname) {
+  const m = /^\/airline\/([^\/?#]+)\/?$/i.exec(pathname);
+  return m ? decodeURIComponent(m[1]).toLowerCase() : null;
+}
+
+function currentPath() {
+  if (view === 'result' && currentFlight) return flightPath(currentFlight);
+  if (view === 'destresult' && destMode === 'airline' && destQueryLabel) return '/airline/' + airlineSlug(destQueryLabel);
+  if (view === 'destresult' && destMode === 'destination' && currentDestSlug) return '/destination/' + encodeURIComponent(currentDestSlug);
+  if (view === 'notfound') return location.pathname;
+  return '/';
+}
+
 function syncUrlAndTitle() {
   if (view === 'loading') return;
-  const want = view === 'result' && currentFlight ? flightPath(currentFlight)
-    : view === 'notfound' ? location.pathname
-    : '/';
+  const want = currentPath();
   if (want !== location.pathname) {
     if (!routingFromHistory) history.pushState({}, '', want);
-    else if (view === 'result') history.replaceState({}, '', want);
+    else if (view === 'result' || view === 'destresult') history.replaceState({}, '', want);
   }
   if (view === 'result' && currentFlight) {
     document.title = tr('{fn} – מה הסיכוי שהטיסה תתעכב? | FlightChance', { fn: currentFlight.flightNumber });
+  } else if (view === 'destresult' && destMode === 'airline') {
+    document.title = tr('{a} – סיכויי עיכוב בטיסות מנתב״ג | FlightChance', { a: destQueryLabel });
+  } else if (view === 'destresult' && destMode === 'destination') {
+    document.title = tr('{c} – טיסות וסיכויי עיכוב מנתב״ג | FlightChance', { c: destQueryLabel });
   } else {
     document.title = DEFAULT_TITLE;
   }
   const canon = document.querySelector('link[rel="canonical"]');
-  if (canon) canon.href = SITE_ORIGIN + (view === 'result' && currentFlight ? flightPath(currentFlight) : '/');
+  if (canon) canon.href = SITE_ORIGIN + (view === 'notfound' ? '/' : want);
 }
 
 async function routeFromLocation() {
   const fn = flightFromPath(location.pathname);
+  const dest = destFromPath(location.pathname);
+  const airline = airlineFromPath(location.pathname);
   routingFromHistory = true;
   try {
     if (fn) await handleSearch(fn, { instant: true });
+    else if (dest) openDestination(dest.replace(/-/g, ' '), destLabelFromSlug(dest));
+    else if (airline) openAirline(allAirlineNames().find(n => airlineSlug(n) === airline) || airline.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()));
     else { view = 'home'; currentFlight = null; render(); }
   } finally {
     routingFromHistory = false;
@@ -1485,37 +1517,54 @@ function submitSearch() {
   if (!v.trim()) return;
   handleSearch(v);
 }
+function destSlug(query) {
+  return normalizeDestinationQuery(query).replace(/\s+/g, '-');
+}
+function destLabelFromSlug(slug) {
+  const q = slug.replace(/-/g, ' ').toLowerCase();
+  if (lang !== 'en') {
+    const he = Object.keys(HEBREW_CITY_MAP).find(k => HEBREW_CITY_MAP[k] === q);
+    if (he) return he;
+  }
+  return q.replace(/\b\w/g, c => c.toUpperCase());
+}
+function openDestination(query, label) {
+  destMode = 'destination';
+  currentDestSlug = destSlug(query);
+  destQueryLabel = (label || query).trim();
+  destResults = searchByDestination(query);
+  destDirectionFilter = 'both';
+  destSortOrder = 'asc';
+  destAirlineFilter = '';
+  view = 'destresult';
+  render();
+  window.scrollTo(0, 0);
+}
 function submitDestSearch() {
   const v = document.getElementById('input-dest').value;
   if (!v.trim()) return;
-  destQueryLabel = v.trim();
-  destResults = searchByDestination(v);
-  destDirectionFilter = 'both';
-  destSortOrder = 'asc';
-  destAirlineFilter = '';
-  view = 'destresult';
-  render();
+  openDestination(v);
 }
 function quickDestSearch(city) {
-  destQueryLabel = city;
-  destResults = searchByDestination(city);
+  openDestination(city);
+}
+
+function openAirline(name) {
+  destMode = 'airline';
+  destQueryLabel = name;
+  destResults = searchByAirline(name);
   destDirectionFilter = 'both';
   destSortOrder = 'asc';
   destAirlineFilter = '';
   view = 'destresult';
   render();
+  window.scrollTo(0, 0);
 }
 
 function submitAirlineSearch() {
   const airlineV = document.getElementById('input-airline').value;
   if (!airlineV) return;
-  destQueryLabel = airlineV;
-  destResults = searchByAirline(airlineV);
-  destDirectionFilter = 'both';
-  destSortOrder = 'asc';
-  destAirlineFilter = '';
-  view = 'destresult';
-  render();
+  openAirline(airlineV);
 }
 
 (async function boot() {

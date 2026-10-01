@@ -1,5 +1,7 @@
 {
   "rewrites": [
-    { "source": "/flight/:flightNumber", "destination": "/index.html" }
+    { "source": "/flight/:flightNumber", "destination": "/index.html" },
+    { "source": "/destination/:city", "destination": "/index.html" },
+    { "source": "/airline/:name", "destination": "/index.html" }
   ]
 }

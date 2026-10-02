@@ -279,6 +279,16 @@ try {
 } catch (e) {}
 
 const EN = {
+ "מהטיסות בנתב״ג אתמול (המראות ונחיתות) התעכבו ב-60+ דקות": "of flights at Ben Gurion yesterday (departures and arrivals) were delayed 60+ minutes",
+ "כל הטיסות בנתב״ג אתמול שהתעכבו ב-60+ דקות": "All flights at Ben Gurion yesterday delayed 60+ minutes",
+ "{n} מתוך {total} הטיסות אתמול (המראות ונחיתות) איחרו ב-60+ דקות": "{n} of {total} flights yesterday (departures and arrivals) were delayed 60+ minutes",
+ "איחורים בנתב״ג לפי יום": "Ben Gurion delays by day",
+ "אחוז הטיסות שהתעכבו ב-60+ דקות בכל יום.": "Share of flights delayed 60+ minutes each day.",
+ "הכול": "All",
+ "{n} טיסות": "{n} flights",
+ "חג": "holiday",
+ "שבת": "Saturday",
+ "לחצו על נקודה לפרטים. נקודה חלולה מסמנת יום עם מעט טיסות, למשל יום כיפור, ולכן האחוז בו פחות מייצג.": "Tap a point for details. A hollow point marks a day with few flights (e.g. Yom Kippur), so its percentage is less representative.",
  "{a} – סיכויי עיכוב בטיסות מנתב״ג | FlightChance": "{a} – Delay chances for flights at Ben Gurion | FlightChance",
  "{c} – טיסות וסיכויי עיכוב מנתב״ג | FlightChance": "{c} – flights and delay chances from TLV | FlightChance",
  "{fn} – מה הסיכוי שהטיסה תתעכב? | FlightChance": "{fn} – Will this flight be delayed? | FlightChance",
@@ -721,7 +731,8 @@ async function handleSearch(flightNumber, opts = {}) {
 function icon(dir) { return dir === 'departure' ? '🛫' : '🛬'; }
 
 function yesterdayHeroStat() {
-  const s = META && META.yesterdayDepartureDelay;
+  const both = META && META.yesterdayDelay;
+  const s = both || (META && META.yesterdayDepartureDelay);
   if (!s) return '';
   const pct = Math.round(s.delayedPct60 * 100);
   const m = riskMeta(pct < 30 ? 'low' : pct < 60 ? 'medium' : 'high');
@@ -729,7 +740,7 @@ function yesterdayHeroStat() {
     <div onclick="goToYesterdayDetail()" style="cursor:pointer;display:inline-flex;flex-direction:column;align-items:center;gap:4px;margin-top:14px">
       <div style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:var(${m.varBg});border:1px solid var(${m.varBorder})">
         <span style="font-size:20px;font-weight:700;color:var(${m.varFg})">${pct}%</span>
-        <span style="font-size:12.5px;color:var(${m.varFg})">${tr('מהטיסות שהמריאו מנתב"ג אתמול התעכבו ב-60+ דקות', { n: s.sampleSize })}</span>
+        <span style="font-size:12.5px;color:var(${m.varFg})">${both ? tr('מהטיסות בנתב״ג אתמול (המראות ונחיתות) התעכבו ב-60+ דקות') : tr('מהטיסות שהמריאו מנתב"ג אתמול התעכבו ב-60+ דקות', { n: s.sampleSize })}</span>
       </div>
       <span style="font-size:11px;color:var(--ink-faint);text-decoration:underline">${tr('לרשימה המלאה')}</span>
     </div>
@@ -741,21 +752,22 @@ let yesterdayDetailList = [];
 function goToYesterdayDetail() {
   const all = (META && META.mostDelayedYesterday) || [];
   yesterdayDetailList = all
-    .filter(e => e.direction === 'departure' && e.delayMin >= 60)
+    .filter(e => (META.yesterdayDelay || e.direction === 'departure') && e.delayMin >= 60)
     .sort((a, b) => b.delayMin - a.delayMin);
   view = 'yesterdayDetail';
   render();
 }
 
 function renderYesterdayDetail() {
-  const s = META && META.yesterdayDepartureDelay;
+  const both = META && META.yesterdayDelay;
+  const s = both || (META && META.yesterdayDepartureDelay);
   const rows = yesterdayDetailList.map((e, i) => {
     return `
       <div class="rank-row" onclick="showFlightDetail('yesterday_detail', ${i})">
         <div class="rank-pos">${i + 1}</div>
         <div class="rank-mid">
           <div class="rank-airline">${e.aliases[0].airline} <span class="flight-num-highlight">${e.aliases[0].flightNumber}</span></div>
-          <div class="rank-flight" dir="ltr">${e.origin} → ${e.destination}</div>
+          <div class="rank-flight" dir="ltr">${icon(e.direction)} ${e.origin} → ${e.destination}</div>
         </div>
         <div class="rank-pct" style="color:var(--red)">+${Math.round(e.delayMin)} min</div>
       </div>
@@ -764,8 +776,8 @@ function renderYesterdayDetail() {
   return `
     <button class="back-btn" onclick="goHome()">${tr('→ חיפוש אחר')}</button>
     <div class="card" style="margin-top:14px">
-      <p class="why-title" style="margin:0">${tr('כל הטיסות שיצאו מנתב"ג אתמול באיחור של 60+ דקות')}</p>
-      <p class="dest-hint" style="margin-top:6px">${s ? tr('{n} מתוך {total} הטיסות שיצאו אתמול איחרו ב-60+ דקות', { n: yesterdayDetailList.length, total: s.sampleSize }) : ''}</p>
+      <p class="why-title" style="margin:0">${both ? tr('כל הטיסות בנתב״ג אתמול שהתעכבו ב-60+ דקות') : tr('כל הטיסות שיצאו מנתב"ג אתמול באיחור של 60+ דקות')}</p>
+      <p class="dest-hint" style="margin-top:6px">${s ? (both ? tr('{n} מתוך {total} הטיסות אתמול (המראות ונחיתות) איחרו ב-60+ דקות', { n: yesterdayDetailList.length, total: s.sampleSize }) : tr('{n} מתוך {total} הטיסות שיצאו אתמול איחרו ב-60+ דקות', { n: yesterdayDetailList.length, total: s.sampleSize })) : ''}</p>
       ${rows || `<p style="font-size:14px;color:var(--ink-soft)">${tr('אין נתונים זמינים.')}</p>`}
     </div>
   `;
@@ -975,7 +987,7 @@ function delayChartCard(recentFlights) {
     const label = `${fmt(p.date)} · ${p.delayMin >= 0 ? '+' : ''}${p.delayMin} min`;
     return `<g data-i="${i}" data-x="${cx}" data-y="${cy}" data-t="${label}" onclick="chartTip(this)" style="cursor:pointer;-webkit-tap-highlight-color:transparent"><circle cx="${cx}" cy="${cy}" r="14" fill="transparent"/><circle cx="${cx}" cy="${cy}" r="4.5" fill="${late ? 'var(--red)' : 'var(--green)'}" stroke="var(--surface, #fff)" stroke-width="1.5"/><title>${label}</title></g>`;
   }).join('');
-  const tip = `<g class="ctip" style="display:none;pointer-events:none"><rect rx="7" height="28" fill="var(--ink)"/><text font-size="14.5" font-weight="600" fill="var(--surface, #fff)" text-anchor="middle"></text></g>`;
+  const tip = `<g class="ctip" style="display:none;pointer-events:none"><rect rx="7" height="28" fill="var(--ink)"/><text font-size="14.5" font-weight="600" fill="var(--surface, #fff)" text-anchor="middle" direction="ltr" unicode-bidi="isolate"></text></g>`;
   const topTick = Math.floor(yMax / 60) * 60;
   const yTicks = topTick > 60 ? [0, 60, topTick] : [0, 60];
   const grid = yTicks.map(v => `<line x1="${L}" x2="${W - R}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}" stroke="${v === 60 ? 'var(--red)' : 'var(--border-soft)'}" stroke-width="1" ${v === 60 ? 'stroke-dasharray="5 5" opacity="0.7"' : ''}/><text x="${L - 8}" y="${(y(v) + 4).toFixed(1)}" text-anchor="end" font-size="13" fill="var(--ink-faint)">${v}</text>`).join('');
@@ -1022,6 +1034,56 @@ function historyCard(recentFlights) {
         <div style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:var(--red)"></span><span style="font-size:12px;color:var(--ink-faint)">${tr('60+ דק\' איחור')}</span></div>
       </div>
     </div>
+  `;
+}
+
+let dailyDir = 'all';
+function setDailyDir(v) { dailyDir = v; render(); }
+
+function dailyChartCard() {
+  const series = (META && META.dailyStats) || [];
+  const pts = series.filter(d => d[dailyDir] && d[dailyDir].flights > 0);
+  if (pts.length < 2) return '';
+  const W = 440, H = 210, L = 40, R = 12, T = 12, B = 32;
+  const pct = d => Math.round(d[dailyDir].delayedPct60 * 100);
+  const vals = pts.map(pct);
+  const yMax = Math.max(50, Math.ceil(Math.max(...vals) / 25) * 25);
+  const dayNum = d => Date.parse(d) / 864e5;
+  const d0 = dayNum(pts[0].date), d1 = dayNum(pts[pts.length - 1].date);
+  const x = i => L + (dayNum(pts[i].date) - d0) * (W - L - R) / Math.max(1, d1 - d0);
+  const y = v => T + (yMax - v) * (H - T - B) / yMax;
+  const fmt = d => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(d); return m ? `${Number(m[3])}.${Number(m[2])}` : d; };
+  const nLab = Math.min(pts.length, 5);
+  const labelIdx = new Set(Array.from({ length: nLab }, (_, j) => Math.round(j * (pts.length - 1) / (nLab - 1))));
+  const grid = [0, 25, 50, 75, 100].filter(v => v <= yMax).map(v => `<line x1="${L}" x2="${W - R}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}" stroke="var(--border-soft)" stroke-width="1"/><text x="${L - 8}" y="${(y(v) + 4).toFixed(1)}" text-anchor="end" font-size="13" fill="var(--ink-faint)">${v}%</text>`).join('');
+  const line = pts.map((p, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)} ${y(pct(p)).toFixed(1)}`).join(' ');
+  const dayNote = p => p.dayType === 'holiday' ? ` · ${tr('חג')}` : p.dayType === 'saturday' ? ` · ${tr('שבת')}` : '';
+  const dots = pts.map((p, i) => {
+    const s = p[dailyDir];
+    const thin = s.flights < 100;
+    const cx = x(i).toFixed(1), cy = y(pct(p)).toFixed(1);
+    const label = `${fmt(p.date)} · ${pct(p)}% · ${tr('{n} טיסות', { n: s.flights })}${dayNote(p)}`;
+    return `<g data-i="${i}" data-x="${cx}" data-y="${cy}" data-t="${label}" onclick="chartTip(this)" style="cursor:pointer;-webkit-tap-highlight-color:transparent"><circle cx="${cx}" cy="${cy}" r="14" fill="transparent"/><circle cx="${cx}" cy="${cy}" r="4.5" fill="${thin ? 'var(--surface, #fff)' : 'var(--brand)'}" stroke="var(--brand)" stroke-width="${thin ? 2 : 1.5}"/><title>${label}</title></g>`;
+  }).join('');
+  const xLabels = pts.map((p, i) => labelIdx.has(i) ? `<text x="${x(i).toFixed(1)}" y="${H - 10}" text-anchor="middle" font-size="13" fill="var(--ink-faint)">${fmt(p.date)}</text>` : '').join('');
+  const tip = `<g class="ctip" style="display:none;pointer-events:none"><rect rx="7" height="28" fill="var(--ink)"/><text font-size="14.5" font-weight="600" fill="var(--surface, #fff)" text-anchor="middle" direction="ltr" unicode-bidi="isolate"></text></g>`;
+  const btn = (v, label) => `<button onclick="setDailyDir('${v}')" style="font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid ${dailyDir === v ? 'var(--brand)' : 'var(--border)'};background:${dailyDir === v ? 'var(--brand)' : 'transparent'};color:${dailyDir === v ? '#fff' : 'var(--ink-soft)'};cursor:pointer">${label}</button>`;
+  return `
+    <section class="card" style="margin-bottom:16px">
+      <p class="why-title" style="margin-top:0">${tr('איחורים בנתב״ג לפי יום')}</p>
+      <p class="dest-hint" style="margin-top:0">${tr('אחוז הטיסות שהתעכבו ב-60+ דקות בכל יום.')}</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 6px">${btn('all', tr('הכול'))}${btn('departure', tr('המראות'))}${btn('arrival', tr('נחיתות'))}</div>
+      <div dir="ltr" style="width:100%">
+        <svg viewBox="0 0 ${W} ${H}" data-l="${L}" data-r="${W - R}" width="100%" role="img" aria-label="${tr('איחורים בנתב״ג לפי יום')}" style="display:block;overflow:visible">
+          ${grid}
+          <path d="${line}" fill="none" stroke="var(--brand)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+          ${dots}
+          ${xLabels}
+          ${tip}
+        </svg>
+      </div>
+      <p style="font-size:12px;color:var(--ink-faint);margin:10px 0 0">${tr('לחצו על נקודה לפרטים. נקודה חלולה מסמנת יום עם מעט טיסות, למשל יום כיפור, ולכן האחוז בו פחות מייצג.')}</p>
+    </section>
   `;
 }
 
@@ -1075,6 +1137,7 @@ function homeStatsSection() {
   `).join('');
   return `
     <p class="why-title" style="margin-top:24px">${tr('סטטיסטיקות')}</p>
+    ${dailyChartCard()}
     <div class="stats-grid">
       <section class="card">
         <p class="why-title" style="margin-top:0">${tr('5 הטיסות עם הכי הרבה איחורים')}</p>

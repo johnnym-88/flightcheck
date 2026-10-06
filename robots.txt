@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /old_index.html
+Sitemap: https://flightchance.com/sitemap.xml

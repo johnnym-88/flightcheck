@@ -1528,10 +1528,10 @@ function renderDestinationResult() {
       <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:14px">
         ${sortBtn('asc', tr('מהכי אמין להכי מסוכן'))}
         ${sortBtn('desc', tr('מהכי מסוכן להכי אמין'))}
-        <select onchange="setDestAirlineFilter(this.value)" style="font-size:12px;padding:6px 10px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--ink-soft);cursor:pointer">
+        ${destMode === 'airline' ? '' : `<select onchange="setDestAirlineFilter(this.value)" style="font-size:12px;padding:6px 10px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--ink-soft);cursor:pointer">
           <option value="">${tr('כל החברות')}</option>
           ${allAirlines.map(a => `<option value="${a}" ${destAirlineFilter===a?'selected':''}>${a}</option>`).join('')}
-        </select>
+        </select>`}
       </div>
       ` : ''}
       ${empty && !hasTechStops ? `

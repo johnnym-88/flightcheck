@@ -280,6 +280,7 @@ try {
 } catch (e) {}
 
 const EN = {
+ "לעמוד הטיסה": "Go to flight page",
  "מהטיסות בנתב״ג אתמול (המראות ונחיתות) התעכבו ב-60+ דקות": "of flights at Ben Gurion yesterday (departures and arrivals) were delayed 60+ minutes",
  "כל הטיסות בנתב״ג אתמול שהתעכבו ב-60+ דקות": "All flights at Ben Gurion yesterday delayed 60+ minutes",
  "{n} מתוך {total} הטיסות אתמול (המראות ונחיתות) איחרו ב-60+ דקות": "{n} of {total} flights yesterday (departures and arrivals) were delayed 60+ minutes",
@@ -1287,6 +1288,24 @@ function showFlightDetail(dir, idx) {
   document.getElementById('flight-detail-modal').style.display = 'flex';
 }
 
+// "To flight page" button in the flight popups. Uses the first alias that has
+// its own flight page (primary first), so codeshare popups still get a link.
+// A real <a href> so Cmd/Ctrl-click opens a new tab; a plain click navigates
+// in place (same as a search) without reloading the site.
+function flightPageButton(aliases) {
+  const target = (aliases || []).map(a => a.flightNumber).find(fn => ALL_FLIGHTS.some(f => f.flightNumber === fn));
+  if (!target) return '';
+  return `<a href="/flight/${encodeURIComponent(target)}" onclick="return goToFlightPage('${target}', event)" style="display:block;text-align:center;margin-top:14px;background:var(--brand);color:#fff;border-radius:8px;padding:10px;font-size:13.5px;font-weight:600;text-decoration:none">${tr('לעמוד הטיסה')} ${target}</a>`;
+}
+
+function goToFlightPage(fn, ev) {
+  if (ev && (ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button === 1)) return true;
+  closeFlightDetail();
+  handleSearch(fn, { instant: true });
+  window.scrollTo(0, 0);
+  return false;
+}
+
 function renderSingleEventModal(e) {
   const primary = e.aliases[0];
   const actual = addMinutesToTime(e.scheduledTime, e.delayMin);
@@ -1309,6 +1328,7 @@ function renderSingleEventModal(e) {
       <span style="color:var(--ink-faint);margin-inline-start:auto">${e.delayMin>=0?'+':''}${Math.round(e.delayMin)} min</span>
     </div>
     ${e.isCodeshareGroup ? `<p style="font-size:12px;color:var(--ink-faint);margin-top:10px">${tr('קודשרינג: גם {list}', { list: e.aliases.slice(1).map(a=>`${a.airline} ${a.flightNumber}`).join(', ') })}</p>` : ''}
+    ${flightPageButton(e.aliases)}
   `;
 }
 
@@ -1360,6 +1380,7 @@ function renderFlightDetailModal(f, isSingleFlight, keepPage) {
     </div>
     ${rows || `<p style="font-size:13px;color:var(--ink-soft)">${tr('אין עדיין נתוני היסטוריה זמינים לטיסה זו.')}</p>`}
     ${hasMore ? `<button onclick="loadMoreHistory()" style="width:100%;margin-top:10px;background:none;border:1px solid var(--border);border-radius:8px;padding:9px;font-size:13px;color:var(--brand);cursor:pointer">${tr('טען עוד שבוע אחורה')}</button>` : ''}
+    ${isSingleFlight ? '' : flightPageButton(f.aliases)}
   `;
 }
 

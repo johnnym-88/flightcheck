@@ -230,9 +230,38 @@
   .rank-badge-mini { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 999px; flex-shrink: 0; }
   .dest-title-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
   .dest-hint { font-size: 12.5px; color: var(--ink-faint); margin-top: 4px; }
+  /* ---------- accessibility ---------- */
+  :focus-visible { outline: 3px solid #F28C28; outline-offset: 2px; }
+  .skip-link { position: absolute; inset-inline-start: 12px; top: -60px; z-index: 100; background: var(--brand); color: #fff; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-weight: 600; }
+  .skip-link:focus { top: 10px; }
+  .a11y-fab { position: fixed; left: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 60; width: 48px; height: 48px; border-radius: 50%; border: none; background: var(--brand); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,.18); }
+  .a11y-panel { position: fixed; left: 16px; bottom: calc(76px + env(safe-area-inset-bottom, 0px)); z-index: 61; width: min(300px, calc(100vw - 32px)); background: var(--surface); color: var(--ink); border: 1px solid var(--border); border-radius: 14px; padding: 14px; box-shadow: 0 8px 30px rgba(0,0,0,.18); }
+  .a11y-panel[hidden] { display: none; }
+  .a11y-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .a11y-head h2 { font-size: 15px; margin: 0; }
+  .a11y-close { background: none; border: none; font-size: 22px; line-height: 1; color: var(--ink-soft); cursor: pointer; width: 36px; height: 36px; }
+  .a11y-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .a11y-grid button { min-height: 48px; border: 1px solid var(--border); background: var(--bg); color: var(--ink); border-radius: 10px; font-family: inherit; font-size: 13px; font-weight: 600; line-height: 1.25; cursor: pointer; padding: 6px 8px; }
+  .a11y-grid button[aria-pressed="true"] { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .a11y-size { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; }
+  .a11y-size span { flex: 1; font-size: 13px; font-weight: 600; }
+  .a11y-size button { width: 48px; font-size: 18px; }
+  .a11y-grid button:disabled { opacity: .35; cursor: default; }
+  .a11y-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; font-size: 12.5px; }
+  .a11y-foot a { color: var(--brand); }
+  .a11y-foot button { background: none; border: none; color: var(--ink-soft); text-decoration: underline; cursor: pointer; font: inherit; }
+  html.a11y-zoom-1 body { zoom: 1.12; }
+  html.a11y-zoom-2 body { zoom: 1.25; }
+  html.a11y-contrast { --bg: #FFFFFF !important; --surface: #FFFFFF !important; --ink: #000000 !important; --ink-soft: #000000 !important; --ink-faint: #1A1A1A !important; --border: #000000 !important; --border-soft: #333333 !important; --brand: #0B3A5B !important; --green: #0B5D27 !important; --amber: #6B4300 !important; --red: #8E1B10 !important; }
+  html.a11y-contrast header.top { background: #FFFFFF; backdrop-filter: none; }
+  html.a11y-links a, html.a11y-links button { text-decoration: underline !important; outline: 2px dashed currentColor; outline-offset: 2px; }
+  html.a11y-font body, html.a11y-font button, html.a11y-font input, html.a11y-font select { font-family: Arial, Helvetica, sans-serif !important; letter-spacing: .03em; word-spacing: .08em; line-height: 1.6; }
+  html.a11y-motion *, html.a11y-motion *::before, html.a11y-motion *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  @media print { .a11y-fab, .a11y-panel { display: none; } }
 </style>
 </head>
 <body>
+<a class="skip-link" href="#app" data-i18n="דילוג לתוכן הראשי">דילוג לתוכן הראשי</a>
 <header class="top">
   <div class="topbar">
     <button class="brand-btn" onclick="goHome()"><picture><source srcset="/logo-dark.png" media="(prefers-color-scheme: dark)" /><img src="/logo.png" alt="FlightChance" style="height:30px;display:block" /></picture></button>
@@ -246,16 +275,20 @@
 </header>
 
 <main>
-  <div id="app" class="wrap"></div>
+  <div id="app" class="wrap" tabindex="-1"></div>
   <div id="flight-detail-modal" class="admin-panel" style="display:none" onclick="if(event.target===this) closeFlightDetail()">
     <div class="admin-box" id="flight-detail-content"></div>
   </div>
 </main>
 
+<button id="a11y-fab" class="a11y-fab" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="a11y-panel" aria-label="תפריט נגישות" onclick="toggleA11y()"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><circle cx="12" cy="4" r="2"/><path d="M19.5 7.6c-2.4.6-4.9.9-7.5.9s-5.1-.3-7.5-.9l-.4 1.6c1.9.5 3.9.8 5.9.9v3.4l-2.2 7.6 1.7.5 2-6.6h1l2 6.6 1.7-.5-2.2-7.6v-3.4c2-.1 4-.4 5.9-.9l-.4-1.6z"/></svg></button>
+<div id="a11y-panel" class="a11y-panel" role="dialog" aria-labelledby="a11y-title" hidden></div>
+
 <footer>
   <div class="fname">FlightChance</div>
   <div class="ftag" dir="ltr">Know before you fly.</div>
   <a class="fx" href="https://x.com/FlightChance" target="_blank" rel="noopener">𝕏 <span data-i18n="עקבו אחרינו">עקבו אחרינו</span></a>
+  <p style="margin:12px 0 0;font-size:12.5px"><a href="/accessibility.html" style="color:var(--ink-soft)" data-i18n="הצהרת נגישות">הצהרת נגישות</a></p>
   <p class="fdisc" data-i18n="הנתונים באתר מבוססים על מידע ממאגר המידע הממשלתי data.gov.il, שמפרסמת רשות שדות התעופה, ומוצגים כפי שהם. FlightChance אינו קשור לרשות שדות התעופה או ל-data.gov.il. איננו מתחייבים לדיוק הנתונים, לשלמותם או לעדכניותם. הסיכוי לעיכוב המוצג הוא הערכה סטטיסטית בלבד, ואינו מבטיח או מנבא את מועד ההמראה או הנחיתה בפועל. האתר אינו ממליץ על חברת תעופה כלשהי, ואין לראות במידע המופיע בו המלצה או ייעוץ. לפני קבלת החלטות, יש לבדוק את פרטי הטיסה מול חברת התעופה.">הנתונים באתר מבוססים על מידע ממאגר המידע הממשלתי data.gov.il, שמפרסמת רשות שדות התעופה, ומוצגים כפי שהם. FlightChance אינו קשור לרשות שדות התעופה או ל-data.gov.il. איננו מתחייבים לדיוק הנתונים, לשלמותם או לעדכניותם. הסיכוי לעיכוב המוצג הוא הערכה סטטיסטית בלבד, ואינו מבטיח או מנבא את מועד ההמראה או הנחיתה בפועל. האתר אינו ממליץ על חברת תעופה כלשהי, ואין לראות במידע המופיע בו המלצה או ייעוץ. לפני קבלת החלטות, יש לבדוק את פרטי הטיסה מול חברת התעופה.</p>
 </footer>
 
@@ -280,6 +313,18 @@ try {
 } catch (e) {}
 
 const EN = {
+ "דילוג לתוכן הראשי": "Skip to main content",
+ "תפריט נגישות": "Accessibility menu",
+ "סגירה": "Close",
+ "גודל טקסט": "Text size",
+ "הקטנת טקסט": "Decrease text size",
+ "הגדלת טקסט": "Increase text size",
+ "ניגודיות גבוהה": "High contrast",
+ "הדגשת קישורים": "Highlight links",
+ "גופן קריא": "Readable font",
+ "עצירת אנימציות": "Stop animations",
+ "הצהרת נגישות": "Accessibility statement",
+ "איפוס הגדרות": "Reset settings",
  "לעמוד הטיסה": "Go to flight page",
  "מהטיסות בנתב״ג אתמול (המראות ונחיתות) התעכבו ב-60+ דקות": "of flights at Ben Gurion yesterday (departures and arrivals) were delayed 60+ minutes",
  "כל הטיסות בנתב״ג אתמול שהתעכבו ב-60+ דקות": "All flights at Ben Gurion yesterday delayed 60+ minutes",
@@ -457,7 +502,76 @@ function applyLang() {
   document.querySelectorAll('[data-i18n]').forEach(n => { n.textContent = tr(n.getAttribute('data-i18n')); });
   const b = document.getElementById('lang-toggle');
   if (b) b.textContent = lang === 'en' ? 'עברית' : 'English';
+  const fab = document.getElementById('a11y-fab');
+  if (fab) fab.setAttribute('aria-label', tr('תפריט נגישות'));
+  const ap = document.getElementById('a11y-panel');
+  if (ap && !ap.hidden) renderA11yPanel();
 }
+
+
+// ---------------------------------------------------------------------
+// Accessibility menu. Settings are applied as classes on <html> and saved
+// in localStorage, so they persist across pages and visits. Self-built (no
+// third-party overlay script). Labels re-render on language switch.
+// ---------------------------------------------------------------------
+const A11Y_KEY = 'fc_a11y';
+let a11y = { zoom: 0, contrast: false, links: false, font: false, motion: false };
+try { Object.assign(a11y, JSON.parse(localStorage.getItem(A11Y_KEY) || '{}')); } catch (e) {}
+
+function applyA11y() {
+  const c = document.documentElement.classList;
+  c.toggle('a11y-zoom-1', a11y.zoom === 1);
+  c.toggle('a11y-zoom-2', a11y.zoom === 2);
+  c.toggle('a11y-contrast', !!a11y.contrast);
+  c.toggle('a11y-links', !!a11y.links);
+  c.toggle('a11y-font', !!a11y.font);
+  c.toggle('a11y-motion', !!a11y.motion);
+  try { localStorage.setItem(A11Y_KEY, JSON.stringify(a11y)); } catch (e) {}
+}
+
+function renderA11yPanel() {
+  const panel = document.getElementById('a11y-panel');
+  if (!panel) return;
+  const t = (k, on) => `<button type="button" aria-pressed="${!!on}" onclick="setA11y('${k}')">${tr({ contrast: 'ניגודיות גבוהה', links: 'הדגשת קישורים', font: 'גופן קריא', motion: 'עצירת אנימציות' }[k])}</button>`;
+  panel.innerHTML = `
+    <div class="a11y-head"><h2 id="a11y-title">${tr('תפריט נגישות')}</h2>
+      <button type="button" class="a11y-close" aria-label="${tr('סגירה')}" onclick="toggleA11y(false)">×</button></div>
+    <div class="a11y-grid">
+      <div class="a11y-size">
+        <button type="button" onclick="setA11yZoom(-1)" aria-label="${tr('הקטנת טקסט')}" ${a11y.zoom === 0 ? 'disabled' : ''}>א-</button>
+        <span>${tr('גודל טקסט')}: ${[100, 112, 125][a11y.zoom]}%</span>
+        <button type="button" onclick="setA11yZoom(1)" aria-label="${tr('הגדלת טקסט')}" ${a11y.zoom === 2 ? 'disabled' : ''}>א+</button>
+      </div>
+      ${t('contrast', a11y.contrast)}${t('links', a11y.links)}${t('font', a11y.font)}${t('motion', a11y.motion)}
+    </div>
+    <div class="a11y-foot"><a href="/accessibility.html">${tr('הצהרת נגישות')}</a>
+      <button type="button" onclick="resetA11y()">${tr('איפוס הגדרות')}</button></div>`;
+}
+
+function toggleA11y(open) {
+  const panel = document.getElementById('a11y-panel'), fab = document.getElementById('a11y-fab');
+  const show = typeof open === 'boolean' ? open : panel.hidden;
+  if (show) renderA11yPanel();
+  panel.hidden = !show;
+  fab.setAttribute('aria-expanded', String(show));
+  if (show) panel.querySelector('button')?.focus(); else fab.focus();
+}
+function setA11y(k) { a11y[k] = !a11y[k]; applyA11y(); renderA11yPanel(); panelFocus(`[onclick="setA11y('${k}')"]`); }
+function setA11yZoom(d) { a11y.zoom = Math.max(0, Math.min(2, a11y.zoom + d)); applyA11y(); renderA11yPanel(); panelFocus(`[onclick="setA11yZoom(${d})"]`); }
+function resetA11y() { a11y = { zoom: 0, contrast: false, links: false, font: false, motion: false }; applyA11y(); renderA11yPanel(); panelFocus('.a11y-foot button'); }
+function panelFocus(sel) { const b = document.querySelector('#a11y-panel ' + sel); (b && !b.disabled ? b : document.querySelector('#a11y-panel .a11y-close'))?.focus(); }
+
+document.addEventListener('keydown', e => {
+  const panel = document.getElementById('a11y-panel');
+  if (e.key === 'Escape' && panel && !panel.hidden) toggleA11y(false);
+});
+document.addEventListener('click', e => {
+  const panel = document.getElementById('a11y-panel');
+  // e.target may already be detached (the panel re-renders on each click), so it is "inside" if it is gone.
+  if (!e.target.isConnected) return;
+  if (panel && !panel.hidden && !panel.contains(e.target) && !document.getElementById('a11y-fab').contains(e.target)) toggleA11y(false);
+});
+applyA11y();
 
 function toggleLang() { setLang(lang === 'en' ? 'he' : 'en'); }
 
